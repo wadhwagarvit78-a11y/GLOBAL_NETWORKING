@@ -1,0 +1,201 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ lead.lead_token }}: {{ lead.title }} | ReferralCircle{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10" x-data="{ closeDealModal: false }">
+  
+  <!-- Back Link -->
+  <div class="mb-6 flex items-center justify-between">
+    <a href="/app" class="text-xs text-slate-400 hover:text-white flex items-center gap-1.5 transition">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      <span>Back to {{ lead.group_name }} Feed</span>
+    </a>
+    
+    <!-- Status Pill -->
+    {% if lead.status == 'open' %}
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        Open for Claim
+      </span>
+    {% elif lead.status == 'claimed' %}
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+        Claimed & In Progress
+      </span>
+    {% elif lead.status == 'closed' %}
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
+        Deal Successfully Closed
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+    
+    <!-- Main Lead Details (Col 1 & 2) -->
+    <div class="lg:col-span-2 space-y-6">
+      
+      <div class="p-8 rounded-3xl glass-card border border-slate-800 shadow-xl space-y-6">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="font-mono text-xs font-bold text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded border border-brand-500/20">
+              {{ lead.lead_token }}
+            </span>
+            <span class="text-xs uppercase font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+              {{ lead.deal_type }}
+            </span>
+            <span class="text-xs text-slate-400 flex items-center gap-1">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-400"></i>
+              {{ lead.sub_location }}
+            </span>
+          </div>
+
+          <h1 class="text-2xl font-extrabold text-white leading-snug">
+            {{ lead.title }}
+          </h1>
+        </div>
+
+        <!-- Budget & Expected Commission Card -->
+        <div class="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <div>
+            <div class="text-[11px] uppercase font-bold text-slate-400">Client Budget</div>
+            <div class="text-lg font-extrabold text-emerald-400 mt-0.5">{{ lead.budget_range }}</div>
+          </div>
+          <div>
+            <div class="text-[11px] uppercase font-bold text-slate-400">Expected Referral Cut</div>
+            <div class="text-sm font-bold text-white mt-1">{{ lead.expected_commission or 'Standard Commission' }}</div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Detailed Criteria</h3>
+          <div class="text-sm text-slate-200 leading-relaxed whitespace-pre-line p-4 rounded-xl bg-slate-950/60 border border-slate-800/80">
+            {{ lead.description }}
+          </div>
+        </div>
+
+        <!-- Deal Lifecycle Actions -->
+        <div class="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4">
+          {% if lead.status == 'open' and lead.author_id != current_user.id %}
+            <form action="/leads/claim/{{ lead.id }}" method="POST" class="w-full">
+              <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-brand-500 hover:from-emerald-400 hover:to-brand-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2 transition">
+                <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i>
+                <span>Claim Lead & Start WhatsApp Coordination</span>
+              </button>
+            </form>
+          {% elif lead.status == 'claimed' %}
+            <div class="w-full flex flex-col sm:flex-row gap-3">
+              <!-- WhatsApp Message Link -->
+              {% set wa_msg = "Hi " ~ lead.author_name ~ ", I am coordinating with you regarding Lead " ~ lead.lead_token ~ " (" ~ lead.title ~ ") on ReferralCircle." %}
+              <a href="https://wa.me/{{ lead.author_whatsapp }}?text={{ wa_msg|urlencode }}" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition shadow-md">
+                <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+                <span>Chat on WhatsApp</span>
+              </a>
+
+              <!-- Close Deal Button -->
+              <button @click="closeDealModal = true" class="flex-1 py-3 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-md">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                <span>Record Deal Closed & Split</span>
+              </button>
+            </div>
+          {% elif lead.status == 'closed' %}
+            <div class="w-full p-4 rounded-xl bg-purple-950/40 border border-purple-500/30 text-xs text-purple-200">
+              <strong class="text-purple-300">Deal Closed:</strong> Total value: ₹{{ "{:,.2f}".format(lead.deal_value) }} | Commission Earned: ₹{{ "{:,.2f}".format(lead.commission_earned) }} | Platform Fee: ₹{{ "{:,.2f}".format(lead.platform_fee) }}
+            </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Sidebar: Poster & Circle Info (Col 3) -->
+    <div class="space-y-6">
+      
+      <!-- Poster Card -->
+      <div class="p-6 rounded-3xl glass-card border border-slate-800 shadow-xl space-y-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Lead Poster Profile</h3>
+        
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-white font-bold text-sm">
+            {{ lead.author_name[:2].upper() }}
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white">{{ lead.author_name }}</div>
+            <div class="text-xs text-slate-400">{{ lead.author_city }}</div>
+          </div>
+        </div>
+
+        {% if lead.author_business %}
+          <div class="text-xs text-slate-300 pt-2 border-t border-slate-800">
+            <span class="text-slate-500">Business/Agency:</span> {{ lead.author_business }}
+          </div>
+        {% endif %}
+
+        <!-- Direct WhatsApp button for verified members -->
+        <div class="pt-2">
+          {% set msg_author = "Hi " ~ lead.author_name ~ ", reaching out regarding " ~ lead.lead_token ~ " on ReferralCircle." %}
+          <a href="https://wa.me/{{ lead.author_whatsapp }}?text={{ msg_author|urlencode }}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-2 transition border border-slate-700">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+            <span>WhatsApp: +{{ lead.author_whatsapp }}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Circle WhatsApp Group Reminder -->
+      <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-3 text-xs text-slate-400">
+        <div class="flex items-center gap-2 text-white font-bold">
+          <i data-lucide="users" class="w-4 h-4 text-brand-400"></i>
+          <span>{{ lead.group_name }}</span>
+        </div>
+        <p>Coordinate within the official WhatsApp group for rapid real-time deal discussions.</p>
+        <a href="{{ lead.whatsapp_group_link }}" target="_blank" class="text-brand-400 hover:underline block font-semibold">
+          Open Official Group &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Close Deal Modal -->
+  <div x-show="closeDealModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+    <div @click.away="closeDealModal = false" class="max-w-md w-full p-6 sm:p-8 rounded-3xl glass-card border border-purple-500/40 shadow-2xl space-y-6">
+      
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-5 h-5 text-purple-400"></i>
+          <span>Record Deal Closure</span>
+        </h3>
+        <button @click="closeDealModal = false" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+
+      <p class="text-xs text-slate-300">
+        Congratulations on closing this deal! Enter the final transaction value and earned commission to record on your ledger.
+      </p>
+
+      <form action="/leads/close/{{ lead.id }}" method="POST" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Total Deal / Mandate Value (₹)</label>
+          <input type="number" step="any" name="deal_value" required placeholder="e.g. 5000000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Total Commission / Brokerage Earned (₹)</label>
+          <input type="number" step="any" name="commission_earned" required placeholder="e.g. 100000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+
+        <div class="p-3 rounded-xl bg-purple-950/30 border border-purple-800 text-[11px] text-purple-300">
+          Platform Success Cut: <strong>15% of earned commission</strong> (recorded on ledger).
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition">
+          Confirm Deal Closed & Record Commission
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

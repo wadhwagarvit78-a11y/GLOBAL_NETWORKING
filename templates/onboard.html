@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+
+{% block title %}Join Your Professional Circle — ReferralCircle{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-12">
+  
+  <div class="text-center mb-8">
+    <span class="text-xs font-bold uppercase tracking-widest text-brand-400">Step 1 of 2</span>
+    <h1 class="text-3xl font-extrabold text-white mt-1">Join Your Industry Circle</h1>
+    <p class="text-sm text-slate-300 mt-2">
+      Select your profession to instantly join verified peers, access active leads, and enter your dedicated WhatsApp group.
+    </p>
+  </div>
+
+  <div class="p-8 rounded-3xl glass-card border border-slate-700/80 shadow-2xl">
+    <form action="/onboard" method="POST" class="space-y-6">
+      
+      <!-- Profession Selection -->
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+          Your Profession / Industry Circle <span class="text-brand-400">*</span>
+        </label>
+        <select name="group_id" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3.5 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          <option value="" disabled {% if not selected_group_id %}selected{% endif %}>-- Select your profession --</option>
+          {% for g in groups %}
+            <option value="{{ g.id }}" {% if selected_group_id == g.id %}selected{% endif %}>
+              {{ g.name }} ({{ g.category }})
+            </option>
+          {% endfor %}
+        </select>
+        <p class="text-[11px] text-slate-400 mt-1">This determines which exclusive lead board and WhatsApp community you are connected to.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Full Name -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            Full Name <span class="text-brand-400">*</span>
+          </label>
+          <input type="text" name="full_name" required placeholder="e.g. Vikram Singhania" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+
+        <!-- WhatsApp Number -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            WhatsApp Number <span class="text-brand-400">*</span>
+          </label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-3 text-slate-400 text-sm font-medium">+91</span>
+            <input type="tel" name="whatsapp_number" required placeholder="98XXXXXXXX" class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- City / Operating Area -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            City / Operating Region <span class="text-brand-400">*</span>
+          </label>
+          <input type="text" name="city_area" required placeholder="e.g. Gurgaon, Noida, South Delhi..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+
+        <!-- Business / Agency Name -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            Business / Agency Name <span class="text-slate-500">(Optional)</span>
+          </label>
+          <input type="text" name="business_name" placeholder="e.g. Singhania Engineering & Tools" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Years of Experience -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            Years of Experience
+          </label>
+          <select name="years_experience" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+            <option value="1">1-3 Years</option>
+            <option value="4" selected>4-7 Years</option>
+            <option value="8">8-12 Years</option>
+            <option value="15">15+ Years</option>
+          </select>
+        </div>
+
+        <!-- License / RERA ID / Association ID -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            ID / License / Reg. No <span class="text-slate-500">(Optional)</span>
+          </label>
+          <input type="text" name="rera_or_license_id" placeholder="e.g. RERA / Bar ID / IATA / GST" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+      </div>
+
+      <!-- How did you hear about us -->
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+          How did you hear about us?
+        </label>
+        <select name="source_channel" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          <option value="LinkedIn">LinkedIn</option>
+          <option value="Instagram">Instagram</option>
+          <option value="WhatsApp Group Referral">Existing WhatsApp Group</option>
+          <option value="Colleague / Peer Referral">Colleague / Peer Referral</option>
+          <option value="Direct Web Search">Direct Search</option>
+        </select>
+      </div>
+
+      <!-- Explicit Contact Sharing Consent -->
+      <div class="flex items-start gap-3 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+        <input type="checkbox" id="consent" name="consent" required checked class="mt-1 w-4 h-4 rounded text-brand-500 focus:ring-brand-500 bg-slate-950 border-slate-700">
+        <label for="consent" class="text-xs text-slate-300 leading-relaxed">
+          I agree to share my WhatsApp contact with verified members of my profession circle for direct lead coordination and understand that the platform charges a transparent success cut on closed deals.
+        </label>
+      </div>
+
+      <!-- Submit Button: Triggers immediate WhatsApp redirect -->
+      <button type="submit" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-600 via-emerald-500 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-extrabold text-base shadow-xl shadow-brand-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01]">
+        <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i>
+        <span>Complete Registration & Open WhatsApp Group &rarr;</span>
+      </button>
+
+      <p class="text-center text-xs text-slate-400">
+        Free 30-day membership activated automatically. ₹500/mo after trial period.
+      </p>
+
+    </form>
+  </div>
+
+</div>
+{% endblock %}

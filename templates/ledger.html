@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+
+{% block title %}Commission Ledger & Payments — ReferralCircle{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ proofModal: false, selectedLedgerId: null, selectedAmount: 0 }">
+  
+  <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Deal Commission Ledger</h1>
+      <p class="text-xs sm:text-sm text-slate-400 mt-1">Track your closed referral deals, platform commission dues, and UPI payment verifications.</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+        <span class="text-slate-400">Account Standing:</span> <strong class="text-emerald-400">Good (100 Rep)</strong>
+      </div>
+    </div>
+  </div>
+
+  {% if ledger_entries %}
+    <div class="space-y-4">
+      {% for entry in ledger_entries %}
+        <div class="p-6 rounded-2xl glass-card border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-xs font-bold text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded border border-brand-500/20">
+                {{ entry.lead_token }}
+              </span>
+              <span class="text-xs text-slate-400">{{ entry.created_at }}</span>
+              
+              {% if entry.status == 'verified' %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  Paid & Verified
+                </span>
+              {% elif entry.status == 'proof_submitted' %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  Verification Pending
+                </span>
+              {% else %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                  Payment Due
+                </span>
+              {% endif %}
+            </div>
+
+            <h3 class="text-base font-bold text-white">{{ entry.lead_title }}</h3>
+            
+            {% if entry.proof_reference %}
+              <div class="text-xs text-slate-400 pt-1">
+                <span>Submitted Ref / UTR: <code class="text-slate-200">{{ entry.proof_reference }}</code></span>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Amount & Pay Button -->
+          <div class="flex items-center gap-4 shrink-0">
+            <div class="text-right">
+              <div class="text-xs text-slate-400">Platform Cut</div>
+              <div class="text-xl font-extrabold text-white">₹{{ "{:,.2f}".format(entry.amount) }}</div>
+            </div>
+
+            {% if entry.status == 'pending' %}
+              <button @click="selectedLedgerId = {{ entry.id }}; selectedAmount = '{{ entry.amount }}'; proofModal = true" class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-md transition">
+                Pay via UPI
+              </button>
+            {% elif entry.status == 'proof_submitted' %}
+              <span class="text-xs text-amber-400 font-medium italic">Under Review</span>
+            {% elif entry.status == 'verified' %}
+              <span class="text-xs text-emerald-400 font-bold flex items-center gap-1">
+                <i data-lucide="check" class="w-4 h-4"></i> Settled
+              </span>
+            {% endif %}
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="p-12 rounded-3xl glass-card border border-slate-800 text-center max-w-md mx-auto">
+      <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="receipt" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-base font-bold text-white">No Commission Dues</h3>
+      <p class="text-xs text-slate-400 mt-1">When you close a lead referral, your earnings and platform cuts will be recorded here.</p>
+    </div>
+  {% endif %}
+
+  <!-- UPI Payment Proof Modal -->
+  <div x-show="proofModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+    <div @click.away="proofModal = false" class="max-w-md w-full p-6 sm:p-8 rounded-3xl glass-card border border-slate-700 shadow-2xl space-y-6">
+      
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i data-lucide="qr-code" class="w-5 h-5 text-brand-400"></i>
+          <span>Submit UPI Payment Proof</span>
+        </h3>
+        <button @click="proofModal = false" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center space-y-2">
+        <div class="text-xs text-slate-400">Scan or Pay to Official UPI ID:</div>
+        <div class="font-mono text-sm font-bold text-brand-400 select-all">referralcircle@upi</div>
+        <div class="text-xs text-slate-400">Amount: <strong class="text-white text-sm">₹<span x-text="selectedAmount"></span></strong></div>
+      </div>
+
+      <form action="/ledger/submit-proof" method="POST" class="space-y-4">
+        <input type="hidden" name="ledger_id" :value="selectedLedgerId">
+        
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-300 mb-1">UPI Transaction Reference / UTR Number <span class="text-brand-400">*</span></label>
+          <input type="text" name="proof_ref" required placeholder="e.g. 329048192348 or UTR-XXXX" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Notes / App Used (GPay/PhonePe/Paytm)</label>
+          <input type="text" name="notes" placeholder="e.g. Paid from Google Pay account" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs transition">
+          Submit Payment for Verification
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

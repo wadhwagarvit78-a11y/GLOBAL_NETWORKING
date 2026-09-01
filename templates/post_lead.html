@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block title %}Post a Requirement / Lead — {{ group.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-10">
+  
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <a href="/app" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 mb-2">
+        &larr; Back to {{ group.name }} Feed
+      </a>
+      <h1 class="text-2xl font-extrabold text-white">Post a Client Lead / Requirement</h1>
+      <p class="text-xs text-slate-400 mt-1">Share work you cannot service with verified peers and earn a referral cut upon deal closure.</p>
+    </div>
+  </div>
+
+  <div class="p-8 rounded-3xl glass-card border border-slate-700/80 shadow-2xl">
+    <form action="/post-lead" method="POST" class="space-y-6">
+      
+      <!-- Lead Title -->
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+          Requirement Title <span class="text-brand-400">*</span>
+        </label>
+        <input type="text" name="title" required placeholder="e.g. Urgent: Buyer for 3BHK in Sector 57 Gurgaon / 100-Pax Dubai Corporate Tour" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Deal Type -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            Deal / Service Type <span class="text-brand-400">*</span>
+          </label>
+          <select name="deal_type" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+            <option value="buy">Purchase / Buying Client</option>
+            <option value="sell">Exclusive Mandate / Seller</option>
+            <option value="rent">Rental / Commercial Lease</option>
+            <option value="project">Project / Manufacturing / Dev Contract</option>
+            <option value="client_consult">Consultation / Advisory Mandate</option>
+          </select>
+        </div>
+
+        <!-- Micro-Location -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            Specific Area / Location <span class="text-brand-400">*</span>
+          </label>
+          <input type="text" name="sub_location" required placeholder="e.g. Gurgaon Sector 54, Noida Sec 62, South Delhi..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Budget Range -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            Client Budget Range <span class="text-brand-400">*</span>
+          </label>
+          <input type="text" name="budget_range" required placeholder="e.g. ₹2.5 Cr - ₹3.0 Cr or ₹1.5 Lakh/mo" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+
+        <!-- Expected Commission / Split -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            Expected Referral Split / Cut
+          </label>
+          <input type="text" name="expected_commission" placeholder="e.g. 20% Brokerage Split (approx ₹50k)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+      </div>
+
+      <!-- Description / Client Criteria -->
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+          Detailed Criteria & Notes <span class="text-brand-400">*</span>
+        </label>
+        <textarea name="description" rows="4" required placeholder="Specify specific buyer preferences, readiness of funds, timeline, key contact criteria..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2 transition">
+        <i data-lucide="send" class="w-4 h-4"></i>
+        <span>Broadcast Lead to {{ group.name }}</span>
+      </button>
+
+    </form>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,317 @@
+{% extends "layout.html" %}
+
+{% block title %}ReferralCircle — Monetize Your Professional Network | Verified Referral Exchange{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+  <!-- Subtle Glow Effect -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    
+    <!-- Verified Badge Pill -->
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-brand-400 font-medium mb-8 shadow-inner">
+      <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
+      <span>Private & Vetted Peer Circles for Every Industry</span>
+    </div>
+
+    <!-- Core Motto & Headline -->
+    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight sm:leading-none">
+      Never Let a Client Inquiry <span class="bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-300 bg-clip-text text-transparent">Go to Waste</span>.
+    </h1>
+
+    <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+      Monetize work outside your location, specialization, or capacity. Hand off leads to verified peers in your exact profession and collect transparent commission on every closed deal.
+    </p>
+
+    <!-- Instant Profession Selector & WhatsApp Redirect Form (Core Interactive Hero Widget) -->
+    <div class="mt-10 max-w-2xl mx-auto p-6 sm:p-8 rounded-2xl glass-card border border-slate-700/80 shadow-2xl relative text-left">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+            <i data-lucide="zap" class="w-5 h-5 text-brand-400"></i>
+            <span>Join Your Profession's Verified Circle</span>
+          </h3>
+          <p class="text-xs text-slate-400">Select your industry to instantly access active leads & connect to your official WhatsApp Group.</p>
+        </div>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded bg-brand-500/20 text-brand-300 border border-brand-500/30">Instant Handoff</span>
+      </div>
+
+      <form action="/onboard" method="POST" class="space-y-4">
+        <!-- Step 1: Profession Dropdown -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+            1. Select Your Profession / Industry
+          </label>
+          <select name="group_id" required class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+            <option value="" disabled selected>-- Choose your professional circle --</option>
+            {% for g in groups %}
+              <option value="{{ g.id }}">{{ g.name }} ({{ g.category }})</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Step 2: Name -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              2. Your Full Name
+            </label>
+            <input type="text" name="full_name" required placeholder="e.g. Rajesh Sharma" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+          </div>
+
+          <!-- Step 3: WhatsApp Number -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              3. WhatsApp Number (Primary)
+            </label>
+            <div class="relative">
+              <span class="absolute left-3.5 top-3 text-slate-400 text-sm font-medium">+91</span>
+              <input type="tel" name="whatsapp_number" required placeholder="98XXXXXXXX" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Operating City / Region -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+            4. Primary City / Operating Area
+          </label>
+          <input type="text" name="city_area" required placeholder="e.g. Gurgaon, Noida, South Delhi, Mumbai, Bengaluru..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+        </div>
+
+        <!-- Submit Button: Instant Redirect to WhatsApp -->
+        <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-brand-600 via-emerald-500 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-bold text-base shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01]">
+          <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i>
+          <span>Continue & Join Official WhatsApp Group &rarr;</span>
+        </button>
+
+        <p class="text-[11px] text-slate-400 text-center">
+          ⚡ 30-Day Free Access • No Credit Card Required • Instant WhatsApp Community Redirect
+        </p>
+      </form>
+    </div>
+
+    <!-- Quick Stats Strip -->
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-brand-400">100%</div>
+        <div class="text-xs text-slate-400 mt-1">Vetted Professionals</div>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-white">₹0 Upfront</div>
+        <div class="text-xs text-slate-400 mt-1">30-Day Free Trial</div>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">₹500<span class="text-sm font-normal text-slate-400">/mo</span></div>
+        <div class="text-xs text-slate-400 mt-1">Transparent Subscription</div>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-teal-400">1-Click</div>
+        <div class="text-xs text-slate-400 mt-1">WhatsApp Lead Handoff</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 5 Core Business Advantages Section -->
+<section id="advantages" class="py-20 bg-slate-900/50 border-t border-b border-slate-800/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Why Professionals Choose Us</h2>
+      <p class="text-3xl sm:text-4xl font-extrabold text-white">The 5 Core Advantages of ReferralCircle</p>
+      <p class="mt-4 text-slate-300 text-sm sm:text-base">
+        Traditional WhatsApp and Facebook groups are plagued with spam, unverified brokers, and broken promises. We engineered a platform built specifically for high-trust professional deal closing.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Advantage 1 -->
+      <div class="p-8 rounded-2xl glass-card border border-slate-800 hover:border-brand-500/50 transition-all group">
+        <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i data-lucide="trending-up" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">1. Zero Lead Wastage</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Every inquiry you can't service (wrong budget, out of area, booked calendar) is lost revenue. Post it to your private circle, let a verified peer close it, and earn your referral cut.
+        </p>
+      </div>
+
+      <!-- Advantage 2 -->
+      <div class="p-8 rounded-2xl glass-card border border-slate-800 hover:border-brand-500/50 transition-all group">
+        <div class="w-12 h-12 rounded-xl bg-accent-500/10 text-accent-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">2. 100% Vetted & Spam-Free</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          No scammers, casual observers, or spammers. Every applicant undergoes admin vetting and credential review before receiving access to circle leads and peer phone numbers.
+        </p>
+      </div>
+
+      <!-- Advantage 3 -->
+      <div class="p-8 rounded-2xl glass-card border border-slate-800 hover:border-brand-500/50 transition-all group">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i data-lucide="receipt" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">3. Automated Commission Ledger</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          No more chasing peer brokers or partners for your referral cut. Our built-in deal tracker and commission ledger provide clear accountability and audit logs from claim to closure.
+        </p>
+      </div>
+
+      <!-- Advantage 4 -->
+      <div class="p-8 rounded-2xl glass-card border border-slate-800 hover:border-brand-500/50 transition-all group">
+        <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i data-lucide="message-square" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">4. Instant WhatsApp Handoff</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Work directly where business gets done. When you claim a lead, the platform generates a 1-click WhatsApp chat pre-filled with the exact Lead ID and deal requirements.
+        </p>
+      </div>
+
+      <!-- Advantage 5 -->
+      <div class="p-8 rounded-2xl glass-card border border-slate-800 hover:border-brand-500/50 transition-all group">
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">5. Ultra-Affordable Flat Pricing</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Just ₹500/month after your free trial. Closing just a single referral deal pays for years of membership. No hidden fees or inflated paywalls.
+        </p>
+      </div>
+
+      <!-- Bonus: Cross-Vertical Agility -->
+      <div class="p-8 rounded-2xl glass-card border border-slate-800 hover:border-brand-500/50 transition-all group bg-gradient-to-br from-slate-900 to-slate-950">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Built for Every Profession</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Whether you are a Travel Agent, Mechanical Engineer, Realtor, Lawyer, or Architect — each profession has its own isolated, focused exchange with zero unrelated clutter.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Active Communities & Request a New Circle Section -->
+<section id="professions" class="py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <div>
+        <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-2">Available Circles</h2>
+        <p class="text-3xl font-extrabold text-white">Dedicated Profession Networks</p>
+      </div>
+      <p class="text-slate-400 text-sm max-w-md">
+        Choose your industry to join the network and get added directly to the official WhatsApp community group.
+      </p>
+    </div>
+
+    <!-- Profession Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for g in groups %}
+      <div class="p-6 rounded-2xl glass-card border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-800 text-brand-400 border border-slate-700">
+              {{ g.category }}
+            </span>
+            <span class="flex items-center gap-1 text-[11px] text-emerald-400 font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Active Circle
+            </span>
+          </div>
+          
+          <h3 class="text-lg font-bold text-white mb-2">{{ g.name }}</h3>
+          <p class="text-xs text-slate-300 line-clamp-2 mb-4">{{ g.description }}</p>
+          
+          <div class="text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-4">
+            <span class="text-slate-300 font-semibold">Typical Split:</span> {{ g.min_commission_rate }}
+          </div>
+        </div>
+
+        <a href="/onboard?group_id={{ g.id }}" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-brand-600 hover:text-slate-950 text-white text-xs font-bold flex items-center justify-center gap-2 transition">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Join Circle & WhatsApp Group</span>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Request a Custom Profession Circle Box -->
+    <div class="mt-12 p-8 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700 shadow-xl">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <div class="lg:col-span-1">
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Growing Daily</span>
+          <h3 class="text-2xl font-bold text-white mt-1">Don't See Your Industry?</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            We launch new dedicated profession circles within 24 hours. Tell us your field (e.g. Solar Contractors, Event Planners, Chartered Accountants) and we'll create your group.
+          </p>
+        </div>
+
+        <form action="/request-circle" method="POST" class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <input type="text" name="name" required placeholder="Your Name" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-brand-500">
+          <input type="tel" name="phone" required placeholder="WhatsApp Number" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-brand-500">
+          <input type="text" name="suggested_profession" required placeholder="Profession / Industry" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-brand-500">
+          <input type="text" name="city" required placeholder="City / Operating Region" class="sm:col-span-2 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-brand-500">
+          <button type="submit" class="bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs rounded-xl py-2.5 px-4 transition flex items-center justify-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Request Circle</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="py-20 bg-slate-900/40 border-t border-slate-800">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Simple & Transparent</h2>
+    <p class="text-3xl sm:text-4xl font-extrabold text-white">One Simple Plan. Infinite Referrals.</p>
+    
+    <div class="mt-12 p-8 sm:p-12 rounded-3xl glass-card border border-brand-500/30 max-w-xl mx-auto shadow-2xl relative">
+      <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-500 text-slate-950 font-bold text-xs uppercase tracking-wider">
+        First 30 Days 100% Free
+      </div>
+
+      <div class="mt-4 flex items-baseline justify-center gap-1">
+        <span class="text-5xl font-extrabold text-white">₹500</span>
+        <span class="text-slate-400 text-sm">/ month per member</span>
+      </div>
+      <p class="text-xs text-slate-400 mt-2">Billed monthly after your free trial. Cancel anytime.</p>
+
+      <ul class="mt-8 space-y-3 text-left text-sm text-slate-300">
+        <li class="flex items-center gap-3">
+          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
+          <span>Access to your dedicated profession's lead exchange board</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
+          <span>Direct entry to the Official Verified WhatsApp Group</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
+          <span>Unlimited lead posting and 1-click claiming</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
+          <span>Deal tracking and transparent commission ledger</span>
+        </li>
+      </ul>
+
+      <a href="/onboard" class="mt-8 w-full block py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-brand-500/25 transition text-center">
+        Start 30-Day Free Trial Now
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

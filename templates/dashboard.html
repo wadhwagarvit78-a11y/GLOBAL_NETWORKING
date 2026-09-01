@@ -1,0 +1,204 @@
+{% extends "layout.html" %}
+
+{% block title %}Lead Exchange — {{ current_user.group_name }} | ReferralCircle{% endblock %}
+
+{% block banner %}
+<!-- Trial Status & Quick Alert Bar -->
+<div class="bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-950 border-b border-brand-500/20 px-4 py-2.5 text-xs text-slate-300">
+  <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-2">
+      <span class="flex h-2 w-2 relative">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+      </span>
+      <span><strong>Free Trial Active:</strong> You have full access to post and claim leads. (Renews at ₹500/mo)</span>
+    </div>
+    <a href="/subscription" class="text-brand-400 hover:text-brand-300 font-semibold underline underline-offset-2">
+      View Subscription Details &rarr;
+    </a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  
+  <!-- Circle Header & Pinned WhatsApp Community Card -->
+  <div class="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+    
+    <!-- Circle Title & Info -->
+    <div class="lg:col-span-2 p-6 sm:p-8 rounded-3xl glass-card border border-slate-800 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-400 text-xs font-bold border border-brand-500/20 uppercase tracking-wider">
+            Your Dedicated Circle
+          </span>
+          <span class="text-xs text-slate-500">|</span>
+          <span class="text-xs text-slate-400">{{ current_user.city_area }}</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white">
+          {{ group.name }}
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+          {{ group.description }}
+        </p>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-4 text-xs text-slate-400">
+          <div><strong class="text-white">{{ leads|length }}</strong> Active Leads</div>
+          <div><strong class="text-brand-400">{{ group.min_commission_rate }}</strong> Split</div>
+        </div>
+        <a href="/post-lead" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-brand-500/20 transition">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Post New Lead / Client Requirement</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Pinned WhatsApp Community Card -->
+    <div class="p-6 rounded-3xl bg-gradient-to-br from-emerald-950/70 via-slate-900 to-slate-950 border border-emerald-500/40 shadow-xl flex flex-col justify-between">
+      <div>
+        <div class="w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center mb-3 shadow-md shadow-emerald-500/30">
+          <i data-lucide="message-circle" class="w-6 h-6 fill-current"></i>
+        </div>
+        <h3 class="text-base font-bold text-white">Official WhatsApp Group</h3>
+        <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+          Coordinate leads in real-time, get instant notifications on new requirements, and network directly with verified circle peers.
+        </p>
+      </div>
+
+      <a href="{{ group.whatsapp_group_link }}" target="_blank" rel="noopener noreferrer" class="mt-4 w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2 transition shadow-md">
+        <i data-lucide="external-link" class="w-4 h-4"></i>
+        <span>Open {{ group.name }} Group</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="p-4 rounded-2xl glass-card border border-slate-800 mb-6">
+    <form method="GET" action="/app" class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+      <!-- Search text -->
+      <div class="sm:col-span-5 relative">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+        <input type="text" name="search" value="{{ search or '' }}" placeholder="Search by area, keyword, requirements..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-xs text-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
+      </div>
+
+      <!-- Location Filter -->
+      <div class="sm:col-span-4">
+        <input type="text" name="location" value="{{ location or '' }}" placeholder="Filter by sub-location (e.g. Gurgaon, Noida)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
+      </div>
+
+      <!-- Filter button -->
+      <div class="sm:col-span-3 flex gap-2">
+        <button type="submit" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition flex items-center justify-center gap-1.5">
+          <i data-lucide="filter" class="w-3.5 h-3.5"></i>
+          <span>Apply Filters</span>
+        </button>
+        {% if search or location %}
+          <a href="/app" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs flex items-center justify-center">
+            Clear
+          </a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  <!-- Leads Feed List -->
+  {% if leads %}
+    <div class="space-y-4">
+      {% for lead in leads %}
+        <div class="p-6 rounded-2xl glass-card border border-slate-800 hover:border-slate-700 transition flex flex-col md:flex-row md:items-center justify-between gap-6">
+          
+          <div class="space-y-2 max-w-3xl">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="font-mono text-[11px] font-bold text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded border border-brand-500/20">
+                {{ lead.lead_token }}
+              </span>
+              <span class="text-xs uppercase font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                {{ lead.deal_type|capitalize }}
+              </span>
+              <span class="text-xs text-slate-400 flex items-center gap-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-400"></i>
+                {{ lead.sub_location }}
+              </span>
+              <span class="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                Budget: {{ lead.budget_range }}
+              </span>
+              
+              <!-- Status Badge -->
+              {% if lead.status == 'open' %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  Open for Claim
+                </span>
+              {% elif lead.status == 'claimed' %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  Claimed (In Progress)
+                </span>
+              {% elif lead.status == 'closed' %}
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  Deal Closed
+                </span>
+              {% endif %}
+            </div>
+
+            <h3 class="text-lg font-bold text-white leading-snug">
+              <a href="/leads/{{ lead.id }}" class="hover:text-brand-400 transition">{{ lead.title }}</a>
+            </h3>
+
+            <p class="text-xs text-slate-300 line-clamp-2">
+              {{ lead.description }}
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-1">
+              <span>Posted by: <strong class="text-slate-200">{{ lead.author_name }}</strong> ({{ lead.author_city }})</span>
+              <span>•</span>
+              <span class="text-brand-400 font-medium">Expected Split: {{ lead.expected_commission or 'Standard Commission' }}</span>
+            </div>
+          </div>
+
+          <!-- Actions Column -->
+          <div class="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end gap-2.5 shrink-0">
+            <a href="/leads/{{ lead.id }}" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold text-center transition">
+              View Details & Split
+            </a>
+
+            {% if lead.status == 'open' and lead.author_id != current_user.id %}
+              <form action="/leads/claim/{{ lead.id }}" method="POST" class="w-full">
+                <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-brand-500 hover:from-emerald-400 hover:to-brand-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-brand-500/20 transition">
+                  <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
+                  <span>Claim & Open WhatsApp</span>
+                </button>
+              </form>
+            {% elif lead.status == 'claimed' %}
+              <!-- Direct WhatsApp link to author -->
+              {% set wa_msg = "Hi " ~ lead.author_name ~ ", I'm reaching out regarding Lead " ~ lead.lead_token ~ " (" ~ lead.title ~ ") on ReferralCircle." %}
+              <a href="https://wa.me/{{ lead.author_whatsapp }}?text={{ wa_msg|urlencode }}" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                <span>Chat with {{ lead.author_name }}</span>
+              </a>
+            {% endif %}
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="p-12 rounded-3xl glass-card border border-slate-800 text-center max-w-lg mx-auto">
+      <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="inbox" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-lg font-bold text-white">No Leads Found</h3>
+      <p class="text-xs text-slate-400 mt-1">
+        Be the first member in this circle to post a client requirement or referral.
+      </p>
+      <a href="/post-lead" class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs transition">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span>Post First Lead Now</span>
+      </a>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

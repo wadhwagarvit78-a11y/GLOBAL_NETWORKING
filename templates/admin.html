@@ -1,0 +1,259 @@
+{% extends "layout.html" %}
+
+{% block title %}Founder Admin Control Center — ReferralCircle{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ tab: 'groups' }">
+  
+  <!-- Header -->
+  <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded bg-rose-500/10 text-rose-400 text-xs font-bold uppercase tracking-wider border border-rose-500/20">
+          Admin Portal
+        </span>
+        <span class="text-xs text-slate-500">|</span>
+        <span class="text-xs text-slate-400">Founder Overview</span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Platform Control Center</h1>
+    </div>
+
+    <!-- Quick Switcher to Member Dashboard -->
+    <a href="/app" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition">
+      <i data-lucide="eye" class="w-4 h-4"></i>
+      <span>View as Member</span>
+    </a>
+  </div>
+
+  <!-- KPI Metric Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+    <div class="p-5 rounded-2xl glass-card border border-slate-800">
+      <div class="text-xs text-slate-400">Total Members</div>
+      <div class="text-2xl font-extrabold text-white mt-1">{{ metrics.total_users }}</div>
+    </div>
+    <div class="p-5 rounded-2xl glass-card border border-slate-800">
+      <div class="text-xs text-slate-400">Total Leads</div>
+      <div class="text-2xl font-extrabold text-brand-400 mt-1">{{ metrics.total_leads }}</div>
+    </div>
+    <div class="p-5 rounded-2xl glass-card border border-slate-800">
+      <div class="text-xs text-slate-400">Closed Deals</div>
+      <div class="text-2xl font-extrabold text-purple-400 mt-1">{{ metrics.closed_leads }}</div>
+    </div>
+    <div class="p-5 rounded-2xl glass-card border border-slate-800">
+      <div class="text-xs text-slate-400">Commission Collected</div>
+      <div class="text-2xl font-extrabold text-emerald-400 mt-1">₹{{ "{:,.0f}".format(metrics.total_commission_collected) }}</div>
+    </div>
+    <div class="p-5 rounded-2xl glass-card border border-slate-800">
+      <div class="text-xs text-slate-400">Pending Dues</div>
+      <div class="text-2xl font-extrabold text-amber-400 mt-1">₹{{ "{:,.0f}".format(metrics.pending_commission) }}</div>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="flex items-center gap-2 border-b border-slate-800 pb-4 mb-8 overflow-x-auto text-xs font-semibold">
+    <button @click="tab = 'groups'" :class="tab === 'groups' ? 'bg-brand-500 text-slate-950 shadow-md shadow-brand-500/20' : 'bg-slate-900 text-slate-400 hover:text-white'" class="px-4 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap">
+      <i data-lucide="message-circle" class="w-4 h-4"></i>
+      <span>WhatsApp Group Links ({{ metrics.groups|length }})</span>
+    </button>
+    <button @click="tab = 'users'" :class="tab === 'users' ? 'bg-brand-500 text-slate-950 shadow-md shadow-brand-500/20' : 'bg-slate-900 text-slate-400 hover:text-white'" class="px-4 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap">
+      <i data-lucide="users" class="w-4 h-4"></i>
+      <span>Members Directory ({{ metrics.users|length }})</span>
+    </button>
+    <button @click="tab = 'commission'" :class="tab === 'commission' ? 'bg-brand-500 text-slate-950 shadow-md shadow-brand-500/20' : 'bg-slate-900 text-slate-400 hover:text-white'" class="px-4 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap">
+      <i data-lucide="receipt" class="w-4 h-4"></i>
+      <span>Commission Queue ({{ metrics.ledger|length }})</span>
+    </button>
+    <button @click="tab = 'leads'" :class="tab === 'leads' ? 'bg-brand-500 text-slate-950 shadow-md shadow-brand-500/20' : 'bg-slate-900 text-slate-400 hover:text-white'" class="px-4 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap">
+      <i data-lucide="layers" class="w-4 h-4"></i>
+      <span>All Leads ({{ metrics.leads|length }})</span>
+    </button>
+  </div>
+
+  <!-- TAB 1: WhatsApp Group Links Manager -->
+  <div x-show="tab === 'groups'" class="space-y-6">
+    <div class="p-6 rounded-3xl glass-card border border-slate-800">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-lg font-bold text-white">Configure WhatsApp Group Invite Links</h2>
+          <p class="text-xs text-slate-400">Update the invite URL for any profession circle. New signups in that profession will automatically be redirected here.</p>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        {% for g in metrics.groups %}
+          <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-white">{{ g.name }}</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-brand-400 border border-slate-700">{{ g.category }}</span>
+              </div>
+              <p class="text-xs text-slate-400">{{ g.description }}</p>
+            </div>
+
+            <!-- Form to update link -->
+            <form action="/admin/update-group-link" method="POST" class="flex items-center gap-2 w-full md:w-auto">
+              <input type="hidden" name="group_id" value="{{ g.id }}">
+              <input type="url" name="whatsapp_group_link" value="{{ g.whatsapp_group_link }}" required class="w-full md:w-80 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono focus:ring-1 focus:ring-brand-500">
+              <button type="submit" class="py-2 px-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs shrink-0 transition">
+                Update Link
+              </button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Members Directory -->
+  <div x-show="tab === 'users'" class="space-y-6">
+    <div class="rounded-3xl glass-card border border-slate-800 overflow-hidden">
+      <div class="p-6 border-b border-slate-800">
+        <h2 class="text-lg font-bold text-white">Registered Circle Members</h2>
+        <p class="text-xs text-slate-400">All vetted professionals across active industry verticals.</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-900/80 text-slate-400 uppercase tracking-wider text-[10px]">
+            <tr>
+              <th class="p-4">Name & Contact</th>
+              <th class="p-4">Assigned Circle</th>
+              <th class="p-4">Operating Area</th>
+              <th class="p-4">Business / License</th>
+              <th class="p-4">Subscription</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            {% for u in metrics.users %}
+              <tr class="hover:bg-slate-900/40 transition">
+                <td class="p-4">
+                  <div class="font-bold text-white">{{ u.full_name }}</div>
+                  <div class="text-slate-400 font-mono">+{{ u.whatsapp_number }}</div>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20 font-medium">
+                    {{ u.group_name or u.profession_category }}
+                  </span>
+                </td>
+                <td class="p-4">{{ u.city_area }}</td>
+                <td class="p-4">
+                  <div>{{ u.business_name or 'Independent' }}</div>
+                  <div class="text-slate-500 font-mono text-[11px]">{{ u.rera_or_license_id or 'No License Added' }}</div>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold uppercase text-[10px]">
+                    {{ u.subscription_status }}
+                  </span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: Commission Queue -->
+  <div x-show="tab === 'commission'" class="space-y-6">
+    <div class="rounded-3xl glass-card border border-slate-800 overflow-hidden">
+      <div class="p-6 border-b border-slate-800">
+        <h2 class="text-lg font-bold text-white">Deal Commission Ledger & Proof Verification</h2>
+        <p class="text-xs text-slate-400">Review UPI transaction references and confirm received platform cuts.</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-900/80 text-slate-400 uppercase tracking-wider text-[10px]">
+            <tr>
+              <th class="p-4">Lead Ref</th>
+              <th class="p-4">Payer</th>
+              <th class="p-4">Cut Amount</th>
+              <th class="p-4">UPI Proof / UTR</th>
+              <th class="p-4">Status & Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            {% for c in metrics.ledger %}
+              <tr class="hover:bg-slate-900/40 transition">
+                <td class="p-4">
+                  <div class="font-bold text-white font-mono">{{ c.lead_token }}</div>
+                  <div class="text-slate-400 text-[11px] truncate max-w-xs">{{ c.lead_title }}</div>
+                </td>
+                <td class="p-4">
+                  <div class="font-bold text-white">{{ c.payer_name }}</div>
+                  <div class="text-slate-400 font-mono">+{{ c.whatsapp_number }}</div>
+                </td>
+                <td class="p-4 font-bold text-emerald-400 text-sm">
+                  ₹{{ "{:,.2f}".format(c.amount) }}
+                </td>
+                <td class="p-4">
+                  {% if c.proof_reference %}
+                    <code class="text-slate-200 bg-slate-950 px-2 py-1 rounded border border-slate-800">{{ c.proof_reference }}</code>
+                    <div class="text-[11px] text-slate-500 mt-1">{{ c.proof_notes or '' }}</div>
+                  {% else %}
+                    <span class="text-slate-500 italic">No proof submitted yet</span>
+                  {% endif %}
+                </td>
+                <td class="p-4">
+                  {% if c.status == 'verified' %}
+                    <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-bold text-[10px]">Verified Paid</span>
+                  {% else %}
+                    <form action="/admin/verify-payment/{{ c.id }}" method="POST">
+                      <button type="submit" class="px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-[11px] transition">
+                        Mark Verified
+                      </button>
+                    </form>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: All Leads -->
+  <div x-show="tab === 'leads'" class="space-y-6">
+    <div class="rounded-3xl glass-card border border-slate-800 overflow-hidden">
+      <div class="p-6 border-b border-slate-800">
+        <h2 class="text-lg font-bold text-white">Cross-Vertical Lead Activity</h2>
+        <p class="text-xs text-slate-400">All live requirements across every profession circle.</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-900/80 text-slate-400 uppercase tracking-wider text-[10px]">
+            <tr>
+              <th class="p-4">Lead Token & Title</th>
+              <th class="p-4">Vertical Circle</th>
+              <th class="p-4">Author</th>
+              <th class="p-4">Claimed By</th>
+              <th class="p-4">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            {% for l in metrics.leads %}
+              <tr class="hover:bg-slate-900/40 transition">
+                <td class="p-4">
+                  <div class="font-bold text-white">{{ l.title }}</div>
+                  <div class="font-mono text-brand-400 text-[11px]">{{ l.lead_token }}</div>
+                </td>
+                <td class="p-4">{{ l.group_name }}</td>
+                <td class="p-4">{{ l.author_name }}</td>
+                <td class="p-4">{{ l.claimer_name or '-' }}</td>
+                <td class="p-4">
+                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-bold text-[10px] uppercase">
+                    {{ l.status }}
+                  </span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
