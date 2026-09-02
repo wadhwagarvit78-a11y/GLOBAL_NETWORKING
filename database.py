@@ -2,7 +2,8 @@ import sqlite3
 import os
 from pathlib import Path
 
-DB_PATH = Path("/home/garvit9906/Downloads/referral_network/referral_platform.db")
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "referral_platform.db"
 
 def get_db_connection():
     os.makedirs(DB_PATH.parent, exist_ok=True)
