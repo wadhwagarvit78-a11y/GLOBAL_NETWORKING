@@ -35,7 +35,7 @@ def seed_all():
             "plane",
             "https://chat.whatsapp.com/invite/Travel-Agents-Hub-Official",
             "10% Net Booking Margin",
-            299
+            0
         ),
         (
             3,

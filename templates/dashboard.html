@@ -11,7 +11,11 @@
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
       </span>
-      <span><strong>Free Trial Active:</strong> You have full access to post and claim leads. (Renews at ₹{{ current_user.group_monthly_fee or 399 }}/mo)</span>
+      {% if current_user.group_monthly_fee == 0 %}
+        <span><strong>100% Free Lifetime Community:</strong> You have unlimited access to post and claim leads. Zero monthly subscription fee!</span>
+      {% else %}
+        <span><strong>Free Trial Active:</strong> You have full access to post and claim leads. (Renews at ₹{{ current_user.group_monthly_fee or 399 }}/mo)</span>
+      {% endif %}
     </div>
     <a href="/subscription" class="text-brand-400 hover:text-brand-300 font-semibold underline underline-offset-2">
       View Subscription Details &rarr;
