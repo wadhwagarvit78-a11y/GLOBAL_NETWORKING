@@ -19,9 +19,12 @@ def get_group_by_slug(slug: str):
     conn.close()
     return dict(group) if group else None
 
-def update_group_whatsapp_link(group_id: int, new_link: str):
+def update_group_whatsapp_link(group_id: int, new_link: str, monthly_fee: int = None):
     conn = get_db_connection()
-    conn.execute("UPDATE vertical_groups SET whatsapp_group_link = ? WHERE id = ?", (new_link, group_id))
+    if monthly_fee is not None:
+        conn.execute("UPDATE vertical_groups SET whatsapp_group_link = ?, monthly_fee = ? WHERE id = ?", (new_link, monthly_fee, group_id))
+    else:
+        conn.execute("UPDATE vertical_groups SET whatsapp_group_link = ? WHERE id = ?", (new_link, group_id))
     conn.commit()
     conn.close()
 
@@ -68,7 +71,7 @@ def create_user_onboard(
 def get_user_by_id(user_id: int):
     conn = get_db_connection()
     user = conn.execute("""
-    SELECT u.*, g.name as group_name, g.whatsapp_group_link as group_whatsapp_link, g.slug as group_slug
+    SELECT u.*, g.name as group_name, g.whatsapp_group_link as group_whatsapp_link, g.slug as group_slug, g.monthly_fee as group_monthly_fee
     FROM users u
     LEFT JOIN vertical_groups g ON u.group_id = g.id
     WHERE u.id = ?

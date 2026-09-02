@@ -56,12 +56,12 @@
     <!-- Upgrade / Extend Section -->
     <div class="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>
-        <div class="text-2xl font-extrabold text-white">₹500 <span class="text-xs font-normal text-slate-400">/ month</span></div>
+        <div class="text-2xl font-extrabold text-white">₹{{ current_user.group_monthly_fee or 399 }} <span class="text-xs font-normal text-slate-400">/ month ({{ current_user.group_name }})</span></div>
         <div class="text-[11px] text-slate-400">Automatic UPI / Card Recurring Payment via Razorpay</div>
       </div>
 
       <button @click="checkoutModal = true" class="w-full sm:w-auto py-3 px-6 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-brand-500/20 transition">
-        Activate ₹500/mo Auto-Renew Now
+        Activate ₹{{ current_user.group_monthly_fee or 399 }}/mo Auto-Renew Now
       </button>
     </div>
 
@@ -77,7 +77,7 @@
 
       <div>
         <h3 class="text-base font-bold text-white">Razorpay Recurring Subscription</h3>
-        <p class="text-xs text-slate-400 mt-1">₹500 / month auto-debit for {{ current_user.full_name }}</p>
+        <p class="text-xs text-slate-400 mt-1">₹{{ current_user.group_monthly_fee or 399 }} / month auto-debit for {{ current_user.full_name }}</p>
       </div>
 
       <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-left space-y-2">
@@ -93,7 +93,7 @@
 
       <form action="/subscription/activate" method="POST">
         <button type="submit" class="w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs transition">
-          Simulate Successful ₹500 Autopay
+          Simulate Successful ₹{{ current_user.group_monthly_fee or 399 }} Autopay
         </button>
       </form>
 

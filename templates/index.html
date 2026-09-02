@@ -104,8 +104,8 @@
         <div class="text-xs text-slate-400 mt-1">30-Day Free Trial</div>
       </div>
       <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">₹500<span class="text-sm font-normal text-slate-400">/mo</span></div>
-        <div class="text-xs text-slate-400 mt-1">Transparent Subscription</div>
+        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">From ₹299<span class="text-sm font-normal text-slate-400">/mo</span></div>
+        <div class="text-xs text-slate-400 mt-1">Profession-Based Plans</div>
       </div>
       <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
         <div class="text-2xl sm:text-3xl font-extrabold text-teal-400">1-Click</div>
@@ -179,9 +179,9 @@
         <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
           <i data-lucide="check-circle-2" class="w-6 h-6"></i>
         </div>
-        <h3 class="text-xl font-bold text-white mb-3">5. Ultra-Affordable Flat Pricing</h3>
+        <h3 class="text-xl font-bold text-white mb-3">5. Fair, Profession-Tailored Pricing</h3>
         <p class="text-sm text-slate-300 leading-relaxed">
-          Just ₹500/month after your free trial. Closing just a single referral deal pays for years of membership. No hidden fees or inflated paywalls.
+          Reasonable pricing matched to your field (₹299 for Engineering/Travel, ₹399 for Legal/Tech, ₹499 for Real Estate) after your free trial. One deal pays for years of access.
         </p>
       </div>
 
@@ -232,8 +232,9 @@
           <h3 class="text-lg font-bold text-white mb-2">{{ g.name }}</h3>
           <p class="text-xs text-slate-300 line-clamp-2 mb-4">{{ g.description }}</p>
           
-          <div class="text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-4">
-            <span class="text-slate-300 font-semibold">Typical Split:</span> {{ g.min_commission_rate }}
+          <div class="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-4">
+            <div><span class="text-slate-300 font-semibold">Split:</span> {{ g.min_commission_rate }}</div>
+            <div class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">₹{{ g.monthly_fee }}/mo</div>
           </div>
         </div>
 
@@ -274,44 +275,143 @@
 
 <!-- Pricing Section -->
 <section id="pricing" class="py-20 bg-slate-900/40 border-t border-slate-800">
-  <div class="max-w-4xl mx-auto px-4 text-center">
-    <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Simple & Transparent</h2>
-    <p class="text-3xl sm:text-4xl font-extrabold text-white">One Simple Plan. Infinite Referrals.</p>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Fair & Tailored Pricing</h2>
+    <p class="text-3xl sm:text-4xl font-extrabold text-white">Transparent Plans Tailored to Your Industry</p>
+    <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl mx-auto">
+      Every member gets a <strong>full 30-day free trial</strong> with unlimited lead posting and WhatsApp access. No credit card required upfront.
+    </p>
     
-    <div class="mt-12 p-8 sm:p-12 rounded-3xl glass-card border border-brand-500/30 max-w-xl mx-auto shadow-2xl relative">
-      <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-500 text-slate-950 font-bold text-xs uppercase tracking-wider">
-        First 30 Days 100% Free
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-left max-w-6xl mx-auto">
+      
+      <!-- Tier 1: Engineering & Travel (₹299/mo) -->
+      <div class="p-8 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Industrial & Travel</span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">Entry</span>
+          </div>
+
+          <h3 class="text-xl font-bold text-white">Mechanical & Travel Hub</h3>
+          <p class="text-xs text-slate-400 mt-1">For mechanical engineers, machine shops, travel agents, and tour operators.</p>
+
+          <div class="mt-6 flex items-baseline gap-1">
+            <span class="text-4xl font-extrabold text-white">₹299</span>
+            <span class="text-slate-400 text-xs">/ month</span>
+          </div>
+          <div class="text-[11px] text-emerald-400 mt-1 font-semibold">First 30 Days Free</div>
+
+          <ul class="mt-6 space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-6">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Fabrication, machining & tour package leads</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Official WhatsApp community access</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>1-click WhatsApp lead claim</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/onboard?group_id=3" class="mt-8 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
+          Join for ₹299/mo (Free Trial)
+        </a>
       </div>
 
-      <div class="mt-4 flex items-baseline justify-center gap-1">
-        <span class="text-5xl font-extrabold text-white">₹500</span>
-        <span class="text-slate-400 text-sm">/ month per member</span>
+      <!-- Tier 2: Legal & Software Tech (₹399/mo) - HIGHLIGHTED -->
+      <div class="p-8 rounded-3xl glass-card border-2 border-brand-500 shadow-2xl relative flex flex-col justify-between transform md:-translate-y-2">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-500 text-slate-950 font-extrabold text-[10px] uppercase tracking-wider shadow">
+          Most Popular
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Legal & Tech</span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-300">High Growth</span>
+          </div>
+
+          <h3 class="text-xl font-bold text-white">Lawyers & Software Tech</h3>
+          <p class="text-xs text-slate-400 mt-1">For corporate/litigation lawyers, freelance devs, and architects.</p>
+
+          <div class="mt-6 flex items-baseline gap-1">
+            <span class="text-4xl font-extrabold text-white">₹399</span>
+            <span class="text-slate-400 text-xs">/ month</span>
+          </div>
+          <div class="text-[11px] text-emerald-400 mt-1 font-semibold">First 30 Days Free</div>
+
+          <ul class="mt-6 space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-6">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>High-value retainer & client referrals</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Software dev contracts & architectural briefs</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Direct WhatsApp verified handoff</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Deal tracking & commission ledger</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/onboard?group_id=4" class="mt-8 w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-extrabold text-xs text-center transition block shadow-lg shadow-brand-500/25">
+          Join for ₹399/mo (Free Trial)
+        </a>
       </div>
-      <p class="text-xs text-slate-400 mt-2">Billed monthly after your free trial. Cancel anytime.</p>
 
-      <ul class="mt-8 space-y-3 text-left text-sm text-slate-300">
-        <li class="flex items-center gap-3">
-          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
-          <span>Access to your dedicated profession's lead exchange board</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
-          <span>Direct entry to the Official Verified WhatsApp Group</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
-          <span>Unlimited lead posting and 1-click claiming</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <i data-lucide="check" class="w-5 h-5 text-brand-400 shrink-0"></i>
-          <span>Deal tracking and transparent commission ledger</span>
-        </li>
-      </ul>
+      <!-- Tier 3: Property Dealers & Realtors (₹499/mo) -->
+      <div class="p-8 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">High-Ticket Real Estate</span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">Big Brokerage</span>
+          </div>
 
-      <a href="/onboard" class="mt-8 w-full block py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-sm shadow-lg shadow-brand-500/25 transition text-center">
-        Start 30-Day Free Trial Now
-      </a>
+          <h3 class="text-xl font-bold text-white">Property Dealers & Realtors</h3>
+          <p class="text-xs text-slate-400 mt-1">For verified brokers and real estate advisors closing multi-crore deals.</p>
+
+          <div class="mt-6 flex items-baseline gap-1">
+            <span class="text-4xl font-extrabold text-white">₹499</span>
+            <span class="text-slate-400 text-xs">/ month</span>
+          </div>
+          <div class="text-[11px] text-emerald-400 mt-1 font-semibold">First 30 Days Free</div>
+
+          <ul class="mt-6 space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-6">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Multi-crore buyer & tenant NCR mandates</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Sector-by-sector micro-location filtering</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Official NCR WhatsApp broker community</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>One closed deal pays for 10+ years</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/onboard?group_id=1" class="mt-8 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
+          Join for ₹499/mo (Free Trial)
+        </a>
+      </div>
+
     </div>
+
   </div>
 </section>
 {% endblock %}

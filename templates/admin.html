@@ -90,12 +90,17 @@
               <p class="text-xs text-slate-400">{{ g.description }}</p>
             </div>
 
-            <!-- Form to update link -->
-            <form action="/admin/update-group-link" method="POST" class="flex items-center gap-2 w-full md:w-auto">
+            <!-- Form to update link & fee -->
+            <form action="/admin/update-group-link" method="POST" class="flex flex-wrap items-center gap-2 w-full md:w-auto">
               <input type="hidden" name="group_id" value="{{ g.id }}">
-              <input type="url" name="whatsapp_group_link" value="{{ g.whatsapp_group_link }}" required class="w-full md:w-80 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono focus:ring-1 focus:ring-brand-500">
+              <div class="flex items-center gap-1 bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5">
+                <span class="text-xs text-slate-400">₹</span>
+                <input type="number" name="monthly_fee" value="{{ g.monthly_fee or 399 }}" required title="Monthly Membership Fee" class="w-16 bg-transparent text-xs text-emerald-400 font-bold focus:outline-none">
+                <span class="text-[10px] text-slate-400">/mo</span>
+              </div>
+              <input type="url" name="whatsapp_group_link" value="{{ g.whatsapp_group_link }}" required placeholder="WhatsApp Group Link" class="w-full md:w-64 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono focus:ring-1 focus:ring-brand-500">
               <button type="submit" class="py-2 px-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs shrink-0 transition">
-                Update Link
+                Save
               </button>
             </form>
           </div>

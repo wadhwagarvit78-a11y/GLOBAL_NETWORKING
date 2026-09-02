@@ -257,9 +257,10 @@ async def admin_page(request: Request):
 @app.post("/admin/update-group-link")
 async def handle_update_group_link(
     group_id: int = Form(...),
-    whatsapp_group_link: str = Form(...)
+    whatsapp_group_link: str = Form(...),
+    monthly_fee: int = Form(None)
 ):
-    models.update_group_whatsapp_link(group_id, whatsapp_group_link)
+    models.update_group_whatsapp_link(group_id, whatsapp_group_link, monthly_fee)
     return RedirectResponse(url="/admin", status_code=302)
 
 @app.post("/admin/verify-payment/{ledger_id}")

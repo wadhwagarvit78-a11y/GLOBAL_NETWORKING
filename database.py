@@ -26,10 +26,17 @@ def init_db():
         icon TEXT DEFAULT 'users',
         whatsapp_group_link TEXT NOT NULL DEFAULT 'https://chat.whatsapp.com/invite-default',
         min_commission_rate TEXT DEFAULT '10-20% Brokerage / Success Fee',
+        monthly_fee INTEGER DEFAULT 399,
         is_active INTEGER DEFAULT 1,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """)
+
+    # Migration for existing vertical_groups table
+    cursor.execute("PRAGMA table_info(vertical_groups)")
+    columns = [col[1] for col in cursor.fetchall()]
+    if "monthly_fee" not in columns:
+        cursor.execute("ALTER TABLE vertical_groups ADD COLUMN monthly_fee INTEGER DEFAULT 399")
 
     # Users Table
     cursor.execute("""

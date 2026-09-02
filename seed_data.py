@@ -23,7 +23,8 @@ def seed_all():
             "High-trust circle for verified brokers and property dealers in NCR and major metros.",
             "building",
             "https://chat.whatsapp.com/invite/NCR-Property-Dealers-Official",
-            "10-20% Brokerage Commission"
+            "10-20% Brokerage Commission",
+            499
         ),
         (
             2,
@@ -33,7 +34,8 @@ def seed_all():
             "Exclusive network for B2B flight, holiday package, visa, and corporate travel referrals.",
             "plane",
             "https://chat.whatsapp.com/invite/Travel-Agents-Hub-Official",
-            "10% Net Booking Margin"
+            "10% Net Booking Margin",
+            299
         ),
         (
             3,
@@ -43,7 +45,8 @@ def seed_all():
             "B2B industrial requirements, fabrication contracts, machining leads, and equipment procurement.",
             "cog",
             "https://chat.whatsapp.com/invite/Mechanical-Industrial-Network",
-            "5-10% Project Value / Referral Cut"
+            "5-10% Project Value / Referral Cut",
+            299
         ),
         (
             4,
@@ -53,7 +56,8 @@ def seed_all():
             "Client consultation referrals, high-court litigation handoffs, and corporate drafting collaborations.",
             "scale",
             "https://chat.whatsapp.com/invite/Lawyers-Legal-Circle-India",
-            "15% Initial Retainer Referral Cut"
+            "15% Initial Retainer Referral Cut",
+            399
         ),
         (
             5,
@@ -63,7 +67,8 @@ def seed_all():
             "Freelance dev contracts, mobile/web app projects, AI integrations, and tech placement referrals.",
             "code",
             "https://chat.whatsapp.com/invite/Tech-Freelancers-Network",
-            "10% Contract Value Split"
+            "10% Contract Value Split",
+            399
         ),
         (
             6,
@@ -73,13 +78,14 @@ def seed_all():
             "Turnkey residential, commercial architectural, 3D modeling, and renovation project referrals.",
             "compass",
             "https://chat.whatsapp.com/invite/Architects-Designers-Hub",
-            "8-12% Execution Project Cut"
+            "8-12% Execution Project Cut",
+            399
         )
     ]
 
     cursor.executemany("""
-    INSERT INTO vertical_groups (id, name, slug, category, description, icon, whatsapp_group_link, min_commission_rate)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO vertical_groups (id, name, slug, category, description, icon, whatsapp_group_link, min_commission_rate, monthly_fee)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, groups)
 
     # 2. Insert Demo Users
