@@ -288,3 +288,17 @@ def create_cross_vertical_request(user_id: int, user_name: str, user_phone: str,
     conn.commit()
     conn.close()
     return req_id
+
+def get_all_members_for_export():
+    conn = get_db_connection()
+    users = conn.execute("""
+    SELECT u.id, u.full_name, u.business_name, u.whatsapp_number, u.phone_number, 
+           COALESCE(g.name, u.profession_category) as circle_name, u.city_area, u.years_experience, 
+           COALESCE(u.rera_or_license_id, '') as rera_or_license_id,
+           u.verification_status, u.subscription_status, u.created_at
+    FROM users u
+    LEFT JOIN vertical_groups g ON u.group_id = g.id
+    ORDER BY u.id DESC
+    """).fetchall()
+    conn.close()
+    return [dict(u) for u in users]

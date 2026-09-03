@@ -113,12 +113,28 @@
     </div>
   </div>
 
-  <!-- TAB 2: Members Directory -->
-  <div x-show="tab === 'users'" class="space-y-6">
+    <!-- TAB 2: Members Directory -->
+  <div x-show="tab === 'users'" class="space-y-6" x-data="{ searchQuery: '' }">
     <div class="rounded-3xl glass-card border border-slate-800 overflow-hidden">
-      <div class="p-6 border-b border-slate-800">
-        <h2 class="text-lg font-bold text-white">Registered Circle Members</h2>
-        <p class="text-xs text-slate-400">All vetted professionals across active industry verticals.</p>
+      
+      <div class="p-6 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-white">Registered Circle Members ({{ metrics.users|length }})</h2>
+          <p class="text-xs text-slate-400">Verify company & phone numbers before approving WhatsApp community join requests.</p>
+        </div>
+
+        <!-- Download Excel / CSV Button -->
+        <a href="/admin/export-members-csv" download class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition shrink-0">
+          <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+          <span>Download Excel (.CSV) Sheet</span>
+        </a>
+      </div>
+
+      <!-- Live Search Box for Fast WhatsApp Verification -->
+      <div class="p-4 bg-slate-950/80 border-b border-slate-800 flex items-center gap-3">
+        <i data-lucide="search" class="w-4 h-4 text-brand-400 shrink-0"></i>
+        <input x-model="searchQuery" type="text" placeholder="Type WhatsApp phone number, member name, or company to instantly verify incoming WhatsApp requests..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono">
+        <button x-show="searchQuery" @click="searchQuery = ''" class="text-xs text-slate-400 hover:text-white px-2">&times; Clear</button>
       </div>
 
       <div class="overflow-x-auto">
@@ -128,16 +144,16 @@
               <th class="p-4">Name & Contact</th>
               <th class="p-4">Assigned Circle</th>
               <th class="p-4">Operating Area</th>
-              <th class="p-4">Business / License</th>
-              <th class="p-4">Subscription</th>
+              <th class="p-4">Company / Firm</th>
+              <th class="p-4">Status & Action</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800">
             {% for u in metrics.users %}
-              <tr class="hover:bg-slate-900/40 transition">
+              <tr x-show="!searchQuery || '{{ u.whatsapp_number }} {{ u.phone_number }} {{ u.full_name|lower }} {{ (u.business_name or '')|lower }} {{ u.city_area|lower }}'.includes(searchQuery.toLowerCase().trim())" class="hover:bg-slate-900/40 transition">
                 <td class="p-4">
                   <div class="font-bold text-white">{{ u.full_name }}</div>
-                  <div class="text-slate-400 font-mono">+{{ u.whatsapp_number }}</div>
+                  <div class="text-emerald-400 font-mono text-xs">+{{ u.whatsapp_number }}</div>
                 </td>
                 <td class="p-4">
                   <span class="px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20 font-medium">
@@ -146,13 +162,13 @@
                 </td>
                 <td class="p-4">{{ u.city_area }}</td>
                 <td class="p-4">
-                  <div>{{ u.business_name or 'Independent' }}</div>
-                  <div class="text-slate-500 font-mono text-[11px]">{{ u.rera_or_license_id or 'No License Added' }}</div>
+                  <div class="font-bold text-white">{{ u.business_name or 'Independent Consultant' }}</div>
+                  <div class="text-slate-500 text-[11px]">{{ u.years_experience or 1 }} yrs exp • {{ u.rera_or_license_id or 'No License Added' }}</div>
                 </td>
                 <td class="p-4">
-                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold uppercase text-[10px]">
-                    {{ u.subscription_status }}
-                  </span>
+                  <a href="https://wa.me/{{ u.whatsapp_number }}?text={{ ('Hi ' ~ u.full_name ~ ', welcome to ' ~ (u.group_name or 'ReferralCircle') ~ '!')|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-brand-400 text-[11px] font-semibold border border-slate-700 transition">
+                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Chat
+                  </a>
                 </td>
               </tr>
             {% endfor %}

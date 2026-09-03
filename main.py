@@ -5,6 +5,8 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 import uvicorn
 import os
+import csv
+import io
 import urllib.parse
 from pathlib import Path
 
@@ -294,6 +296,54 @@ async def handle_update_group_link(
 async def handle_verify_payment(ledger_id: int):
     models.verify_commission_payment(ledger_id)
     return RedirectResponse(url="/admin", status_code=302)
+
+# 10b. Export Members Directory to CSV / Excel
+@app.get("/admin/export-members-csv")
+async def export_members_csv():
+    members = models.get_all_members_for_export()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    
+    # Write CSV Header
+    writer.writerow([
+        "Member ID", 
+        "Full Name", 
+        "Company / Business Name", 
+        "WhatsApp Number", 
+        "Calling Phone", 
+        "Profession Circle", 
+        "City / Operating Region", 
+        "Experience (Years)", 
+        "License / RERA / Reg ID", 
+        "Verification Status", 
+        "Subscription Status", 
+        "Registration Date"
+    ])
+    
+    for m in members:
+        writer.writerow([
+            m.get("id"),
+            m.get("full_name"),
+            m.get("business_name") or "N/A",
+            m.get("whatsapp_number"),
+            m.get("phone_number"),
+            m.get("circle_name"),
+            m.get("city_area"),
+            m.get("years_experience"),
+            m.get("rera_or_license_id") or "N/A",
+            m.get("verification_status"),
+            m.get("subscription_status"),
+            m.get("created_at")
+        ])
+    
+    csv_data = output.getvalue()
+    return Response(
+        content=csv_data,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=referralcircle_members_directory.csv"
+        }
+    )
 
 # 11. Request Custom Profession Circle
 @app.post("/request-circle")
