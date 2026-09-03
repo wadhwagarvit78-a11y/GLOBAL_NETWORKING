@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}ReferralCircle — Professional Lead-Exchange & Networking Community{% endblock %}</title>
   
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/static/icon-192.png">
+  <meta name="theme-color" content="#16a34a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ReferralCircle">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -242,9 +250,68 @@
     </div>
   </footer>
 
+  <!-- PWA Install Floating Banner (Mobile & Desktop App Prompt) -->
+  <div id="pwa-install-banner" class="hidden fixed bottom-5 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-50 p-4 rounded-2xl bg-slate-900/95 border border-brand-500/50 shadow-2xl backdrop-blur-md flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <img src="/static/icon-192.png" alt="App Icon" class="w-10 h-10 rounded-xl border border-brand-500/40 shrink-0">
+      <div>
+        <div class="text-xs font-bold text-white">Install ReferralCircle App</div>
+        <div class="text-[10px] text-slate-400">1-tap home screen access on phone</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-1.5 shrink-0">
+      <button id="pwa-install-btn" class="px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs shadow-md transition">
+        Install
+      </button>
+      <button onclick="document.getElementById('pwa-install-banner').classList.add('hidden')" class="p-1.5 text-slate-400 hover:text-white text-xs">&times;</button>
+    </div>
+  </div>
+
   <script>
     // Initialize Lucide icons
     lucide.createIcons();
+
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('PWA Service Worker registered:', reg.scope))
+          .catch(err => console.log('Service Worker registration failed:', err));
+      });
+    }
+
+    // Handle PWA Install Prompt
+    let deferredPrompt;
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installBtn = document.getElementById('pwa-install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBanner) {
+        installBanner.classList.remove('hidden');
+      }
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('User response to install prompt:', outcome);
+        deferredPrompt = null;
+        if (installBanner) {
+          installBanner.classList.add('hidden');
+        }
+      });
+    }
+
+    window.addEventListener('appinstalled', () => {
+      console.log('ReferralCircle PWA installed successfully!');
+      if (installBanner) {
+        installBanner.classList.add('hidden');
+      }
+    });
   </script>
 </body>
 </html>

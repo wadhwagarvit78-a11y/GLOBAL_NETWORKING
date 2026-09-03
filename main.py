@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form, Response, Depends, HTTPException, status
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
@@ -21,7 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent
 app = FastAPI(title="ReferralCircle — Professional Referral Network")
 app.add_middleware(SessionMiddleware, secret_key="referralcircle-super-secret-key-2026")
 
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+
+# PWA Root Endpoints
+@app.get("/manifest.json")
+async def get_manifest():
+    return FileResponse(str(BASE_DIR / "static" / "manifest.json"), media_type="application/manifest+json")
+
+@app.get("/sw.js")
+async def get_sw():
+    return FileResponse(str(BASE_DIR / "static" / "sw.js"), media_type="application/javascript")
 
 def get_current_user(request: Request):
     user_id = request.session.get("user_id")

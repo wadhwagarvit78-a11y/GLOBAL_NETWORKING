@@ -1,0 +1,24 @@
+{
+  "name": "ReferralCircle — Verified Business Network",
+  "short_name": "ReferralCircle",
+  "description": "Exclusive verified referral network for Property Dealers, Lawyers, Engineers, and Travel Operators.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#16a34a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}
