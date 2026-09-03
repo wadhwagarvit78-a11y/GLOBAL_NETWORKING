@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form, Response, Depends, HTTPException, status
-from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
@@ -7,6 +7,7 @@ import uvicorn
 import os
 import csv
 import io
+import traceback
 import urllib.parse
 from pathlib import Path
 
@@ -20,6 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI(title="ReferralCircle — Professional Referral Network")
 app.add_middleware(SessionMiddleware, secret_key="referralcircle-super-secret-key-2026")
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    err_trace = f"RENDER EXCEPTION: {exc}\n\n{traceback.format_exc()}"
+    print(err_trace)
+    return PlainTextResponse(err_trace, status_code=500)
 
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
