@@ -122,6 +122,24 @@ def init_db():
     );
     """)
 
+    # Cross-Vertical Peer Service Requests (When a lawyer needs property, or dealer needs a trip)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS cross_vertical_requests (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        user_name TEXT NOT NULL,
+        user_phone TEXT NOT NULL,
+        user_profession TEXT NOT NULL,
+        target_service TEXT NOT NULL,
+        requirement_details TEXT NOT NULL,
+        budget_range TEXT,
+        status TEXT DEFAULT 'pending',
+        admin_notes TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    );
+    """)
+
     conn.commit()
     conn.close()
 

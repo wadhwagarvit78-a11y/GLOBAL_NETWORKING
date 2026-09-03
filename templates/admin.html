@@ -67,6 +67,10 @@
       <i data-lucide="layers" class="w-4 h-4"></i>
       <span>All Leads ({{ metrics.leads|length }})</span>
     </button>
+    <button @click="tab = 'cross'" :class="tab === 'cross' ? 'bg-brand-500 text-slate-950 shadow-md shadow-brand-500/20' : 'bg-slate-900 text-slate-400 hover:text-white'" class="px-4 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap">
+      <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+      <span>Cross-Circle Deals ({{ metrics.cross_requests|length }})</span>
+    </button>
   </div>
 
   <!-- TAB 1: WhatsApp Group Links Manager -->
@@ -251,6 +255,68 @@
                   <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-bold text-[10px] uppercase">
                     {{ l.status }}
                   </span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: Cross-Circle Deals Manager -->
+  <div x-show="tab === 'cross'" class="space-y-6">
+    <div class="rounded-3xl glass-card border border-slate-800 overflow-hidden">
+      <div class="p-6 border-b border-slate-800">
+        <h2 class="text-lg font-bold text-white">Cross-Circle Privilege Requests</h2>
+        <p class="text-xs text-slate-400">When a member in one circle needs verified assistance in another circle (e.g. Lawyer buying property, Dealer planning trip). Founder handpicks the peer and facilitates the deal.</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-900/80 text-slate-400 uppercase tracking-wider text-[10px]">
+            <tr>
+              <th class="p-4">Requester</th>
+              <th class="p-4">Target Service</th>
+              <th class="p-4">Requirement Details</th>
+              <th class="p-4">Budget</th>
+              <th class="p-4">Status</th>
+              <th class="p-4">Founder Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            {% for cr in metrics.cross_requests %}
+              <tr class="hover:bg-slate-900/40 transition">
+                <td class="p-4">
+                  <div class="font-bold text-white">{{ cr.user_name }}</div>
+                  <div class="text-slate-400 text-[11px]">{{ cr.user_profession }}</div>
+                  <div class="font-mono text-emerald-400 text-[11px]">{{ cr.user_phone }}</div>
+                </td>
+                <td class="p-4">
+                  <span class="px-2.5 py-1 rounded-lg bg-brand-500/10 text-brand-300 border border-brand-500/20 font-bold text-[11px]">
+                    {{ cr.target_service }}
+                  </span>
+                </td>
+                <td class="p-4 max-w-xs">
+                  <p class="text-slate-200 text-xs">{{ cr.requirement_details }}</p>
+                </td>
+                <td class="p-4 font-bold text-white">{{ cr.budget_range or 'Open' }}</td>
+                <td class="p-4">
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold text-[10px] uppercase">
+                    {{ cr.status }}
+                  </span>
+                </td>
+                <td class="p-4">
+                  <a href="https://wa.me/{{ cr.user_phone }}?text={{ ('Hi ' ~ cr.user_name ~ ', I received your request for ' ~ cr.target_service ~ ' on ReferralCircle. I have 2 top verified peers ready for you!')|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-[11px] transition">
+                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                    <span>Connect on WhatsApp</span>
+                  </a>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" class="p-8 text-center text-slate-500">
+                  No cross-circle service requests yet. When members submit requests from their dashboard, they will appear here.
                 </td>
               </tr>
             {% endfor %}

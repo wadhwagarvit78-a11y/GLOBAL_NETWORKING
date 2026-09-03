@@ -259,6 +259,9 @@ def get_admin_metrics():
     JOIN users u ON cl.payer_id = u.id
     ORDER BY cl.id DESC
     """).fetchall()
+    cross_requests = conn.execute("""
+    SELECT * FROM cross_vertical_requests ORDER BY id DESC
+    """).fetchall()
     
     conn.close()
     return {
@@ -270,5 +273,18 @@ def get_admin_metrics():
         "groups": [dict(g) for g in groups],
         "users": [dict(u) for u in all_users],
         "leads": [dict(l) for l in all_leads],
-        "ledger": [dict(r) for r in all_ledger]
+        "ledger": [dict(r) for r in all_ledger],
+        "cross_requests": [dict(cr) for cr in cross_requests]
     }
+
+def create_cross_vertical_request(user_id: int, user_name: str, user_phone: str, user_profession: str, target_service: str, requirement_details: str, budget_range: str = "") -> int:
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+    INSERT INTO cross_vertical_requests (user_id, user_name, user_phone, user_profession, target_service, requirement_details, budget_range)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (user_id, user_name, user_phone, user_profession, target_service, requirement_details, budget_range))
+    req_id = cursor.lastrowid
+    conn.commit()
+    conn.close()
+    return req_id

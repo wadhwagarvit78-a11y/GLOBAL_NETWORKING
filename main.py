@@ -228,7 +228,32 @@ async def handle_submit_proof(
     notes: str = Form("")
 ):
     models.submit_payment_proof(ledger_id, proof_ref, notes)
-    return RedirectResponse(url="/ledger", status_code=302)
+# 8b. Cross-Vertical Service Request (E.g. Lawyer needing property or dealer needing trip)
+@app.post("/cross-referral")
+async def handle_cross_referral(
+    request: Request,
+    target_service: str = Form(...),
+    requirement_details: str = Form(...),
+    budget_range: str = Form(""),
+    user_name: str = Form(None),
+    user_phone: str = Form(None)
+):
+    current_user = get_current_user(request)
+    uid = current_user["id"] if current_user else None
+    uname = current_user["full_name"] if current_user else (user_name or "Guest")
+    uphone = current_user["phone_number"] if current_user else (user_phone or "")
+    uprof = current_user["group_name"] if current_user else "Visitor"
+    
+    models.create_cross_vertical_request(
+        user_id=uid,
+        user_name=uname,
+        user_phone=uphone,
+        user_profession=uprof,
+        target_service=target_service,
+        requirement_details=requirement_details,
+        budget_range=budget_range
+    )
+    return RedirectResponse(url="/app?cross_success=1", status_code=302)
 
 # 9. Subscription & Trial
 @app.get("/subscription", response_class=HTMLResponse)

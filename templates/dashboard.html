@@ -204,5 +204,125 @@
     </div>
   {% endif %}
 
+  <!-- Success Notification if redirected with cross_success -->
+  {% if request.query_params.get('cross_success') %}
+  <div class="mt-8 p-4 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs flex items-center justify-between gap-3 shadow-lg">
+    <div class="flex items-center gap-2.5">
+      <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+      <span><strong>Request Submitted to Founder Desk:</strong> We have received your cross-circle requirement! Our team is handpicking a verified top peer from that industry to connect with you directly.</span>
+    </div>
+    <a href="/app" class="text-emerald-400 hover:text-white font-bold shrink-0">&times;</a>
+  </div>
+  {% endif %}
+
+  <!-- Cross-Circle Member Privileges Section -->
+  <div id="cross-network" x-data="{ crossModal: false, targetService: '' }" class="mt-14 p-8 rounded-3xl glass-card border border-slate-800 relative overflow-hidden bg-gradient-to-b from-slate-900/90 via-slate-950 to-slate-950">
+    <div class="absolute -right-16 -top-16 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-full bg-brand-500/20 text-brand-300 text-[10px] font-bold uppercase tracking-wider border border-brand-500/30">Member Privilege</span>
+          <h2 class="text-xl font-extrabold text-white">Need Trusted Services Outside Your Field?</h2>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">
+          Don't risk untrusted contacts on Google or JustDial. As a verified member of <strong>{{ current_user.group_name }}</strong>, you have direct VIP access to top vetted peers in our sister circles at exclusive member rates.
+        </p>
+      </div>
+    </div>
+
+    <!-- 4 Quick-Action Service Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- Card 1: Property / Real Estate -->
+      <div @click="targetService = 'Property / NCR Real Estate'; crossModal = true" class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800/60 cursor-pointer transition group">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <i data-lucide="building" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-sm font-bold text-white mb-1">Buy or Rent Property in NCR</h3>
+        <p class="text-[11px] text-slate-400 line-clamp-2">Connect with verified top brokers from our NCR Property Circle for verified titles & zero spam.</p>
+        <div class="mt-3 text-[11px] text-emerald-400 font-bold flex items-center gap-1">
+          <span>Request Property Peer</span> &rarr;
+        </div>
+      </div>
+
+      <!-- Card 2: Travel & Tour Packages -->
+      <div @click="targetService = 'Travel & Holiday Packages'; crossModal = true" class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-800/60 cursor-pointer transition group">
+        <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <i data-lucide="plane" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-sm font-bold text-white mb-1">Planning Vacation or Tour?</h3>
+        <p class="text-[11px] text-slate-400 line-clamp-2">Get direct B2B negotiated holiday packages, flights, and visas from vetted Tour Operators.</p>
+        <div class="mt-3 text-[11px] text-teal-400 font-bold flex items-center gap-1">
+          <span>Request Travel Peer</span> &rarr;
+        </div>
+      </div>
+
+      <!-- Card 3: Software, Website & App -->
+      <div @click="targetService = 'Website, App & Custom Software'; crossModal = true" class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-brand-500/50 hover:bg-slate-800/60 cursor-pointer transition group">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <i data-lucide="code" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-sm font-bold text-white mb-1">Build a Website, App or AI Tool</h3>
+        <p class="text-[11px] text-slate-400 line-clamp-2">Get custom websites, CRMs, or automations built by senior engineers from our Tech Circle.</p>
+        <div class="mt-3 text-[11px] text-brand-400 font-bold flex items-center gap-1">
+          <span>Request Tech Peer</span> &rarr;
+        </div>
+      </div>
+
+      <!-- Card 4: Legal & Litigation -->
+      <div @click="targetService = 'Legal, Litigation & Drafting'; crossModal = true" class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-800/60 cursor-pointer transition group">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <i data-lucide="scale" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-sm font-bold text-white mb-1">Legal Advice, Court or Drafting</h3>
+        <p class="text-[11px] text-slate-400 line-clamp-2">Consult verified Supreme Court & High Court Advocates for contracts, property disputes & retainers.</p>
+        <div class="mt-3 text-[11px] text-amber-400 font-bold flex items-center gap-1">
+          <span>Request Legal Peer</span> &rarr;
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interactive Cross-Circle Modal -->
+    <div x-show="crossModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+      <div @click.away="crossModal = false" class="max-w-md w-full p-6 rounded-3xl glass-card border border-slate-700 shadow-2xl space-y-5">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-brand-400 tracking-wider">Founder Concierge Desk</span>
+            <h3 class="text-base font-bold text-white" x-text="'Request: ' + targetService"></h3>
+          </div>
+          <button @click="crossModal = false" class="text-slate-400 hover:text-white text-lg">&times;</button>
+        </div>
+
+        <p class="text-xs text-slate-300">
+          Tell us what you need. The Founder Desk will personally handpick a verified, top-rated member from that circle and introduce them to you.
+        </p>
+
+        <form action="/cross-referral" method="POST" class="space-y-4">
+          <input type="hidden" name="target_service" :value="targetService">
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Describe your exact requirement:</label>
+            <textarea name="requirement_details" rows="3" required placeholder="E.g. Looking for a 3BHK flat in Sector 65 Gurgaon under 3 Cr / Need a 5-day family trip to Kashmir / Need corporate website for my firm..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-brand-500"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Approximate Budget (Optional):</label>
+            <input type="text" name="budget_range" placeholder="E.g. ₹2.5 Cr / ₹1.5 Lakhs / ₹50,000" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-brand-500">
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-brand-500/20 transition flex items-center justify-center gap-2">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Submit to Founder Concierge Desk &rarr;</span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
 </div>
 {% endblock %}
