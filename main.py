@@ -59,8 +59,7 @@ def get_current_user(request: Request):
 async def home_page(request: Request):
     groups = models.get_all_active_groups()
     current_user = get_current_user(request)
-    return templates.TemplateResponse("index.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="index.html", context={
         "groups": groups,
         "current_user": current_user
     })
@@ -70,8 +69,7 @@ async def home_page(request: Request):
 async def onboard_page(request: Request, group_id: int = None):
     groups = models.get_all_active_groups()
     current_user = get_current_user(request)
-    return templates.TemplateResponse("onboard.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="onboard.html", context={
         "groups": groups,
         "selected_group_id": group_id,
         "current_user": current_user
@@ -106,8 +104,7 @@ async def handle_onboard(
     group = models.get_group_by_id(group_id)
     
     # Render instant WhatsApp redirection page with countdown & direct join link
-    return templates.TemplateResponse("whatsapp_redirect.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="whatsapp_redirect.html", context={
         "user": user,
         "group": group,
         "current_user": user
@@ -129,8 +126,7 @@ async def member_dashboard(
     group = models.get_group_by_id(group_id)
     leads = models.get_leads_for_group(group_id, sub_location=location, deal_type=deal_type, search=search)
     
-    return templates.TemplateResponse("dashboard.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="dashboard.html", context={
         "current_user": current_user,
         "group": group,
         "leads": leads,
@@ -147,8 +143,7 @@ async def post_lead_page(request: Request):
         return RedirectResponse(url="/login", status_code=302)
     group_id = current_user.get("group_id") or 1
     group = models.get_group_by_id(group_id)
-    return templates.TemplateResponse("post_lead.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="post_lead.html", context={
         "current_user": current_user,
         "group": group
     })
@@ -188,8 +183,7 @@ async def lead_detail_page(request: Request, lead_id: int):
     if not lead:
         raise HTTPException(status_code=404, detail="Lead not found")
         
-    return templates.TemplateResponse("lead_detail.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="lead_detail.html", context={
         "current_user": current_user,
         "lead": lead
     })
@@ -234,8 +228,7 @@ async def ledger_page(request: Request):
         return RedirectResponse(url="/login", status_code=302)
         
     ledger_entries = models.get_commission_ledger(current_user["id"])
-    return templates.TemplateResponse("ledger.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="ledger.html", context={
         "current_user": current_user,
         "ledger_entries": ledger_entries
     })
@@ -281,8 +274,7 @@ async def handle_cross_referral(
 @app.get("/subscription", response_class=HTMLResponse)
 async def subscription_page(request: Request):
     current_user = get_current_user(request)
-    return templates.TemplateResponse("subscription.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="subscription.html", context={
         "current_user": current_user
     })
 
@@ -295,8 +287,7 @@ async def handle_subscription_activate(request: Request):
 async def admin_page(request: Request):
     current_user = get_current_user(request)
     metrics = models.get_admin_metrics()
-    return templates.TemplateResponse("admin.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="admin.html", context={
         "current_user": current_user,
         "metrics": metrics
     })
@@ -380,8 +371,7 @@ async def handle_request_circle(
 async def login_page(request: Request):
     demo_users = models.get_admin_metrics()["users"]
     current_user = get_current_user(request)
-    return templates.TemplateResponse("login.html", {
-        "request": request,
+    return templates.TemplateResponse(request=request, name="login.html", context={
         "demo_users": demo_users,
         "current_user": current_user
     })
