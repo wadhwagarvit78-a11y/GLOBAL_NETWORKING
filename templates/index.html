@@ -104,8 +104,8 @@
         <div class="text-xs text-slate-400 mt-1">30-Day Free Trial</div>
       </div>
       <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">From ₹299<span class="text-sm font-normal text-slate-400">/mo</span></div>
-        <div class="text-xs text-slate-400 mt-1">Profession-Based Plans</div>
+        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">30 Days</div>
+        <div class="text-xs text-slate-400 mt-1">100% Free Access</div>
       </div>
       <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
         <div class="text-2xl sm:text-3xl font-extrabold text-teal-400">1-Click</div>
@@ -179,9 +179,9 @@
         <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
           <i data-lucide="check-circle-2" class="w-6 h-6"></i>
         </div>
-        <h3 class="text-xl font-bold text-white mb-3">5. Fair, Profession-Tailored Pricing</h3>
+        <h3 class="text-xl font-bold text-white mb-3">5. 30-Day Free Trial First</h3>
         <p class="text-sm text-slate-300 leading-relaxed">
-          Reasonable pricing matched to your field (₹299 for Engineering/Travel, ₹399 for Legal/Tech, ₹499 for Real Estate) after your free trial. One deal pays for years of access.
+          Start 100% free with zero upfront payment. Experience real deal flow, close referrals, and only choose to renew if the platform proves valuable for your business.
         </p>
       </div>
 
@@ -218,7 +218,7 @@
     <!-- Profession Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {% for g in groups %}
-      <div class="p-6 rounded-2xl glass-card border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition">
+      <div x-data="{ showCharges: false }" class="p-6 rounded-2xl glass-card border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-800 text-brand-400 border border-slate-700">
@@ -232,13 +232,30 @@
           <h3 class="text-lg font-bold text-white mb-2">{{ g.name }}</h3>
           <p class="text-xs text-slate-300 line-clamp-2 mb-4">{{ g.description }}</p>
           
-          <div class="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-4">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-3">
             <div><span class="text-slate-300 font-semibold">Split:</span> {{ g.min_commission_rate }}</div>
             {% if g.monthly_fee == 0 %}
-              <div class="text-brand-400 font-extrabold bg-brand-500/20 px-2.5 py-0.5 rounded border border-brand-500/30">100% FREE</div>
+              <div class="text-brand-400 font-extrabold bg-brand-500/20 px-2 py-0.5 rounded border border-brand-500/30">100% FREE</div>
             {% else %}
-              <div class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">₹{{ g.monthly_fee }}/mo</div>
+              <div class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">30-Day Free Trial</div>
             {% endif %}
+          </div>
+
+          <!-- Click to reveal post-trial charges -->
+          <div class="mb-4">
+            <button type="button" @click="showCharges = !showCharges" class="text-[11px] text-slate-400 hover:text-brand-300 flex items-center gap-1 transition">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-brand-400"></i>
+              <span class="underline underline-offset-2" x-text="showCharges ? 'Hide renewal charges' : 'Click to view charges after free trial'"></span>
+            </button>
+            <div x-show="showCharges" x-cloak class="mt-2 p-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-[11px] text-slate-300 space-y-1">
+              {% if g.monthly_fee == 0 %}
+                <div class="text-emerald-400 font-bold">✨ Zero Monthly Fees Forever</div>
+                <p class="text-slate-400">100% free lifetime community. Pay only referral commission on closed deals.</p>
+              {% else %}
+                <div class="text-white font-bold">First 30 Days 100% Free!</div>
+                <p class="text-slate-400">Renews at only <strong class="text-emerald-400 font-extrabold">₹{{ g.monthly_fee }}/month</strong> after your trial ends. Cancel anytime with zero lock-in.</p>
+              {% endif %}
+            </div>
           </div>
         </div>
 
@@ -289,61 +306,83 @@
     <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left max-w-7xl mx-auto">
       
       <!-- Tier 0: Travel & Tourism (100% FREE) -->
-      <div class="p-6 rounded-3xl glass-card border border-brand-500/40 hover:border-brand-400 flex flex-col justify-between transition bg-gradient-to-b from-brand-950/20 to-slate-900/60">
+      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border border-brand-500/40 hover:border-brand-400 flex flex-col justify-between transition bg-gradient-to-b from-brand-950/20 to-slate-900/60">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Travel & Tourism</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-300">Zero Fee</span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-300">100% Free</span>
           </div>
 
           <h3 class="text-lg font-bold text-white">Travel Agents Hub</h3>
           <p class="text-xs text-slate-400 mt-1">For B2B tour operators, visa facilitators, and flight/package brokers.</p>
 
-          <div class="mt-6 flex items-baseline gap-1">
-            <span class="text-4xl font-extrabold text-white">₹0</span>
-            <span class="text-brand-400 text-xs font-bold">/ Free Lifetime</span>
+          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+            <div class="text-2xl font-extrabold text-brand-400">100% Free</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Lifetime Community Access</div>
           </div>
-          <div class="text-[11px] text-emerald-400 mt-1 font-semibold">Pay only commission on deals</div>
 
-          <ul class="mt-6 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
+          <!-- Click to reveal info -->
+          <div class="mt-4">
+            <button type="button" @click="showFee = !showFee" class="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1.5 font-medium transition">
+              <i data-lucide="info" class="w-3.5 h-3.5"></i>
+              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Plan Details ▴' : 'Click to View Charges ▾'"></span>
+            </button>
+            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+              <div class="font-bold text-emerald-400">✨ Zero Monthly Fees Forever</div>
+              <p class="text-slate-400 leading-relaxed">This community has zero monthly subscription charges. You only share a referral cut upon closing a successful tour/package deal.</p>
+            </div>
+          </div>
+
+          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
             <li class="flex items-center gap-2">
               <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>100% Free WhatsApp community</span>
+              <span>Official WhatsApp community access</span>
             </li>
             <li class="flex items-center gap-2">
               <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Group booking & tour leads</span>
+              <span>Group tour & package leads</span>
             </li>
             <li class="flex items-center gap-2">
               <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>No monthly renewal charges</span>
+              <span>No monthly subscription renewal</span>
             </li>
           </ul>
         </div>
 
         <a href="/onboard?group_id=2" class="mt-6 w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs text-center transition block shadow-md shadow-brand-500/20">
-          Join Free Lifetime Community
+          Join Free Community &rarr;
         </a>
       </div>
 
-      <!-- Tier 1: Mechanical & Industrial Engineers (₹299/mo) -->
-      <div class="p-6 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
+      <!-- Tier 1: Mechanical & Industrial Engineers (₹299/mo after trial) -->
+      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Engineering</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">Industrial</span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-emerald-400">Free Trial</span>
           </div>
 
           <h3 class="text-lg font-bold text-white">Mechanical Hub</h3>
           <p class="text-xs text-slate-400 mt-1">For mechanical engineers, fabrication plants, and machine shops.</p>
 
-          <div class="mt-6 flex items-baseline gap-1">
-            <span class="text-4xl font-extrabold text-white">₹299</span>
-            <span class="text-slate-400 text-xs">/ month</span>
+          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+            <div class="text-2xl font-extrabold text-white">30 Days Free</div>
+            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">₹0 Upfront • Full Access</div>
           </div>
-          <div class="text-[11px] text-emerald-400 mt-1 font-semibold">First 30 Days Free</div>
 
-          <ul class="mt-6 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
+          <!-- Click to reveal post-trial charges -->
+          <div class="mt-4">
+            <button type="button" @click="showFee = !showFee" class="text-xs text-slate-300 hover:text-brand-400 flex items-center gap-1.5 font-medium transition">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-brand-400"></i>
+              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Renewal Details ▴' : 'Click to View Post-Trial Charges ▾'"></span>
+            </button>
+            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+              <div class="font-bold text-white">First 30 Days 100% Free!</div>
+              <p class="text-slate-400 leading-relaxed">After your 30-day trial ends, renewal is just <strong class="text-emerald-400 font-bold">₹299/month</strong>. Cancel anytime with zero lock-in.</p>
+            </div>
+          </div>
+
+          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
             <li class="flex items-center gap-2">
               <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
               <span>Fabrication & CNC contracts</span>
@@ -360,12 +399,12 @@
         </div>
 
         <a href="/onboard?group_id=3" class="mt-6 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
-          Join for ₹299/mo
+          Start 30-Day Free Trial &rarr;
         </a>
       </div>
 
-      <!-- Tier 2: Legal & Software Tech (₹399/mo) - HIGHLIGHTED -->
-      <div class="p-6 rounded-3xl glass-card border-2 border-brand-500 shadow-2xl relative flex flex-col justify-between transform lg:-translate-y-2">
+      <!-- Tier 2: Legal & Software Tech (₹399/mo after trial) - HIGHLIGHTED -->
+      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border-2 border-brand-500 shadow-2xl relative flex flex-col justify-between transform lg:-translate-y-2">
         <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-brand-500 text-slate-950 font-extrabold text-[9px] uppercase tracking-wider shadow">
           Popular
         </div>
@@ -373,19 +412,30 @@
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Legal & Tech</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-300">High Growth</span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-300">Free Trial</span>
           </div>
 
           <h3 class="text-lg font-bold text-white">Lawyers & Tech</h3>
           <p class="text-xs text-slate-400 mt-1">For corporate/litigation lawyers, freelance devs, and architects.</p>
 
-          <div class="mt-6 flex items-baseline gap-1">
-            <span class="text-4xl font-extrabold text-white">₹399</span>
-            <span class="text-slate-400 text-xs">/ month</span>
+          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+            <div class="text-2xl font-extrabold text-white">30 Days Free</div>
+            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">₹0 Upfront • Full Access</div>
           </div>
-          <div class="text-[11px] text-emerald-400 mt-1 font-semibold">First 30 Days Free</div>
 
-          <ul class="mt-6 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
+          <!-- Click to reveal post-trial charges -->
+          <div class="mt-4">
+            <button type="button" @click="showFee = !showFee" class="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1.5 font-medium transition">
+              <i data-lucide="info" class="w-3.5 h-3.5"></i>
+              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Renewal Details ▴' : 'Click to View Post-Trial Charges ▾'"></span>
+            </button>
+            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+              <div class="font-bold text-white">First 30 Days 100% Free!</div>
+              <p class="text-slate-400 leading-relaxed">After your 30-day trial ends, renewal is just <strong class="text-emerald-400 font-bold">₹399/month</strong>. One closed brief pays for years.</p>
+            </div>
+          </div>
+
+          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
             <li class="flex items-center gap-2">
               <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
               <span>High-value retainer referrals</span>
@@ -396,34 +446,45 @@
             </li>
             <li class="flex items-center gap-2">
               <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Commission ledger & escrow</span>
+              <span>Direct WhatsApp verified handoff</span>
             </li>
           </ul>
         </div>
 
         <a href="/onboard?group_id=4" class="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-extrabold text-xs text-center transition block shadow-lg shadow-brand-500/25">
-          Join for ₹399/mo
+          Start 30-Day Free Trial &rarr;
         </a>
       </div>
 
-      <!-- Tier 3: Property Dealers & Realtors (₹499/mo) -->
-      <div class="p-6 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
+      <!-- Tier 3: Property Dealers & Realtors (₹499/mo after trial) -->
+      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Real Estate</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">High Brokerage</span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">Free Trial</span>
           </div>
 
           <h3 class="text-lg font-bold text-white">Property Dealers</h3>
           <p class="text-xs text-slate-400 mt-1">For verified brokers closing multi-crore NCR property deals.</p>
 
-          <div class="mt-6 flex items-baseline gap-1">
-            <span class="text-4xl font-extrabold text-white">₹499</span>
-            <span class="text-slate-400 text-xs">/ month</span>
+          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+            <div class="text-2xl font-extrabold text-white">30 Days Free</div>
+            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">₹0 Upfront • Full Access</div>
           </div>
-          <div class="text-[11px] text-emerald-400 mt-1 font-semibold">First 30 Days Free</div>
 
-          <ul class="mt-6 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
+          <!-- Click to reveal post-trial charges -->
+          <div class="mt-4">
+            <button type="button" @click="showFee = !showFee" class="text-xs text-slate-300 hover:text-brand-400 flex items-center gap-1.5 font-medium transition">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-brand-400"></i>
+              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Renewal Details ▴' : 'Click to View Post-Trial Charges ▾'"></span>
+            </button>
+            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+              <div class="font-bold text-white">First 30 Days 100% Free!</div>
+              <p class="text-slate-400 leading-relaxed">After your 30-day trial ends, renewal is just <strong class="text-emerald-400 font-bold">₹499/month</strong>. One deal covers a lifetime of access.</p>
+            </div>
+          </div>
+
+          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
             <li class="flex items-center gap-2">
               <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
               <span>Multi-crore buyer/tenant mandates</span>
@@ -440,7 +501,7 @@
         </div>
 
         <a href="/onboard?group_id=1" class="mt-6 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
-          Join for ₹499/mo
+          Start 30-Day Free Trial &rarr;
         </a>
       </div>
 
