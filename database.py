@@ -140,8 +140,13 @@ def init_db():
     );
     """)
 
+    # Auto-seed if empty
+    group_count = cursor.execute("SELECT COUNT(*) FROM vertical_groups").fetchone()[0]
     conn.commit()
     conn.close()
+    if group_count == 0:
+        import seed_data
+        seed_data.seed_all()
 
 if __name__ == "__main__":
     init_db()

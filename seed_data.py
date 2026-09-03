@@ -89,7 +89,7 @@ def seed_all():
     """, groups)
 
     # 2. Insert Demo Users
-    trial_expiry = datetime.now() + timedelta(days=28)
+    trial_expiry = (datetime.now() + timedelta(days=28)).strftime('%Y-%m-%d %H:%M:%S')
     users = [
         (
             1, "Admin Founder", "9876500000", "919876500000", "Platform Admin", None, 1,
@@ -108,13 +108,13 @@ def seed_all():
         ),
         (
             4, "Sunil Verma", "9711223344", "919711223344", "Travel Agents & Tour Operators Circle", None, 2,
-            "Delhi Connaught Place", "Verma Global Vacations", 14, "IATA-DL-9081", "Referral", 1,
-            "approved", 96, "member", "trial", trial_expiry
+            "Central Delhi / Connaught Place", "Globe Trotters B2B Holidays", 10, "IATA-9812-DEL", "Travel Expo", 1,
+            "approved", 96, "member", "active", trial_expiry
         ),
         (
-            5, "Pooja Malhotra", "9871556677", "919871556677", "Travel Agents & Tour Operators Circle", None, 2,
-            "Chandigarh Sector 17", "Malhotra Luxury Trips", 7, "TAAI-CH-114", "Instagram", 1,
-            "approved", 92, "member", "trial", trial_expiry
+            5, "Karan Kapoor", "9818889900", "919818889900", "Software Engineers & Tech Consultants", None, 5,
+            "Noida Sector 62 / Remote", "Kapoor FullStack Lab", 7, "NASSCOM-DEV-882", "GitHub Community", 1,
+            "approved", 94, "member", "trial", trial_expiry
         ),
         (
             6, "Vikram Singhania", "9822446688", "919822446688", "Mechanical & Industrial Engineers Hub", None, 3,
@@ -143,32 +143,32 @@ def seed_all():
             "Urgent: Verified Buyer for 4BHK Luxury Apartment in Sector 65, Gurgaon",
             "buy", "Gurgaon Sector 65", "₹4.5 Cr - ₹5.5 Cr",
             "Client looking for immediate possession in M3M Golfestate or Trump Tower. Ready cheque with pre-approved loan.",
-            "20% Brokerage Split (approx ₹90k-₹1.1L)",
-            "open", None, None, None, 0, 0, 0
+            "1% Net Brokerage Split (approx ₹4.5 Lakhs)",
+            "open", None, None, None, 45000000, 450000, 67500
         ),
         (
-            2, "LEAD-102", 1, 3,
-            "Commercial Retail Space Tenant for Sector 132 Expressway, Noida",
-            "rent", "Noida Sector 132", "₹1.5 Lakh/Month",
-            "Established Diagnostic Lab looking for 1,800 sq ft ground floor space on main road. 9-year lease required.",
-            "1 Month Rent Commission Split (₹75k)",
-            "claimed", 2, datetime.now() - timedelta(days=2), None, 0, 0, 0
+            2, "LEAD-102", 2, 4,
+            "Corporate Offsite: 85 Pax 3N/4D Luxury Resort Package in Jim Corbett / Goa",
+            "b2b_group", "Delhi Corporate Client", "₹12 Lakhs - ₹15 Lakhs",
+            "Looking for 5-star inventory with conference hall, gala dinner, and airport transfers for IT corporate team.",
+            "10% Net Booking Margin Split",
+            "open", None, None, None, 1200000, 120000, 18000
         ),
         (
-            3, "LEAD-103", 2, 4,
-            "High-Budget Corporate Offsite Booking (120 Pax to Dubai)",
-            "client_consult", "Delhi NCR / International", "₹35 Lakhs Total Package",
-            "Tech MNC requiring 4-star hotel stay, flight charters, and conference hall in Dubai for 4 Nights.",
-            "10% Net Margin Split",
-            "open", None, None, None, 0, 0, 0
+            3, "LEAD-103", 5, 5,
+            "Mobile App MVP: Cross-Platform React Native App for Logistics Startup",
+            "client_brief", "Bangalore / Remote Client", "₹2.5 Lakhs - ₹3.5 Lakhs",
+            "Client needs rapid 4-week prototype with GPS tracking and payment gateway integration. Wireframes ready.",
+            "15% Subcontracting Commission",
+            "open", None, None, None, 300000, 45000, 6750
         ),
         (
             4, "LEAD-104", 3, 6,
-            "CNC Precision Milling Contract for 5,000 Auto Component Units",
-            "project", "Faridabad / Manesar", "₹18 Lakhs Contract",
-            "Tier-1 Automotive OEM looking for certified vendor with VMC machines and CMM inspection capabilities.",
-            "7% Referral Cut",
-            "open", None, None, None, 0, 0, 0
+            "CNC Precision Machining & Sheet Metal Fabrication for EV Enclosures",
+            "supplier_mandate", "Manesar IMT / Pune", "₹8 Lakhs / Month Recurring",
+            "OEM Tier-1 supplier seeking certified vendor for 5,000 units/mo aluminium CNC turned components.",
+            "5% Continuous Sourcing Margin",
+            "open", None, None, None, 800000, 40000, 6000
         ),
         (
             5, "LEAD-105", 4, 7,
@@ -176,7 +176,7 @@ def seed_all():
             "client_consult", "South Delhi / Saket", "₹1.5 Lakh Retainer",
             "NRI landlord seeking dispute representation against defaulting commercial tenant.",
             "15% Referral Fee (₹22,500)",
-            "closed", 7, datetime.now() - timedelta(days=5), datetime.now() - timedelta(days=1), 150000, 22500, 3375
+            "closed", 7, (datetime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S'), (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S'), 150000, 22500, 3375
         )
     ]
 

@@ -24,7 +24,6 @@ wheels/
 *.egg
 
 # Database
-referral_platform.db
 *.sqlite3
 *.db-journal
 
