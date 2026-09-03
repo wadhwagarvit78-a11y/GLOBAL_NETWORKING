@@ -65,21 +65,100 @@
         </div>
       </a>
 
-      <!-- Desktop Nav Links -->
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-        <a href="/" class="text-slate-300 hover:text-white transition-colors">Home</a>
-        <a href="/#advantages" class="text-slate-300 hover:text-white transition-colors">Why It Works</a>
-        <a href="/#professions" class="text-slate-300 hover:text-white transition-colors">Communities</a>
-        <a href="/#pricing" class="text-slate-300 hover:text-white transition-colors">Pricing</a>
+      <!-- Desktop Nav Links with Dropdowns -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-300">
+        
+        <!-- HOME -->
+        <a href="/" class="hover:text-white transition-colors tracking-wide uppercase text-xs">Home</a>
+
+        <!-- COMPANY ▾ Dropdown -->
+        <div x-data="{ open: false }" class="relative" @click.away="open = false">
+          <button @click="open = !open" class="flex items-center gap-1 hover:text-white transition-colors tracking-wide uppercase text-xs focus:outline-none">
+            <span>Company</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+          </button>
+          <div x-show="open" x-cloak class="absolute left-0 mt-3 w-56 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
+            <a href="/#about" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold">About ReferralCircle</div>
+              <div class="text-[10px] text-slate-400">Our vision & business network</div>
+            </a>
+            <a href="/#advantages" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold">The 5 Core Advantages</div>
+              <div class="text-[10px] text-slate-400">Why professionals partner with us</div>
+            </a>
+            <a href="/#pricing" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold">Pricing & Free Trial</div>
+              <div class="text-[10px] text-slate-400">Zero upfront charges, 30 days free</div>
+            </a>
+          </div>
+        </div>
+
+        <!-- PRODUCTS / SERVICES ▾ Dropdown -->
+        <div x-data="{ open: false }" class="relative" @click.away="open = false">
+          <button @click="open = !open" class="flex items-center gap-1 hover:text-white transition-colors tracking-wide uppercase text-xs focus:outline-none">
+            <span>Services</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+          </button>
+          <div x-show="open" x-cloak class="absolute left-0 mt-3 w-72 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
+            <a href="/#services-property" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">🏢</span>
+              <div>
+                <div class="font-bold">Real Estate Advisory</div>
+                <div class="text-[10px] text-slate-400">NCR residential, commercial & plots</div>
+              </div>
+            </a>
+            <a href="/#services-travel" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">✈️</span>
+              <div>
+                <div class="font-bold">Tours & Travel Packages</div>
+                <div class="text-[10px] text-slate-400">Wholesale B2B & family holiday bookings</div>
+              </div>
+            </a>
+            <a href="/#services-tech" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">💻</span>
+              <div>
+                <div class="font-bold">Websites, Apps & Tech</div>
+                <div class="text-[10px] text-slate-400">Custom business software & portals</div>
+              </div>
+            </a>
+            <a href="/#services-legal" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">⚖️</span>
+              <div>
+                <div class="font-bold">Legal & Litigation Services</div>
+                <div class="text-[10px] text-slate-400">Registry check, court cases & drafting</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- OPPORTUNITY ▾ Dropdown -->
+        <div x-data="{ open: false }" class="relative" @click.away="open = false">
+          <button @click="open = !open" class="flex items-center gap-1 hover:text-white transition-colors tracking-wide uppercase text-xs focus:outline-none">
+            <span>Opportunity</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+          </button>
+          <div x-show="open" x-cloak class="absolute left-0 mt-3 w-64 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
+            <a href="/#professions" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold text-brand-400">Join a Profession Circle</div>
+              <div class="text-[10px] text-slate-400">30-Day Free Trial in your industry</div>
+            </a>
+            <a href="/#advantages" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold">Close Leads & Earn</div>
+              <div class="text-[10px] text-slate-400">Direct WhatsApp deal coordination</div>
+            </a>
+            <a href="/#request-circle" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold">Request a New Vertical</div>
+              <div class="text-[10px] text-slate-400">We launch circles in 24 hours</div>
+            </a>
+          </div>
+        </div>
+
         {% if current_user %}
-          <a href="/app" class="text-brand-400 hover:text-brand-300 flex items-center gap-1.5 font-semibold">
-            <i data-lucide="layout-grid" class="w-4 h-4"></i> My Circle ({{ current_user.group_name or 'Dashboard' }})
+          <a href="/app" class="text-brand-400 hover:text-brand-300 flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-lg bg-brand-500/10 border border-brand-500/20">
+            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> My Circle
           </a>
-          <a href="/app#cross-network" class="text-amber-400 hover:text-amber-300 flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 transition">
+          <a href="/app#cross-network" class="text-amber-400 hover:text-amber-300 flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 transition">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Peer Services
-          </a>
-          <a href="/ledger" class="text-slate-300 hover:text-white flex items-center gap-1.5">
-            <i data-lucide="receipt" class="w-4 h-4"></i> Commission Ledger
           </a>
         {% endif %}
       </nav>

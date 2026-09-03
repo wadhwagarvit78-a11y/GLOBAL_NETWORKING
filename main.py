@@ -240,9 +240,9 @@ async def handle_cross_referral(
 ):
     current_user = get_current_user(request)
     uid = current_user["id"] if current_user else None
-    uname = current_user["full_name"] if current_user else (user_name or "Guest")
-    uphone = current_user["phone_number"] if current_user else (user_phone or "")
-    uprof = current_user["group_name"] if current_user else "Visitor"
+    uname = user_name or (current_user["full_name"] if current_user else "Guest")
+    uphone = user_phone or (current_user["phone_number"] if current_user else "")
+    uprof = (current_user["group_name"] if current_user else "Direct Client")
     
     models.create_cross_vertical_request(
         user_id=uid,
@@ -253,6 +253,8 @@ async def handle_cross_referral(
         requirement_details=requirement_details,
         budget_range=budget_range
     )
+    if user_name:
+        return RedirectResponse(url="/?service_success=1#services", status_code=302)
     return RedirectResponse(url="/app?cross_success=1", status_code=302)
 
 # 9. Subscription & Trial
