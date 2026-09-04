@@ -172,18 +172,18 @@
             <i data-lucide="plane-takeoff" class="w-6 h-6"></i>
           </div>
           <span class="text-[10px] font-bold uppercase tracking-wider text-teal-400 px-2 py-0.5 rounded bg-teal-500/10 border border-teal-500/20">Travel & Tourism Desk</span>
-          <h3 class="text-lg font-bold text-white mt-2 mb-2">Tours & Holiday Packages</h3>
+          <h3 class="text-lg font-bold text-white mt-2 mb-2">Hotels, Cabs & Tour Packages</h3>
           <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Wholesale B2B flight bookings, customized domestic/international holiday packages (Dubai, Europe, Bali, Kashmir), and fast-track corporate visa assistance.
+            Wholesale B2B hotel bookings, car & cab rentals (luxury cars, SUVs, tempo travellers), domestic/international holiday packages (Dubai, Europe, Bali, Kashmir), flights, and corporate visa assistance.
           </p>
           <ul class="space-y-1.5 text-[11px] text-slate-400 mb-6">
-            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> Direct operator wholesale rates</li>
-            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> 100% customized family/group tours</li>
-            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> 24/7 on-trip concierge support</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> Wholesale hotel & resort bookings across India</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> Local & outstation car/cab rentals (Sedan, SUV, Tempo)</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i> 100% customized family, group & corporate tours</li>
           </ul>
         </div>
-        <button @click="activeServiceName = 'Tours & Travel Packages'; serviceModal = true" class="w-full py-2.5 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md shadow-teal-500/20">
-          <span>Inquire for Travel</span> &rarr;
+        <button @click="activeServiceName = 'Hotels, Cabs & Travel Packages'; serviceModal = true" class="w-full py-2.5 px-4 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md shadow-teal-500/20">
+          <span>Inquire for Hotels, Cabs & Travel</span> &rarr;
         </button>
       </div>
 
@@ -462,11 +462,14 @@
           <p class="text-xs text-slate-300 line-clamp-2 mb-4">{{ g.description }}</p>
           
           <div class="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-3">
-            <div><span class="text-slate-300 font-semibold">Split:</span> {{ g.min_commission_rate }}</div>
+            <div class="text-slate-300 font-medium flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-brand-400"></i>
+              <span>Verified Direct Handoff</span>
+            </div>
             {% if g.monthly_fee == 0 %}
-              <div class="text-brand-400 font-extrabold bg-brand-500/20 px-2 py-0.5 rounded border border-brand-500/30">100% FREE</div>
+              <div class="text-brand-400 font-extrabold bg-brand-500/20 px-2.5 py-0.5 rounded border border-brand-500/30">100% FREE</div>
             {% else %}
-              <div class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">30-Day Free Trial</div>
+              <div class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">30-Day Free Trial</div>
             {% endif %}
           </div>
 
