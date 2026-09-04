@@ -31,8 +31,8 @@ def seed_all():
             "Travel Agents & Tour Operators Circle",
             "travel-agents",
             "Travel & Tourism",
-            "B2B hotel bookings, car & cab rentals, holiday packages, flights, visas, and corporate travel referrals.",
-            "plane",
+            "B2B hotel bookings, car & cab rentals, holiday packages, visas, and corporate travel referrals.",
+            "compass",
             "https://chat.whatsapp.com/invite/Travel-Agents-Hub-Official",
             "10% Net Booking Margin",
             0
