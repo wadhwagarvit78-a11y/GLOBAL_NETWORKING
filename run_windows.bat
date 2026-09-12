@@ -1,7 +1,7 @@
 @echo off
-title ReferralCircle Server
+title Viora Networking Server
 echo ===================================================
-echo   Starting ReferralCircle Web Platform (Windows)
+echo   Starting Viora Networking Web Platform (Windows)
 echo ===================================================
 echo.
 

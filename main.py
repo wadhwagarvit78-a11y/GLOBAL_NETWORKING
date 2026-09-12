@@ -19,8 +19,8 @@ init_db()
 
 BASE_DIR = Path(__file__).resolve().parent
 
-app = FastAPI(title="ReferralCircle — Professional Referral Network")
-app.add_middleware(SessionMiddleware, secret_key="referralcircle-super-secret-key-2026")
+app = FastAPI(title="Viora Networking — Verified Business & Client Solutions")
+app.add_middleware(SessionMiddleware, secret_key="viora-networking-super-secret-key-2026")
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
@@ -110,10 +110,11 @@ async def handle_onboard(
         "current_user": user
     })
 
-# 4. Member's Dedicated Feed Dashboard (Filtered exclusively to their profession)
+# 4. Member's Dedicated Feed Dashboard (Dual Mode: B2B Lead Feed & B2B2C Client Solutions)
 @app.get("/app", response_class=HTMLResponse)
 async def member_dashboard(
     request: Request,
+    mode: str = "b2b",
     location: str = None,
     deal_type: str = None,
     search: str = None
@@ -125,15 +126,26 @@ async def member_dashboard(
     group_id = current_user.get("group_id") or 1
     group = models.get_group_by_id(group_id)
     leads = models.get_leads_for_group(group_id, sub_location=location, deal_type=deal_type, search=search)
+    b2b2c_inquiries = models.get_b2b2c_inquiries(user_id=current_user.get("id"), user_phone=current_user.get("phone_number"))
     
     return templates.TemplateResponse(request=request, name="dashboard.html", context={
         "current_user": current_user,
         "group": group,
         "leads": leads,
+        "b2b2c_inquiries": b2b2c_inquiries,
+        "mode": mode,
         "location": location,
         "deal_type": deal_type,
         "search": search
     })
+
+@app.get("/b2b")
+async def b2b_redirect():
+    return RedirectResponse(url="/app?mode=b2b", status_code=302)
+
+@app.get("/b2b2c")
+async def b2b2c_redirect():
+    return RedirectResponse(url="/app?mode=b2b2c", status_code=302)
 
 # 5. Post Lead
 @app.get("/post-lead", response_class=HTMLResponse)
@@ -202,7 +214,7 @@ async def handle_claim_lead(request: Request, lead_id: int):
         author_wa = lead["author_whatsapp"]
         token = lead["lead_token"]
         title = lead["title"]
-        msg = f"Hi {lead['author_name']}, I claimed your requirement {token} ({title}) on ReferralCircle. Let's coordinate the deal!"
+        msg = f"Hi {lead['author_name']}, I claimed your requirement {token} ({title}) on Viora Networking. Let's coordinate the deal!"
         encoded_msg = urllib.parse.quote(msg)
         wa_url = f"https://wa.me/{author_wa}?text={encoded_msg}"
         return RedirectResponse(url=wa_url, status_code=302)
@@ -350,7 +362,7 @@ async def export_members_csv():
         content=csv_data,
         media_type="text/csv",
         headers={
-            "Content-Disposition": "attachment; filename=referralcircle_members_directory.csv"
+            "Content-Disposition": "attachment; filename=viora_members_directory.csv"
         }
     )
 

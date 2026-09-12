@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}ReferralCircle — Professional Lead-Exchange & Networking Community{% endblock %}</title>
+  <title>{% block title %}Viora Networking — Verified B2B & Client Solutions Network{% endblock %}</title>
   
   <!-- PWA Meta Tags -->
   <link rel="manifest" href="/manifest.json">
@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#16a34a">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="ReferralCircle">
+  <meta name="apple-mobile-web-app-title" content="Viora Networking">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -62,17 +62,18 @@
 <body class="min-h-full flex flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 font-sans antialiased text-slate-200 selection:bg-brand-500 selection:text-white pb-16 md:pb-0">
 
   <!-- Top Navigation -->
-  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
       <!-- Brand Logo -->
       <a href="/" class="flex items-center gap-2.5 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-slate-950 shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
-          <i data-lucide="network" class="w-6 h-6 text-white"></i>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform font-black text-lg">
+          V
         </div>
         <div>
-          <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">ReferralCircle</span>
-          <span class="hidden sm:inline-block ml-2 text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">Verified Networks</span>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">Viora</span>
+          <span class="text-xs uppercase tracking-widest font-bold text-emerald-400 ml-1">Networking</span>
+          <span class="hidden sm:inline-block ml-2 text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">B2B & Client Solutions</span>
         </div>
       </a>
 
@@ -82,80 +83,24 @@
         <!-- HOME -->
         <a href="/" class="hover:text-white transition-colors tracking-wide uppercase text-xs">Home</a>
 
-        <!-- COMPANY ▾ Dropdown -->
+        <!-- B2B REFERRAL NETWORK ▾ Dropdown -->
         <div x-data="{ open: false }" class="relative" @click.away="open = false">
           <button @click="open = !open" class="flex items-center gap-1 hover:text-white transition-colors tracking-wide uppercase text-xs focus:outline-none">
-            <span>Company</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
-          </button>
-          <div x-show="open" x-cloak class="absolute left-0 mt-3 w-56 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
-            <a href="/#about" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <div class="font-bold">About ReferralCircle</div>
-              <div class="text-[10px] text-slate-400">Our vision & business network</div>
-            </a>
-            <a href="/#advantages" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <div class="font-bold">The 5 Core Advantages</div>
-              <div class="text-[10px] text-slate-400">Why professionals partner with us</div>
-            </a>
-            <a href="/#pricing" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <div class="font-bold">Pricing & Free Trial</div>
-              <div class="text-[10px] text-slate-400">Zero upfront charges, 30 days free</div>
-            </a>
-          </div>
-        </div>
-
-        <!-- PRODUCTS / SERVICES ▾ Dropdown -->
-        <div x-data="{ open: false }" class="relative" @click.away="open = false">
-          <button @click="open = !open" class="flex items-center gap-1 hover:text-white transition-colors tracking-wide uppercase text-xs focus:outline-none">
-            <span>Services</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
-          </button>
-          <div x-show="open" x-cloak class="absolute left-0 mt-3 w-72 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
-            <a href="/#services-property" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <span class="text-base">🏢</span>
-              <div>
-                <div class="font-bold">Real Estate Advisory</div>
-                <div class="text-[10px] text-slate-400">NCR residential, commercial & plots</div>
-              </div>
-            </a>
-            <a href="/#services-travel" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <span class="text-base">🏨</span>
-              <div>
-                <div class="font-bold">Hotels, Cabs & Tours</div>
-                <div class="text-[10px] text-slate-400">Wholesale hotel bookings, cab rentals & tours</div>
-              </div>
-            </a>
-            <a href="/#services-tech" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <span class="text-base">💻</span>
-              <div>
-                <div class="font-bold">Websites, Apps & Tech</div>
-                <div class="text-[10px] text-slate-400">Custom business software & portals</div>
-              </div>
-            </a>
-            <a href="/#services-legal" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <span class="text-base">⚖️</span>
-              <div>
-                <div class="font-bold">Legal & Litigation Services</div>
-                <div class="text-[10px] text-slate-400">Registry check, court cases & drafting</div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <!-- OPPORTUNITY ▾ Dropdown -->
-        <div x-data="{ open: false }" class="relative" @click.away="open = false">
-          <button @click="open = !open" class="flex items-center gap-1 hover:text-white transition-colors tracking-wide uppercase text-xs focus:outline-none">
-            <span>Opportunity</span>
+            <span>🏢 B2B Circles</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
           </button>
           <div x-show="open" x-cloak class="absolute left-0 mt-3 w-64 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
             <a href="/#professions" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <div class="font-bold text-brand-400">Join a Profession Circle</div>
-              <div class="text-[10px] text-slate-400">30-Day Free Trial in your industry</div>
+              <div class="font-bold text-emerald-400">All Verified Circles (100% Free)</div>
+              <div class="text-[10px] text-slate-400">Real Estate, Law, IT, Tourism, Industrial</div>
             </a>
-            <a href="/#advantages" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <div class="font-bold">Close Leads & Earn</div>
-              <div class="text-[10px] text-slate-400">Direct WhatsApp deal coordination</div>
+            <a href="/app" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold">B2B Leads Feed & Exchange</div>
+              <div class="text-[10px] text-slate-400">Claim high-value deals with peers</div>
+            </a>
+            <a href="/post-lead" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <div class="font-bold">Broadcast Excess Client Inquiry</div>
+              <div class="text-[10px] text-slate-400">Hand off leads & earn deal commissions</div>
             </a>
             <a href="/#request-circle" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
               <div class="font-bold">Request a New Vertical</div>
@@ -164,12 +109,50 @@
           </div>
         </div>
 
+        <!-- B2B2C / CLIENT SOLUTIONS ▾ Dropdown -->
+        <div x-data="{ open: false }" class="relative" @click.away="open = false">
+          <button @click="open = !open" class="flex items-center gap-1 hover:text-white transition-colors tracking-wide uppercase text-xs focus:outline-none">
+            <span>🎯 Client Services</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+          </button>
+          <div x-show="open" x-cloak class="absolute left-0 mt-3 w-72 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
+            <a href="/#services-property" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">🏢</span>
+              <div>
+                <div class="font-bold">NCR Property & Real Estate</div>
+                <div class="text-[10px] text-slate-400">Direct verified builder & resale mandates</div>
+              </div>
+            </a>
+            <a href="/#services-travel" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">🏨</span>
+              <div>
+                <div class="font-bold">Hotels, Cabs & Tours</div>
+                <div class="text-[10px] text-slate-400">Wholesale hotel bookings, cab rentals & packages</div>
+              </div>
+            </a>
+            <a href="/#services-tech" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">💻</span>
+              <div>
+                <div class="font-bold">Websites, Apps & Software</div>
+                <div class="text-[10px] text-slate-400">Custom business portals, mobile apps & CRM</div>
+              </div>
+            </a>
+            <a href="/#services-legal" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">⚖️</span>
+              <div>
+                <div class="font-bold">Legal & High Court Counsel</div>
+                <div class="text-[10px] text-slate-400">Registry check, litigation defense & contracts</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ABOUT / ADVANTAGES -->
+        <a href="/#advantages" class="hover:text-white transition-colors tracking-wide uppercase text-xs">Why Viora</a>
+
         {% if current_user %}
           <a href="/app" class="text-brand-400 hover:text-brand-300 flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-lg bg-brand-500/10 border border-brand-500/20">
-            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> My Circle
-          </a>
-          <a href="/app#cross-network" class="text-amber-400 hover:text-amber-300 flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 transition">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Peer Services
+            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Member Dashboard
           </a>
         {% endif %}
       </nav>
@@ -179,21 +162,21 @@
         {% if current_user %}
           <div class="flex items-center gap-2">
             <a href="/app" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition">
-              <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span class="font-medium truncate max-w-[120px]">{{ current_user.full_name }}</span>
             </a>
             <a href="/logout" class="text-xs text-slate-400 hover:text-white px-2 py-1">Logout</a>
           </div>
         {% else %}
-          <a href="/login" class="text-sm font-medium text-slate-300 hover:text-white px-3 py-2">Member Sign In</a>
-          <a href="/onboard" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-semibold text-sm shadow-md shadow-brand-600/20 transition-all hover:scale-[1.02]">
-            <i data-lucide="user-plus" class="w-4 h-4"></i>
-            <span>Join Your Circle</span>
+          <a href="/login" class="text-sm font-medium text-slate-300 hover:text-white px-3 py-2">Sign In</a>
+          <a href="/onboard" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-md shadow-brand-600/20 transition-all hover:scale-[1.02]">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>Join Free</span>
           </a>
         {% endif %}
 
         <!-- Quick Switcher to Admin -->
-        <a href="/admin" title="Admin Portal" class="p-2 text-slate-400 hover:text-brand-400 transition-colors rounded-lg hover:bg-slate-800">
+        <a href="/admin" title="Founder Admin Portal" class="p-2 text-slate-400 hover:text-brand-400 transition-colors rounded-lg hover:bg-slate-800">
           <i data-lucide="shield" class="w-4 h-4"></i>
         </a>
       </div>
@@ -215,17 +198,17 @@
         <i data-lucide="home" class="w-5 h-5"></i>
         <span>Home</span>
       </a>
-      <a href="/onboard" class="flex flex-col items-center gap-1 text-brand-400 py-1 font-semibold">
+      <a href="/onboard" class="flex flex-col items-center gap-1 text-emerald-400 py-1 font-semibold">
         <i data-lucide="plus-circle" class="w-5 h-5"></i>
-        <span>Join Circle</span>
+        <span>Join B2B</span>
+      </a>
+      <a href="/#services" class="flex flex-col items-center gap-1 text-teal-400 py-1 font-semibold">
+        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+        <span>Services</span>
       </a>
       <a href="/app" class="flex flex-col items-center gap-1 text-slate-400 hover:text-brand-400 py-1">
         <i data-lucide="layers" class="w-5 h-5"></i>
-        <span>Leads Feed</span>
-      </a>
-      <a href="/ledger" class="flex flex-col items-center gap-1 text-slate-400 hover:text-brand-400 py-1">
-        <i data-lucide="receipt" class="w-5 h-5"></i>
-        <span>Ledger</span>
+        <span>Dashboard</span>
       </a>
     </div>
   </nav>
@@ -235,20 +218,20 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-2">
-          <div class="w-6 h-6 rounded bg-brand-600 flex items-center justify-center text-white text-xs font-bold">R</div>
-          <span class="font-bold text-slate-200">ReferralCircle</span>
+          <div class="w-6 h-6 rounded bg-brand-600 flex items-center justify-center text-white text-xs font-black">V</div>
+          <span class="font-bold text-slate-200">Viora Networking</span>
           <span class="text-slate-600">|</span>
           <span class="text-emerald-400 font-semibold">Connect More. Earn More.</span>
         </div>
         <div class="flex flex-wrap items-center gap-6">
-          <a href="/#advantages" class="hover:text-slate-200">Advantages</a>
-          <a href="/#professions" class="hover:text-slate-200">All Professions</a>
-          <a href="/#pricing" class="hover:text-slate-200">₹500/mo Plan</a>
+          <a href="/#professions" class="hover:text-slate-200">B2B Circles</a>
+          <a href="/#services" class="hover:text-slate-200">Direct Client Services</a>
+          <a href="/#advantages" class="hover:text-slate-200">Why Viora</a>
           <a href="/admin" class="hover:text-brand-400 text-slate-500">Founder Admin</a>
         </div>
       </div>
       <div class="mt-6 pt-6 border-t border-slate-900 text-center text-slate-500 text-[11px]">
-        &copy; 2026 ReferralCircle. <em>Whatever You Need, We're Connected.</em> Built for verified professionals to turn excess inquiries into guaranteed referral income.
+        &copy; 2026 Viora Networking (vioranetworking.com). <em>Whatever You Need, We're Connected.</em> Uniting verified B2B peer referral networks and direct fulfillment client solutions.
       </div>
     </div>
   </footer>
@@ -258,7 +241,7 @@
     <div class="flex items-center gap-3">
       <img src="/static/icon-192.png" alt="App Icon" class="w-10 h-10 rounded-xl border border-brand-500/40 shrink-0">
       <div>
-        <div class="text-xs font-bold text-white">Install ReferralCircle App</div>
+        <div class="text-xs font-bold text-white">Install Viora Networking App</div>
         <div class="text-[10px] text-slate-400">1-tap home screen access on phone</div>
       </div>
     </div>
@@ -310,7 +293,7 @@
     }
 
     window.addEventListener('appinstalled', () => {
-      console.log('ReferralCircle PWA installed successfully!');
+      console.log('Viora Networking PWA installed successfully!');
       if (installBanner) {
         installBanner.classList.add('hidden');
       }

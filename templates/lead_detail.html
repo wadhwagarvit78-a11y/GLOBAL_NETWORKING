@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}{{ lead.lead_token }}: {{ lead.title }} | ReferralCircle{% endblock %}
+{% block title %}{{ lead.lead_token }}: {{ lead.title }} | Viora Networking{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto px-4 py-10" x-data="{ closeDealModal: false }">
@@ -86,7 +86,7 @@
           {% elif lead.status == 'claimed' %}
             <div class="w-full flex flex-col sm:flex-row gap-3">
               <!-- WhatsApp Message Link -->
-              {% set wa_msg = "Hi " ~ lead.author_name ~ ", I am coordinating with you regarding Lead " ~ lead.lead_token ~ " (" ~ lead.title ~ ") on ReferralCircle." %}
+              {% set wa_msg = "Hi " ~ lead.author_name ~ ", I am coordinating with you regarding Lead " ~ lead.lead_token ~ " (" ~ lead.title ~ ") on Viora Networking." %}
               <a href="https://wa.me/{{ lead.author_whatsapp }}?text={{ wa_msg|urlencode }}" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition shadow-md">
                 <i data-lucide="message-circle" class="w-4 h-4 fill-current"></i>
                 <span>Chat on WhatsApp</span>
@@ -134,7 +134,7 @@
 
         <!-- Direct WhatsApp button for verified members -->
         <div class="pt-2">
-          {% set msg_author = "Hi " ~ lead.author_name ~ ", reaching out regarding " ~ lead.lead_token ~ " on ReferralCircle." %}
+          {% set msg_author = "Hi " ~ lead.author_name ~ ", reaching out regarding " ~ lead.lead_token ~ " on Viora Networking." %}
           <a href="https://wa.me/{{ lead.author_whatsapp }}?text={{ msg_author|urlencode }}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-2 transition border border-slate-700">
             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
             <span>WhatsApp: +{{ lead.author_whatsapp }}</span>

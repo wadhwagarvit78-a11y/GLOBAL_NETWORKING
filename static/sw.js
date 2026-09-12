@@ -1,5 +1,5 @@
-// ReferralCircle Service Worker
-const CACHE_NAME = 'referralcircle-v1';
+// Viora Networking Service Worker
+const CACHE_NAME = 'viora-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/static/manifest.json',

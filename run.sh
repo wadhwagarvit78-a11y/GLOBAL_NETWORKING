@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 
 echo "================================================="
-echo "  Starting ReferralCircle Platform..."
+echo "  Starting Viora Networking Platform..."
 echo "  Opening http://localhost:8000 in your browser..."
 echo "================================================="
 

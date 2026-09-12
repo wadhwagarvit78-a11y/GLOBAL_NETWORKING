@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}ReferralCircle — Monetize Your Professional Network | Verified Referral Exchange{% endblock %}
+{% block title %}Viora Networking — Verified B2B Circles & Direct Client Solutions{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+<section class="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-24">
   <!-- Subtle Glow Effect -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
   
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     
@@ -27,94 +27,117 @@
     </p>
 
     <p class="mt-3 text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
-      Monetize work outside your location, specialization, or capacity. Hand off leads to verified peers in your exact profession and collect transparent commission on every closed deal.
+      Welcome to <strong>Viora Networking</strong> — where verified business referral circles and direct high-ticket client solutions work hand in hand.
     </p>
 
-    <!-- Instant Profession Selector & WhatsApp Redirect Form (Core Interactive Hero Widget) -->
-    <div class="mt-10 max-w-2xl mx-auto p-6 sm:p-8 rounded-2xl glass-card border border-slate-700/80 shadow-2xl relative text-left">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="text-lg font-bold text-white flex items-center gap-2">
-            <i data-lucide="zap" class="w-5 h-5 text-brand-400"></i>
-            <span>Join Your Profession's Verified Circle</span>
-          </h3>
-          <p class="text-xs text-slate-400">Select your industry to instantly access active leads & connect to your official WhatsApp Group.</p>
+    <!-- Objective 2-Option Purpose Gateway -->
+    <div class="mt-12 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+      
+      <!-- Option 1: B2B Peer Referral Network -->
+      <div class="p-6 sm:p-8 rounded-3xl glass-card border border-emerald-500/40 hover:border-emerald-400 bg-gradient-to-b from-slate-900/90 to-slate-950 flex flex-col justify-between shadow-2xl transition group relative overflow-hidden">
+        <div class="absolute top-0 right-0 px-3.5 py-1 rounded-bl-2xl bg-emerald-500/20 text-emerald-300 font-bold text-[10px] uppercase tracking-wider border-b border-l border-emerald-500/30">
+          ✨ 100% Free Lifetime
         </div>
-        <span class="text-xs font-semibold px-2.5 py-1 rounded bg-brand-500/20 text-brand-300 border border-brand-500/30">Instant Handoff</span>
+        
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+            <i data-lucide="building-2" class="w-6 h-6"></i>
+          </div>
+          
+          <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Path 1: Businesses & Professionals</span>
+          <h3 class="text-2xl font-black text-white mt-1 mb-2">B2B Referral Network</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+            Join verified peer circles in your exact industry. Exchange high-ticket leads, collaborate on client requirements, and access official WhatsApp groups with zero monthly charges.
+          </p>
+
+          <ul class="space-y-2.5 text-xs text-slate-300 mb-8">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+              <span><strong>100% Free Circles:</strong> Property, Law, Tech, Tourism, Mfg</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+              <span><strong>Monetize Excess Inquiries:</strong> Earn cuts on closed deals</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+              <span><strong>Direct WhatsApp Community:</strong> Fast 1-click coordination</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <a href="#professions" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.01]">
+            <span>Join B2B Peer Circles (Free)</span> &rarr;
+          </a>
+          <div class="mt-2 text-[10px] text-center text-slate-400">₹0 Monthly Fees • Immediate WhatsApp Group Access</div>
+        </div>
       </div>
 
-      <form action="/onboard" method="POST" class="space-y-4">
-        <!-- Step 1: Profession Dropdown -->
+      <!-- Option 2: Direct Client Services (B2B2C) -->
+      <div class="p-6 sm:p-8 rounded-3xl glass-card border border-teal-500/40 hover:border-teal-400 bg-gradient-to-b from-slate-900/90 to-slate-950 flex flex-col justify-between shadow-2xl transition group relative overflow-hidden">
+        <div class="absolute top-0 right-0 px-3.5 py-1 rounded-bl-2xl bg-teal-500/20 text-teal-300 font-bold text-[10px] uppercase tracking-wider border-b border-l border-teal-500/30">
+          🎯 Founder Concierge
+        </div>
+        
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-            1. Select Your Profession / Industry
-          </label>
-          <select name="group_id" required class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
-            <option value="" disabled selected>-- Choose your professional circle --</option>
-            {% for g in groups %}
-              <option value="{{ g.id }}">{{ g.name }} ({{ g.category }})</option>
-            {% endfor %}
-          </select>
+          <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+            <i data-lucide="briefcase" class="w-6 h-6"></i>
+          </div>
+          
+          <span class="text-[10px] font-bold uppercase tracking-wider text-teal-400">Path 2: Clients & Consumers</span>
+          <h3 class="text-2xl font-black text-white mt-1 mb-2">Direct Client Solutions</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+            Looking for verified high-ticket business solutions? Our centralized Founder Desk connects you with vetted specialists with verified quality & transparent delivery.
+          </p>
+
+          <ul class="space-y-2.5 text-xs text-slate-300 mb-8">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span><strong>NCR Property:</strong> Verified builder floors, resale & commercial</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span><strong>Hotels, Cabs & Tours:</strong> Wholesale resort bookings & car rentals</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span><strong>Tech & Software:</strong> Full-stack apps, MVP & web portals</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span><strong>Legal Counsel:</strong> Property vetting & litigation defense</span>
+            </li>
+          </ul>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Step 2: Name -->
-          <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              2. Your Full Name
-            </label>
-            <input type="text" name="full_name" required placeholder="e.g. Rajesh Sharma" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
-          </div>
-
-          <!-- Step 3: WhatsApp Number -->
-          <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              3. WhatsApp Number (Primary)
-            </label>
-            <div class="relative">
-              <span class="absolute left-3.5 top-3 text-slate-400 text-sm font-medium">+91</span>
-              <input type="tel" name="whatsapp_number" required placeholder="98XXXXXXXX" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-12 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 4: Operating City / Region -->
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-            4. Primary City / Operating Area
-          </label>
-          <input type="text" name="city_area" required placeholder="e.g. Gurgaon, Noida, South Delhi, Mumbai, Bengaluru..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+          <a href="#services" class="w-full py-3.5 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-slate-700 shadow-lg transition-all hover:scale-[1.01]">
+            <span>Explore Solutions & Hire</span> &rarr;
+          </a>
+          <div class="mt-2 text-[10px] text-center text-slate-400">Zero Middleman Markup • Direct Founder Coordination</div>
         </div>
+      </div>
 
-        <!-- Submit Button: Instant Redirect to WhatsApp -->
-        <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-brand-600 via-emerald-500 to-teal-500 hover:from-brand-500 hover:to-teal-400 text-slate-950 font-bold text-base shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01]">
-          <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i>
-          <span>Continue & Join Official WhatsApp Group &rarr;</span>
-        </button>
-
-        <p class="text-[11px] text-slate-400 text-center">
-          ⚡ 30-Day Free Access • No Credit Card Required • Instant WhatsApp Community Redirect
-        </p>
-      </form>
     </div>
 
     <!-- Quick Stats Strip -->
     <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-        <div class="text-2xl sm:text-3xl font-extrabold text-brand-400">100%</div>
+      <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">100%</div>
         <div class="text-xs text-slate-400 mt-1">Vetted Professionals</div>
       </div>
-      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-        <div class="text-2xl sm:text-3xl font-extrabold text-white">₹0 Upfront</div>
-        <div class="text-xs text-slate-400 mt-1">30-Day Free Trial</div>
+      <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-white">₹0 Monthly</div>
+        <div class="text-xs text-slate-400 mt-1">Free Lifetime Circles</div>
       </div>
-      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">30 Days</div>
-        <div class="text-xs text-slate-400 mt-1">100% Free Access</div>
+      <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-teal-400">2 Models</div>
+        <div class="text-xs text-slate-400 mt-1">B2B + Client Fulfillment</div>
       </div>
-      <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-        <div class="text-2xl sm:text-3xl font-extrabold text-teal-400">1-Click</div>
-        <div class="text-xs text-slate-400 mt-1">WhatsApp Lead Handoff</div>
+      <div class="p-4 rounded-2xl bg-slate-900/50 border border-slate-800">
+        <div class="text-2xl sm:text-3xl font-extrabold text-brand-400">1-Click</div>
+        <div class="text-xs text-slate-400 mt-1">WhatsApp Coordination</div>
       </div>
     </div>
 
@@ -244,7 +267,7 @@
         
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <div>
-            <span class="text-[10px] uppercase font-bold text-brand-400 tracking-wider">ReferralCircle Solutions</span>
+            <span class="text-[10px] uppercase font-bold text-brand-400 tracking-wider">Viora Client Solutions</span>
             <h3 class="text-base font-bold text-white" x-text="activeServiceName"></h3>
           </div>
           <button @click="serviceModal = false" class="text-slate-400 hover:text-white text-lg">&times;</button>
@@ -295,7 +318,7 @@
     
     <div class="text-center max-w-3xl mx-auto mb-16">
       <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Why Professionals Choose Us</h2>
-      <p class="text-3xl sm:text-4xl font-extrabold text-white">The 5 Core Advantages of ReferralCircle</p>
+      <p class="text-3xl sm:text-4xl font-extrabold text-white">The 5 Core Advantages of Viora Networking</p>
       <p class="mt-4 text-slate-300 text-sm sm:text-base">
         Traditional WhatsApp and Facebook groups are plagued with spam, unverified brokers, and broken promises. We engineered a platform built specifically for high-trust professional deal closing.
       </p>
@@ -383,7 +406,7 @@
       </span>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">One Community. Instant Access to Every Industry.</h2>
       <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
-        You come to ReferralCircle for leads in your profession — but whenever you need verified services for yourself or your business, our network puts the most trusted peers at your fingertips with zero spam.
+        You come to Viora Networking for leads in your profession — but whenever you need verified services for yourself or your business, our network puts the most trusted peers at your fingertips with zero spam.
       </p>
     </div>
 
@@ -466,39 +489,26 @@
           <h3 class="text-lg font-bold text-white mb-2">{{ g.name }}</h3>
           <p class="text-xs text-slate-300 line-clamp-2 mb-4">{{ g.description }}</p>
           
-          <div class="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-3">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80 mb-4">
             <div class="text-slate-300 font-medium flex items-center gap-1.5">
               <i data-lucide="shield-check" class="w-3.5 h-3.5 text-brand-400"></i>
               <span>Verified Direct Handoff</span>
             </div>
-            {% if g.monthly_fee == 0 %}
-              <div class="text-brand-400 font-extrabold bg-brand-500/20 px-2.5 py-0.5 rounded border border-brand-500/30">100% FREE</div>
-            {% else %}
-              <div class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">30-Day Free Trial</div>
-            {% endif %}
+            <div class="text-emerald-400 font-extrabold bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20 flex items-center gap-1">
+              <i data-lucide="sparkles" class="w-3 h-3"></i>
+              <span>100% FREE</span>
+            </div>
           </div>
 
-          <!-- Click to reveal post-trial charges -->
-          <div class="mb-4">
-            <button type="button" @click="showCharges = !showCharges" class="text-[11px] text-slate-400 hover:text-brand-300 flex items-center gap-1 transition">
-              <i data-lucide="info" class="w-3.5 h-3.5 text-brand-400"></i>
-              <span class="underline underline-offset-2" x-text="showCharges ? 'Hide renewal charges' : 'Click to view charges after free trial'"></span>
-            </button>
-            <div x-show="showCharges" x-cloak class="mt-2 p-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-[11px] text-slate-300 space-y-1">
-              {% if g.monthly_fee == 0 %}
-                <div class="text-emerald-400 font-bold">✨ Zero Monthly Fees Forever</div>
-                <p class="text-slate-400">100% free lifetime community. Pay only referral commission on closed deals.</p>
-              {% else %}
-                <div class="text-white font-bold">First 30 Days 100% Free!</div>
-                <p class="text-slate-400">Renews at only <strong class="text-emerald-400 font-extrabold">₹{{ g.monthly_fee }}/month</strong> after your trial ends. Cancel anytime with zero lock-in.</p>
-              {% endif %}
-            </div>
+          <div class="mb-4 text-[11px] text-slate-400 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>Zero monthly charges • Official WhatsApp Group Included</span>
           </div>
         </div>
 
         <a href="/onboard?group_id={{ g.id }}" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-brand-600 hover:text-slate-950 text-white text-xs font-bold flex items-center justify-center gap-2 transition">
           <i data-lucide="message-circle" class="w-4 h-4"></i>
-          <span>Join Circle & WhatsApp Group</span>
+          <span>Join Free Circle & WhatsApp Group</span>
         </a>
       </div>
       {% endfor %}
@@ -532,213 +542,134 @@
 </section>
 
 <!-- Pricing Section -->
+<!-- The Viora Zero-Subscription Model Section -->
 <section id="pricing" class="py-20 bg-slate-900/40 border-t border-slate-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Fair & Tailored Pricing</h2>
-    <p class="text-3xl sm:text-4xl font-extrabold text-white">Transparent Plans Tailored to Your Industry</p>
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 text-xs font-bold uppercase tracking-wider border border-brand-500/20 mb-3">
+      <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+      <span>Zero Subscription Fees Forever</span>
+    </div>
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">The Viora Business Model</h2>
     <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl mx-auto">
-      Every member gets a <strong>full 30-day free trial</strong> with unlimited lead posting and WhatsApp access. No credit card required upfront.
+      We believe high-trust business networking should not be blocked by monthly paywalls. All communities are <strong>100% Free Lifetime Access</strong>.
     </p>
     
-    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left max-w-7xl mx-auto">
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-left max-w-6xl mx-auto">
       
-      <!-- Tier 0: Travel & Tourism (100% FREE) -->
-      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border border-brand-500/40 hover:border-brand-400 flex flex-col justify-between transition bg-gradient-to-b from-brand-950/20 to-slate-900/60">
+      <!-- Pillar 1: 100% Free B2B Circles -->
+      <div class="p-8 rounded-3xl glass-card border border-brand-500/30 hover:border-brand-400 flex flex-col justify-between transition bg-gradient-to-b from-brand-950/20 to-slate-900/70 shadow-xl">
         <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Travel & Tourism</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-300">100% Free</span>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Pillar 1 • B2B Peer Circles</span>
+            <span class="text-[10px] uppercase font-extrabold px-2.5 py-0.5 rounded bg-brand-500/20 text-brand-300">₹0 / Month</span>
           </div>
 
-          <h3 class="text-lg font-bold text-white">Travel Agents Hub</h3>
-          <p class="text-xs text-slate-400 mt-1">For B2B tour operators, visa facilitators, and hotel/cab brokers.</p>
+          <h3 class="text-xl font-extrabold text-white">100% Free Lifetime Access</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            Join verified profession networks without paying any subscription or monthly membership fee. Ever.
+          </p>
 
-          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
-            <div class="text-2xl font-extrabold text-brand-400">100% Free</div>
-            <div class="text-[11px] text-slate-400 mt-0.5">Lifetime Community Access</div>
+          <div class="mt-6 p-4 rounded-2xl bg-slate-950/90 border border-slate-800">
+            <div class="text-3xl font-black text-brand-400">₹0 <span class="text-xs font-medium text-slate-400">forever</span></div>
+            <div class="text-[11px] text-slate-400 mt-1">Zero monthly fees • Zero hidden lock-ins</div>
           </div>
 
-          <!-- Click to reveal info -->
-          <div class="mt-4">
-            <button type="button" @click="showFee = !showFee" class="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1.5 font-medium transition">
-              <i data-lucide="info" class="w-3.5 h-3.5"></i>
-              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Plan Details ▴' : 'Click to View Charges ▾'"></span>
-            </button>
-            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
-              <div class="font-bold text-emerald-400">✨ Zero Monthly Fees Forever</div>
-              <p class="text-slate-400 leading-relaxed">This community has zero monthly subscription charges. You only share a referral cut upon closing a successful tour/package deal.</p>
-            </div>
-          </div>
-
-          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
+          <ul class="mt-6 space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-6">
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-brand-400 shrink-0"></i>
               <span>Official WhatsApp community access</span>
             </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Group tour & package leads</span>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Post & claim verified peer leads</span>
             </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>No monthly subscription renewal</span>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-brand-400 shrink-0"></i>
+              <span>Direct WhatsApp contact handoff</span>
             </li>
           </ul>
         </div>
 
-        <a href="/onboard?group_id=2" class="mt-6 w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs text-center transition block shadow-md shadow-brand-500/20">
-          Join Free Community &rarr;
+        <a href="/onboard" class="mt-8 w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-xs text-center transition block shadow-lg shadow-brand-500/20">
+          Join Free Network &rarr;
         </a>
       </div>
 
-      <!-- Tier 1: Mechanical & Industrial Engineers (₹299/mo after trial) -->
-      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
+      <!-- Pillar 2: Deal-Based Referral Splits -->
+      <div class="p-8 rounded-3xl glass-card border border-emerald-500/30 hover:border-emerald-400 flex flex-col justify-between transition bg-gradient-to-b from-emerald-950/20 to-slate-900/70 shadow-xl">
         <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Engineering</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-emerald-400">Free Trial</span>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Pillar 2 • Closed Deals</span>
+            <span class="text-[10px] uppercase font-extrabold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Success-Based</span>
           </div>
 
-          <h3 class="text-lg font-bold text-white">Mechanical Hub</h3>
-          <p class="text-xs text-slate-400 mt-1">For mechanical engineers, fabrication plants, and machine shops.</p>
+          <h3 class="text-xl font-extrabold text-white">Deal-Based Success Splits</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            When you pass a lead or claim one that converts into revenue, you and your verified partner share the agreed referral cut.
+          </p>
 
-          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
-            <div class="text-2xl font-extrabold text-white">30 Days Free</div>
-            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">₹0 Upfront • Full Access</div>
+          <div class="mt-6 p-4 rounded-2xl bg-slate-950/90 border border-slate-800">
+            <div class="text-3xl font-black text-emerald-400">10-20% <span class="text-xs font-medium text-slate-400">peer split</span></div>
+            <div class="text-[11px] text-slate-400 mt-1">Paid only when client deal closes</div>
           </div>
 
-          <!-- Click to reveal post-trial charges -->
-          <div class="mt-4">
-            <button type="button" @click="showFee = !showFee" class="text-xs text-slate-300 hover:text-brand-400 flex items-center gap-1.5 font-medium transition">
-              <i data-lucide="info" class="w-3.5 h-3.5 text-brand-400"></i>
-              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Renewal Details ▴' : 'Click to View Post-Trial Charges ▾'"></span>
-            </button>
-            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
-              <div class="font-bold text-white">First 30 Days 100% Free!</div>
-              <p class="text-slate-400 leading-relaxed">After your 30-day trial ends, renewal is just <strong class="text-emerald-400 font-bold">₹299/month</strong>. Cancel anytime with zero lock-in.</p>
-            </div>
-          </div>
-
-          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Fabrication & CNC contracts</span>
+          <ul class="mt-6 space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-6">
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+              <span>Clear referral percentages agreed upfront</span>
             </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>WhatsApp community access</span>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+              <span>High-trust peer accountability</span>
             </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>1-click WhatsApp lead claim</span>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+              <span>Monetize leads you cannot fulfill yourself</span>
             </li>
           </ul>
         </div>
 
-        <a href="/onboard?group_id=3" class="mt-6 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
-          Start 30-Day Free Trial &rarr;
+        <a href="/app" class="mt-8 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
+          View Open Peer Leads &rarr;
         </a>
       </div>
 
-      <!-- Tier 2: Legal & Software Tech (₹399/mo after trial) - HIGHLIGHTED -->
-      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border-2 border-brand-500 shadow-2xl relative flex flex-col justify-between transform lg:-translate-y-2">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-brand-500 text-slate-950 font-extrabold text-[9px] uppercase tracking-wider shadow">
-          Popular
-        </div>
-
+      <!-- Pillar 3: Founder Concierge Solutions (B2B2C) -->
+      <div class="p-8 rounded-3xl glass-card border border-teal-500/30 hover:border-teal-400 flex flex-col justify-between transition bg-gradient-to-b from-teal-950/20 to-slate-900/70 shadow-xl">
         <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Legal & Tech</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-300">Free Trial</span>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-400">Pillar 3 • Client Services</span>
+            <span class="text-[10px] uppercase font-extrabold px-2.5 py-0.5 rounded bg-teal-500/20 text-teal-300">Founder Concierge</span>
           </div>
 
-          <h3 class="text-lg font-bold text-white">Lawyers & Tech</h3>
-          <p class="text-xs text-slate-400 mt-1">For corporate/litigation lawyers, freelance devs, and architects.</p>
+          <h3 class="text-xl font-extrabold text-white">Direct Client Solutions</h3>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            For individuals and businesses needing verified NCR Real Estate, Hotels & Cabs, Tech Dev, or Legal counsel fulfilled directly.
+          </p>
 
-          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
-            <div class="text-2xl font-extrabold text-white">30 Days Free</div>
-            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">₹0 Upfront • Full Access</div>
+          <div class="mt-6 p-4 rounded-2xl bg-slate-950/90 border border-slate-800">
+            <div class="text-3xl font-black text-teal-400">Direct <span class="text-xs font-medium text-slate-400">fulfillment</span></div>
+            <div class="text-[11px] text-slate-400 mt-1">Founder oversight & verified providers</div>
           </div>
 
-          <!-- Click to reveal post-trial charges -->
-          <div class="mt-4">
-            <button type="button" @click="showFee = !showFee" class="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1.5 font-medium transition">
-              <i data-lucide="info" class="w-3.5 h-3.5"></i>
-              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Renewal Details ▴' : 'Click to View Post-Trial Charges ▾'"></span>
-            </button>
-            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
-              <div class="font-bold text-white">First 30 Days 100% Free!</div>
-              <p class="text-slate-400 leading-relaxed">After your 30-day trial ends, renewal is just <strong class="text-emerald-400 font-bold">₹399/month</strong>. One closed brief pays for years.</p>
-            </div>
-          </div>
-
-          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>High-value retainer referrals</span>
+          <ul class="mt-6 space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-6">
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span>No middleman scams or spammers</span>
             </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Software & architecture briefs</span>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span>Fast 15-minute Founder response</span>
             </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Direct WhatsApp verified handoff</span>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span>End-to-end satisfaction guarantee</span>
             </li>
           </ul>
         </div>
 
-        <a href="/onboard?group_id=4" class="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-extrabold text-xs text-center transition block shadow-lg shadow-brand-500/25">
-          Start 30-Day Free Trial &rarr;
-        </a>
-      </div>
-
-      <!-- Tier 3: Property Dealers & Realtors (₹499/mo after trial) -->
-      <div x-data="{ showFee: false }" class="p-6 rounded-3xl glass-card border border-slate-800 hover:border-slate-700 flex flex-col justify-between transition">
-        <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Real Estate</span>
-            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">Free Trial</span>
-          </div>
-
-          <h3 class="text-lg font-bold text-white">Property Dealers</h3>
-          <p class="text-xs text-slate-400 mt-1">For verified brokers closing multi-crore NCR property deals.</p>
-
-          <div class="mt-5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
-            <div class="text-2xl font-extrabold text-white">30 Days Free</div>
-            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">₹0 Upfront • Full Access</div>
-          </div>
-
-          <!-- Click to reveal post-trial charges -->
-          <div class="mt-4">
-            <button type="button" @click="showFee = !showFee" class="text-xs text-slate-300 hover:text-brand-400 flex items-center gap-1.5 font-medium transition">
-              <i data-lucide="info" class="w-3.5 h-3.5 text-brand-400"></i>
-              <span class="underline underline-offset-2" x-text="showFee ? 'Hide Renewal Details ▴' : 'Click to View Post-Trial Charges ▾'"></span>
-            </button>
-            <div x-show="showFee" x-cloak class="mt-2 p-3 rounded-xl bg-slate-950/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
-              <div class="font-bold text-white">First 30 Days 100% Free!</div>
-              <p class="text-slate-400 leading-relaxed">After your 30-day trial ends, renewal is just <strong class="text-emerald-400 font-bold">₹499/month</strong>. One deal covers a lifetime of access.</p>
-            </div>
-          </div>
-
-          <ul class="mt-5 space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-5">
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Multi-crore buyer/tenant mandates</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Sector-by-sector NCR filters</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <i data-lucide="check" class="w-4 h-4 text-brand-400 shrink-0"></i>
-              <span>Official NCR WhatsApp network</span>
-            </li>
-          </ul>
-        </div>
-
-        <a href="/onboard?group_id=1" class="mt-6 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
-          Start 30-Day Free Trial &rarr;
+        <a href="#services" class="mt-8 w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs text-center transition block shadow-lg shadow-teal-500/20">
+          Request a Solution &rarr;
         </a>
       </div>
 
@@ -758,12 +689,12 @@
       Connect More. Earn More.
     </h2>
     <p class="mt-4 text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-      Turn every unserviceable inquiry into guaranteed referral commission. Join NCR's most trusted peer-to-peer business exchange today.
+      Turn every unserviceable inquiry into guaranteed referral commission. Join NCR's most trusted peer-to-peer business exchange today with 100% free lifetime membership.
     </p>
     <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
       <a href="/onboard" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow-xl shadow-emerald-500/20 transition flex items-center justify-center gap-2">
         <i data-lucide="zap" class="w-4 h-4"></i>
-        <span>Join Your Circle (30 Days Free)</span>
+        <span>Join Your Circle (100% Free Lifetime)</span>
       </a>
       <a href="#services" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
         <span>Explore Direct Services</span> &rarr;

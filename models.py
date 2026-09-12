@@ -289,6 +289,17 @@ def create_cross_vertical_request(user_id: int, user_name: str, user_phone: str,
     conn.close()
     return req_id
 
+def get_b2b2c_inquiries(user_id: int = None, user_phone: str = None):
+    conn = get_db_connection()
+    if user_id:
+        reqs = conn.execute("SELECT * FROM cross_vertical_requests WHERE user_id = ? ORDER BY id DESC", (user_id,)).fetchall()
+    elif user_phone:
+        reqs = conn.execute("SELECT * FROM cross_vertical_requests WHERE user_phone LIKE ? ORDER BY id DESC", (f"%{user_phone}%",)).fetchall()
+    else:
+        reqs = conn.execute("SELECT * FROM cross_vertical_requests ORDER BY id DESC LIMIT 50").fetchall()
+    conn.close()
+    return [dict(r) for r in reqs]
+
 def get_all_members_for_export():
     conn = get_db_connection()
     users = conn.execute("""

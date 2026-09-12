@@ -13,7 +13,7 @@ def seed_all():
     cursor.execute("DELETE FROM users")
     cursor.execute("DELETE FROM vertical_groups")
 
-    # 1. Insert Initial Profession Circles
+    # 1. Insert Initial Profession Circles (100% Free Lifetime)
     groups = [
         (
             1,
@@ -24,7 +24,7 @@ def seed_all():
             "building",
             "https://chat.whatsapp.com/invite/NCR-Property-Dealers-Official",
             "10-20% Brokerage Commission",
-            499
+            0
         ),
         (
             2,
@@ -46,7 +46,7 @@ def seed_all():
             "cog",
             "https://chat.whatsapp.com/invite/Mechanical-Industrial-Network",
             "5-10% Project Value / Referral Cut",
-            299
+            0
         ),
         (
             4,
@@ -57,7 +57,7 @@ def seed_all():
             "scale",
             "https://chat.whatsapp.com/invite/Lawyers-Legal-Circle-India",
             "15% Initial Retainer Referral Cut",
-            399
+            0
         ),
         (
             5,
@@ -68,7 +68,7 @@ def seed_all():
             "code",
             "https://chat.whatsapp.com/invite/Tech-Freelancers-Network",
             "10% Contract Value Split",
-            399
+            0
         ),
         (
             6,
@@ -79,7 +79,7 @@ def seed_all():
             "compass",
             "https://chat.whatsapp.com/invite/Architects-Designers-Hub",
             "8-12% Execution Project Cut",
-            399
+            0
         )
     ]
 
@@ -88,43 +88,42 @@ def seed_all():
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, groups)
 
-    # 2. Insert Demo Users
-    trial_expiry = (datetime.now() + timedelta(days=28)).strftime('%Y-%m-%d %H:%M:%S')
+    # 2. Insert Demo Users (100% Free Active Members)
     users = [
         (
             1, "Admin Founder", "9876500000", "919876500000", "Platform Admin", None, 1,
             "Gurgaon Sector 29", "Platform Management", 10, "FOUNDER-001", "Direct", 1,
-            "approved", 100, "admin", "active", trial_expiry
+            "approved", 100, "admin", "active", None
         ),
         (
             2, "Rajesh Khanna", "9811002233", "919811002233", "Property Dealers & Realtors Network", None, 1,
             "Gurgaon Golf Course Ext", "Khanna Real Estate Advisors", 12, "HRERA-GGM-2021-894", "WhatsApp Group", 1,
-            "approved", 98, "member", "trial", trial_expiry
+            "approved", 98, "member", "active", None
         ),
         (
             3, "Amit Sharma", "9899112233", "919899112233", "Property Dealers & Realtors Network", None, 1,
             "Noida Expressway", "NCR Square Properties", 8, "UPRERA-NOIDA-541", "LinkedIn", 1,
-            "approved", 95, "member", "trial", trial_expiry
+            "approved", 95, "member", "active", None
         ),
         (
             4, "Sunil Verma", "9711223344", "919711223344", "Travel Agents & Tour Operators Circle", None, 2,
             "Central Delhi / Connaught Place", "Globe Trotters B2B Holidays", 10, "IATA-9812-DEL", "Travel Expo", 1,
-            "approved", 96, "member", "active", trial_expiry
+            "approved", 96, "member", "active", None
         ),
         (
             5, "Karan Kapoor", "9818889900", "919818889900", "Software Engineers & Tech Consultants", None, 5,
             "Noida Sector 62 / Remote", "Kapoor FullStack Lab", 7, "NASSCOM-DEV-882", "GitHub Community", 1,
-            "approved", 94, "member", "trial", trial_expiry
+            "approved", 94, "member", "active", None
         ),
         (
             6, "Vikram Singhania", "9822446688", "919822446688", "Mechanical & Industrial Engineers Hub", None, 3,
             "Faridabad Industrial Area", "Singhania Precision Tooling", 15, "ISO-9001-MFG", "Industry Association", 1,
-            "approved", 99, "member", "trial", trial_expiry
+            "approved", 99, "member", "active", None
         ),
         (
             7, "Adv. Neha Saxena", "9810887766", "919810887766", "Corporate & Litigation Lawyers Network", None, 4,
             "South Delhi / Saket Court", "Saxena Legal Chambers", 9, "D/1452/2015", "Bar Association", 1,
-            "approved", 97, "member", "trial", trial_expiry
+            "approved", 97, "member", "active", None
         )
     ]
 

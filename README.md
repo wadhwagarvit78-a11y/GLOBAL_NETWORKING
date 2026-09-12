@@ -1,4 +1,4 @@
-# ReferralCircle — Professional Referral & Community Platform
+# Viora Networking — Professional Referral & Community Platform
 
 A hyper-local, multi-vertical referral exchange and networking platform designed for professionals (Travel Agents, Mechanical Engineers, Realtors, Lawyers, Architects, Tech Freelancers) to monetize excess client inquiries and coordinate leads directly via WhatsApp.
 

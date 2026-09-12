@@ -26,17 +26,18 @@ def init_db():
         icon TEXT DEFAULT 'users',
         whatsapp_group_link TEXT NOT NULL DEFAULT 'https://chat.whatsapp.com/invite-default',
         min_commission_rate TEXT DEFAULT '10-20% Brokerage / Success Fee',
-        monthly_fee INTEGER DEFAULT 399,
+        monthly_fee INTEGER DEFAULT 0,
         is_active INTEGER DEFAULT 1,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """)
 
-    # Migration for existing vertical_groups table
+    # Ensure monthly_fee defaults to 0 (100% Free Lifetime Communities)
     cursor.execute("PRAGMA table_info(vertical_groups)")
     columns = [col[1] for col in cursor.fetchall()]
     if "monthly_fee" not in columns:
-        cursor.execute("ALTER TABLE vertical_groups ADD COLUMN monthly_fee INTEGER DEFAULT 399")
+        cursor.execute("ALTER TABLE vertical_groups ADD COLUMN monthly_fee INTEGER DEFAULT 0")
+    cursor.execute("UPDATE vertical_groups SET monthly_fee = 0")
 
     # Users Table
     cursor.execute("""
@@ -57,7 +58,7 @@ def init_db():
         verification_status TEXT DEFAULT 'approved', -- 'pending', 'approved', 'rejected'
         reputation_score INTEGER DEFAULT 100,
         role TEXT DEFAULT 'member', -- 'member', 'admin'
-        subscription_status TEXT DEFAULT 'trial', -- 'trial', 'active', 'expired'
+        subscription_status TEXT DEFAULT 'active', -- 'active' 100% free lifetime membership
         trial_ends_at TIMESTAMP,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (group_id) REFERENCES vertical_groups (id)
