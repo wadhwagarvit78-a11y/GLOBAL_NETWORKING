@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Founder Admin Control Center — Viora Networking{% endblock %}
+{% block title %}Founder Admin Control Center — TrustHub Networking{% endblock %}
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ tab: 'groups' }">
@@ -166,7 +166,7 @@
                   <div class="text-slate-500 text-[11px]">{{ u.years_experience or 1 }} yrs exp • {{ u.rera_or_license_id or 'No License Added' }}</div>
                 </td>
                 <td class="p-4">
-                  <a href="https://wa.me/{{ u.whatsapp_number }}?text={{ ('Hi ' ~ u.full_name ~ ', welcome to ' ~ (u.group_name or 'Viora Networking') ~ '!')|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-brand-400 text-[11px] font-semibold border border-slate-700 transition">
+                  <a href="https://wa.me/{{ u.whatsapp_number }}?text={{ ('Hi ' ~ u.full_name ~ ', welcome to ' ~ (u.group_name or 'TrustHub Networking') ~ '!')|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-brand-400 text-[11px] font-semibold border border-slate-700 transition">
                     <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Chat
                   </a>
                 </td>
@@ -323,7 +323,7 @@
                   </span>
                 </td>
                 <td class="p-4">
-                  <a href="https://wa.me/{{ cr.user_phone }}?text={{ ('Hi ' ~ cr.user_name ~ ', I received your request for ' ~ cr.target_service ~ ' on Viora Networking. I have verified top partners ready for you!')|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-[11px] transition">
+                  <a href="https://wa.me/{{ cr.user_phone }}?text={{ ('Hi ' ~ cr.user_name ~ ', I received your request for ' ~ cr.target_service ~ ' on TrustHub Networking. I have verified top partners ready for you!')|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-[11px] transition">
                     <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
                     <span>Connect on WhatsApp</span>
                   </a>

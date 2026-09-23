@@ -19,8 +19,8 @@ init_db()
 
 BASE_DIR = Path(__file__).resolve().parent
 
-app = FastAPI(title="Viora Networking — Verified Business & Client Solutions")
-app.add_middleware(SessionMiddleware, secret_key="viora-networking-super-secret-key-2026")
+app = FastAPI(title="TrustHub Networking — Verified Business & Client Solutions")
+app.add_middleware(SessionMiddleware, secret_key="trusthub-super-secret-key-2026")
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
@@ -214,7 +214,7 @@ async def handle_claim_lead(request: Request, lead_id: int):
         author_wa = lead["author_whatsapp"]
         token = lead["lead_token"]
         title = lead["title"]
-        msg = f"Hi {lead['author_name']}, I claimed your requirement {token} ({title}) on Viora Networking. Let's coordinate the deal!"
+        msg = f"Hi {lead['author_name']}, I claimed your requirement {token} ({title}) on TrustHub Networking. Let's coordinate the deal!"
         encoded_msg = urllib.parse.quote(msg)
         wa_url = f"https://wa.me/{author_wa}?text={encoded_msg}"
         return RedirectResponse(url=wa_url, status_code=302)
@@ -362,7 +362,7 @@ async def export_members_csv():
         content=csv_data,
         media_type="text/csv",
         headers={
-            "Content-Disposition": "attachment; filename=viora_members_directory.csv"
+            "Content-Disposition": "attachment; filename=trusthub_members_directory.csv"
         }
     )
 

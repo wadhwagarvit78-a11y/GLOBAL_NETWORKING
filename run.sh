@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 
 echo "================================================="
-echo "  Starting Viora Networking Platform..."
+echo "  Starting TrustHub Networking Platform..."
 echo "  Opening http://localhost:8000 in your browser..."
 echo "================================================="
 

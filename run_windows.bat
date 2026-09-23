@@ -1,7 +1,7 @@
 @echo off
-title Viora Networking Server
+title TrustHub Networking Server
 echo ===================================================
-echo   Starting Viora Networking Web Platform (Windows)
+echo   Starting TrustHub Networking Web Platform (Windows)
 echo ===================================================
 echo.
 

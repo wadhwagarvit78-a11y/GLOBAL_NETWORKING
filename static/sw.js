@@ -1,5 +1,5 @@
-// Viora Networking Service Worker
-const CACHE_NAME = 'viora-v1';
+// TrustHub Networking Service Worker
+const CACHE_NAME = 'trusthub-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/static/manifest.json',
