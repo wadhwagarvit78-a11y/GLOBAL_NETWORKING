@@ -67,18 +67,19 @@
       
       <!-- Brand Logo -->
       <a href="/" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-emerald-500 to-teal-400 p-0.5 flex items-center justify-center text-slate-950 shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform overflow-hidden">
-          <div class="w-full h-full rounded-[10px] bg-slate-950 flex items-center justify-center relative overflow-hidden">
-            <img src="/static/images/logo.png" alt="TrustHub" class="w-full h-full object-contain p-1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="w-full h-full bg-gradient-to-tr from-emerald-500 to-teal-400 items-center justify-center text-slate-950 font-black text-xl hidden">T</div>
-          </div>
+        <div class="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-lg shadow-emerald-500/10 border border-slate-200/30 group-hover:scale-105 transition-transform overflow-hidden shrink-0">
+          <img src="/static/images/logo_emblem.png" alt="TrustHub Logo" class="w-full h-full object-contain" />
         </div>
         <div>
           <div class="flex items-center gap-1.5">
-            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">TrustHub</span>
+            <span class="text-xl font-extrabold tracking-tight text-white">Trust<span class="text-amber-400">Hub</span></span>
             <span class="text-xs uppercase tracking-widest font-bold text-emerald-400">Networking</span>
           </div>
-          <div class="text-[9px] text-slate-400 font-medium tracking-wider">trusthubnetworking.com</div>
+          <div class="text-[9px] text-slate-400 font-medium tracking-wider flex items-center gap-1">
+            <span>trusthubnetworking.com</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-amber-300/90 font-medium italic">The Right Connection.</span>
+          </div>
         </div>
       </a>
 
@@ -229,12 +230,17 @@
   <footer class="border-t border-slate-800/80 bg-slate-950 text-slate-400 text-xs py-10 mt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-2.5">
-          <div class="w-6 h-6 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 text-xs font-black">T</div>
-          <span class="font-bold text-slate-200">TrustHub Networking</span>
-          <span class="text-xs text-slate-500">• trusthubnetworking.com</span>
-          <span class="text-slate-600">|</span>
-          <span class="text-emerald-400 font-semibold">Connect More. Earn More.</span>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-xl bg-white p-1 flex items-center justify-center text-slate-950 shadow shrink-0">
+            <img src="/static/images/logo_emblem.png" alt="TrustHub" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-slate-200">Trust<span class="text-amber-400">Hub</span> Networking</span>
+              <span class="text-xs text-slate-500">• trusthubnetworking.com</span>
+            </div>
+            <div class="text-[10px] text-slate-400">The Right Connection. • Connect More. Earn More.</div>
+          </div>
         </div>
         <div class="flex flex-wrap items-center gap-6">
           <a href="/#professions" class="hover:text-slate-200">B2B Circles</a>
