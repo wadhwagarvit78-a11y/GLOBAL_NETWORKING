@@ -136,8 +136,20 @@ def seed_all():
             "https://chat.whatsapp.com/invite/Mechanical-Industrial-Network",
             "5-10% Project Value / Referral Cut",
             0
+        ),
+        (
+            12,
+            "FREE Sponsored Trips",
+            "free-sponsored-trips",
+            "Travel & Sponsorships",
+            "Exclusive circle for travel organizers, brands, influencers, hospitality sponsors & corporate groups collaborating on fully/partially funded trips.",
+            "gift",
+            "https://chat.whatsapp.com/invite/Free-Sponsored-Trips-Hub",
+            "Sponsor Terms / Collab Split",
+            0
         )
     ]
+
 
     cursor.executemany("""
     INSERT INTO vertical_groups (id, name, slug, category, description, icon, whatsapp_group_link, min_commission_rate, monthly_fee)

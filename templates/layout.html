@@ -97,8 +97,8 @@
           </button>
           <div x-show="open" x-cloak class="absolute left-0 mt-3 w-72 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 text-xs space-y-1">
             <a href="/#professions" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <div class="font-bold text-emerald-400">All 11 Verified Circles (100% Free)</div>
-              <div class="text-[10px] text-slate-400">Real Estate, Catering, Events, DMCs, Law, Tech</div>
+              <div class="font-bold text-emerald-400">All 12 Verified Circles</div>
+              <div class="text-[10px] text-slate-400">Real Estate, Travel, Sponsored Trips, Catering, Tech</div>
             </a>
             <a href="/app?mode=b2b" @click="open = false" class="block p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
               <div class="font-bold">B2B Leads Feed & Exchange</div>
@@ -129,11 +129,11 @@
                 <div class="text-[10px] text-slate-400">Direct verified builder & resale mandates</div>
               </div>
             </a>
-            <a href="/#services-dmc" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
-              <span class="text-base">🏔️</span>
+            <a href="/#services-travel-packages" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
+              <span class="text-base">✈️</span>
               <div>
-                <div class="font-bold">DMCs (Himachal, Uttarakhand, Goa)</div>
-                <div class="text-[10px] text-slate-400">Ground operators, luxury stays & fleet transport</div>
+                <div class="font-bold">Tour Packages & Vacations</div>
+                <div class="text-[10px] text-slate-400">Customized domestic, international & family holidays</div>
               </div>
             </a>
             <a href="/#services-catering-events" @click="open = false" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition">
@@ -183,7 +183,7 @@
             {% if current_user.role == 'admin' %}
               <a href="/admin" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold hover:bg-amber-500/20 transition">
                 <i data-lucide="shield" class="w-3.5 h-3.5"></i>
-                <span>Trusthub admin</span>
+                <span>Admin Panel</span>
               </a>
             {% else %}
               <a href="/app" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition">
@@ -197,14 +197,9 @@
           <a href="/login" class="text-xs font-bold text-slate-300 hover:text-white px-2.5 py-1.5">Sign In</a>
           <a href="/onboard" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-md shadow-brand-600/20 transition-all hover:scale-[1.02]">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-            <span>Join Free</span>
+            <span>Join Network</span>
           </a>
         {% endif %}
-
-        <!-- Quick Switcher to Admin -->
-        <a href="/admin" title="Founder Admin Portal (Password: 9906)" class="p-2 text-slate-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-slate-800">
-          <i data-lucide="shield-check" class="w-4 h-4"></i>
-        </a>
       </div>
     </div>
   </header>
@@ -259,7 +254,7 @@
           <a href="/#professions" class="hover:text-slate-200">B2B Circles</a>
           <a href="/#services" class="hover:text-slate-200">Direct Client Services</a>
           <a href="/#advantages" class="hover:text-slate-200">Why TrustHub</a>
-          <a href="/admin" class="hover:text-brand-400 text-slate-500">Founder Admin</a>
+          <a href="/client-portal" class="hover:text-teal-400">Client Desk</a>
         </div>
       </div>
       <div class="mt-6 pt-6 border-t border-slate-900 text-center text-slate-500 text-[11px]">
