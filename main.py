@@ -308,8 +308,26 @@ async def subscription_page(request: Request):
 async def handle_subscription_activate(request: Request):
     return RedirectResponse(url="/app", status_code=302)
 
-ADMIN_USERNAME = "Trusthub admin"
-ADMIN_PASSWORD = "9906"
+import hashlib
+import secrets
+
+# Secure Admin Auth: Loaded from Environment Variable or verified against a salted PBKDF2 cryptographic hash
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "Trusthub admin")
+DEFAULT_HASH = "c1c0b0757ede62fc7ca20d9472e4171a:23e204ffa7ce0a77d83518977e733461fb7343910dee5c0d3c8a0c6a01366f01"
+ADMIN_PASSWORD_HASH = os.getenv("ADMIN_PASSWORD_HASH", DEFAULT_HASH)
+
+def verify_admin_password(provided_password: str) -> bool:
+    env_plain = os.getenv("ADMIN_PASSWORD")
+    if env_plain and secrets.compare_digest(provided_password.strip(), env_plain.strip()):
+        return True
+    try:
+        salt_hex, key_hex = ADMIN_PASSWORD_HASH.split(":")
+        salt = bytes.fromhex(salt_hex)
+        key = bytes.fromhex(key_hex)
+        derived = hashlib.pbkdf2_hmac("sha256", provided_password.strip().encode("utf-8"), salt, 100000)
+        return secrets.compare_digest(derived, key)
+    except Exception:
+        return False
 
 def is_admin(request: Request) -> bool:
     if request.session.get("is_admin") is True:
@@ -331,14 +349,18 @@ async def admin_login_page(request: Request, error: str = None):
 
 @app.post("/admin/login")
 async def handle_admin_login(request: Request, username: str = Form(...), password: str = Form(...)):
-    if username.strip().lower() == ADMIN_USERNAME.lower() and password.strip() == ADMIN_PASSWORD:
+    user_match = secrets.compare_digest(username.strip().lower(), ADMIN_USERNAME.lower())
+    pass_match = verify_admin_password(password)
+    
+    if user_match and pass_match:
         request.session["is_admin"] = True
         request.session["user_id"] = 1  # Trusthub admin user ID
         return RedirectResponse(url="/admin", status_code=302)
     return templates.TemplateResponse(request=request, name="admin_login.html", context={
         "username": username,
-        "error": "Invalid username or password. Please enter the correct Founder credentials."
+        "error": "Invalid username or password. Access denied."
     }, status_code=401)
+
 
 @app.get("/admin/logout")
 async def handle_admin_logout(request: Request):
