@@ -12,7 +12,7 @@
         <span>Direct Client Fulfillment Desk</span>
       </div>
       <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Your Requirements & Solutions Desk</h1>
-      <p class="text-xs text-slate-400 mt-1">Track requirements submitted to TrustHub Founder Desk for direct verified execution.</p>
+      <p class="text-xs text-slate-400 mt-1">Track requirements submitted to TrustHub Executive Priority Desk for verified fulfillment.</p>
     </div>
 
     <a href="/#services" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs shadow-md transition">
@@ -50,9 +50,9 @@
           <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider {% if inq.status == 'approved' or inq.status == 'in_progress' %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/30{% else %}bg-amber-500/10 text-amber-400 border border-amber-500/30{% endif %}">
             ● {{ inq.status|capitalize }}
           </span>
-          <a href="https://wa.me/919876500000?text={{ ('Hi TrustHub Founder, following up on my inquiry for ' ~ inq.target_service)|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-medium border border-slate-700 transition">
+          <a href="https://wa.me/918529171368?text={{ ('Hi TrustHub Support, following up on my inquiry for ' ~ inq.target_service)|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-medium border border-slate-700 transition">
             <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
-            <span>Chat with Desk</span>
+            <span>Chat with Priority Desk</span>
           </a>
         </div>
       </div>
