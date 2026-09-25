@@ -147,7 +147,7 @@ def seed_all():
     # 2. Insert Demo Users (100% Free Active Members)
     users = [
         (
-            1, "Admin Founder", "9876500000", "919876500000", "Platform Admin", None, 1,
+            1, "Trusthub admin", "9876500000", "919876500000", "Platform Admin", None, 1,
             "Gurgaon Sector 29", "TrustHub Founders Desk", 10, "FOUNDER-001", "Direct", 1,
             "approved", 100, "admin", "active", None
         ),

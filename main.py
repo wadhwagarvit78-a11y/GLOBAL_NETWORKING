@@ -47,12 +47,8 @@ def get_current_user(request: Request):
         user = models.get_user_by_id(user_id)
         if user:
             return user
-    # Fallback demo default user (User 2: Rajesh Khanna / Real Estate or User 4: Sunil Verma / Travel)
-    default_user = models.get_user_by_id(2)
-    if default_user:
-        request.session["user_id"] = default_user["id"]
-        return default_user
     return None
+
 
 # 1. Homepage (Universal / Vertical-Agnostic with Motto & 5 Advantages)
 @app.get("/", response_class=HTMLResponse)
@@ -278,9 +274,27 @@ async def handle_cross_referral(
         requirement_details=requirement_details,
         budget_range=budget_range
     )
+    if uphone:
+        request.session["client_phone"] = uphone
     if user_name:
-        return RedirectResponse(url="/?service_success=1#services", status_code=302)
+        return RedirectResponse(url="/client-portal?submitted=1", status_code=302)
     return RedirectResponse(url="/app?cross_success=1", status_code=302)
+
+# 8b. Dedicated Client Solutions Portal (B2B2C Dashboard)
+@app.get("/client-portal", response_class=HTMLResponse)
+async def client_portal_page(request: Request, submitted: int = None):
+    current_user = get_current_user(request)
+    client_phone = request.session.get("client_phone")
+    user_id = current_user.get("id") if current_user else None
+    phone = (current_user.get("phone_number") if current_user else None) or client_phone
+    
+    inquiries = models.get_b2b2c_inquiries(user_id=user_id, user_phone=phone) if (user_id or phone) else []
+    return templates.TemplateResponse(request=request, name="client_portal.html", context={
+        "current_user": current_user,
+        "inquiries": inquiries,
+        "submitted": submitted
+    })
+
 
 # 9. Subscription & Trial
 @app.get("/subscription", response_class=HTMLResponse)
@@ -294,15 +308,54 @@ async def subscription_page(request: Request):
 async def handle_subscription_activate(request: Request):
     return RedirectResponse(url="/app", status_code=302)
 
-# 10. Admin Control Center (WhatsApp Link Manager, KPIs, Directory, Commission Approvals)
+ADMIN_USERNAME = "Trusthub admin"
+ADMIN_PASSWORD = "9906"
+
+def is_admin(request: Request) -> bool:
+    if request.session.get("is_admin") is True:
+        return True
+    user = get_current_user(request)
+    if user and user.get("role") == "admin":
+        return True
+    return False
+
+# 10. Admin Login & Control Center
+@app.get("/admin/login", response_class=HTMLResponse)
+async def admin_login_page(request: Request, error: str = None):
+    if is_admin(request):
+        return RedirectResponse(url="/admin", status_code=302)
+    return templates.TemplateResponse(request=request, name="admin_login.html", context={
+        "username": ADMIN_USERNAME,
+        "error": error
+    })
+
+@app.post("/admin/login")
+async def handle_admin_login(request: Request, username: str = Form(...), password: str = Form(...)):
+    if username.strip().lower() == ADMIN_USERNAME.lower() and password.strip() == ADMIN_PASSWORD:
+        request.session["is_admin"] = True
+        request.session["user_id"] = 1  # Trusthub admin user ID
+        return RedirectResponse(url="/admin", status_code=302)
+    return templates.TemplateResponse(request=request, name="admin_login.html", context={
+        "username": username,
+        "error": "Invalid username or password. Please enter the correct Founder credentials."
+    }, status_code=401)
+
+@app.get("/admin/logout")
+async def handle_admin_logout(request: Request):
+    request.session.pop("is_admin", None)
+    return RedirectResponse(url="/", status_code=302)
+
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_page(request: Request):
+    if not is_admin(request):
+        return RedirectResponse(url="/admin/login", status_code=302)
     current_user = get_current_user(request)
     metrics = models.get_admin_metrics()
     return templates.TemplateResponse(request=request, name="admin.html", context={
         "current_user": current_user,
         "metrics": metrics
     })
+
 
 @app.post("/admin/update-group-link")
 async def handle_update_group_link(

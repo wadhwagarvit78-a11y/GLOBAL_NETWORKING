@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}Founder Admin Login — TrustHub Networking{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16">
+  
+  <div class="text-center mb-8">
+    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto mb-4 border border-amber-500/20 shadow-lg shadow-amber-500/10">
+      <i data-lucide="shield-check" class="w-7 h-7"></i>
+    </div>
+    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 text-xs font-bold border border-rose-500/20 uppercase tracking-wider mb-2">
+      Founder Desk
+    </div>
+    <h1 class="text-2xl font-extrabold text-white">TrustHub Admin Portal</h1>
+    <p class="text-xs text-slate-400 mt-1">Authorized access for platform management, directory and client leads.</p>
+  </div>
+
+  <div class="p-8 rounded-3xl glass-card border border-slate-700/80 shadow-2xl space-y-6">
+    
+    {% if error %}
+    <div class="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
+      <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+      <span>{{ error }}</span>
+    </div>
+    {% endif %}
+
+    <form action="/admin/login" method="POST" class="space-y-4">
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Admin Username</label>
+        <div class="relative">
+          <i data-lucide="user" class="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400"></i>
+          <input type="text" name="username" value="{{ username or 'Trusthub admin' }}" required placeholder="Trusthub admin" class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-xs text-white focus:ring-1 focus:ring-brand-500">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Admin Password</label>
+        <div class="relative">
+          <i data-lucide="lock" class="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400"></i>
+          <input type="password" name="password" required placeholder="Enter password" class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-xs text-white focus:ring-1 focus:ring-brand-500">
+        </div>
+      </div>
+
+      <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
+        <i data-lucide="key" class="w-4 h-4"></i>
+        <span>Unlock Admin Control Center</span>
+      </button>
+    </form>
+
+    <div class="text-center pt-2 border-t border-slate-800">
+      <a href="/" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        <span>Back to TrustHub Homepage</span>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

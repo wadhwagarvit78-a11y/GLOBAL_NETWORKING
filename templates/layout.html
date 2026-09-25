@@ -163,7 +163,13 @@
         <!-- ABOUT / ADVANTAGES -->
         <a href="/#advantages" class="hover:text-white transition-colors tracking-wide uppercase text-xs">Why TrustHub</a>
 
-        {% if current_user %}
+        <!-- CLIENT PORTAL LINK -->
+        <a href="/client-portal" class="hover:text-white transition-colors tracking-wide uppercase text-xs flex items-center gap-1.5 text-teal-400">
+          <i data-lucide="inbox" class="w-3.5 h-3.5"></i>
+          <span>Client Desk</span>
+        </a>
+
+        {% if current_user and current_user.role != 'admin' %}
           <a href="/app" class="text-brand-400 hover:text-brand-300 flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-lg bg-brand-500/10 border border-brand-500/20">
             <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Member Dashboard
           </a>
@@ -174,14 +180,21 @@
       <div class="flex items-center gap-3">
         {% if current_user %}
           <div class="flex items-center gap-2">
-            <a href="/app" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span class="font-medium truncate max-w-[120px]">{{ current_user.full_name }}</span>
-            </a>
+            {% if current_user.role == 'admin' %}
+              <a href="/admin" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold hover:bg-amber-500/20 transition">
+                <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                <span>Trusthub admin</span>
+              </a>
+            {% else %}
+              <a href="/app" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="font-medium truncate max-w-[120px]">{{ current_user.full_name }}</span>
+              </a>
+            {% endif %}
             <a href="/logout" class="text-xs text-slate-400 hover:text-white px-2 py-1">Logout</a>
           </div>
         {% else %}
-          <a href="/login" class="text-sm font-medium text-slate-300 hover:text-white px-3 py-2">Sign In</a>
+          <a href="/login" class="text-xs font-bold text-slate-300 hover:text-white px-2.5 py-1.5">Sign In</a>
           <a href="/onboard" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-slate-950 font-bold text-xs shadow-md shadow-brand-600/20 transition-all hover:scale-[1.02]">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
             <span>Join Free</span>
@@ -189,8 +202,8 @@
         {% endif %}
 
         <!-- Quick Switcher to Admin -->
-        <a href="/admin" title="Founder Admin Portal" class="p-2 text-slate-400 hover:text-brand-400 transition-colors rounded-lg hover:bg-slate-800">
-          <i data-lucide="shield" class="w-4 h-4"></i>
+        <a href="/admin" title="Founder Admin Portal (Password: 9906)" class="p-2 text-slate-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-slate-800">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
         </a>
       </div>
     </div>
