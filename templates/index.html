@@ -112,7 +112,11 @@
             </li>
             <li class="flex items-center gap-2">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0"></i>
-              <span><strong>Tour Packages & Holidays:</strong> Customized domestic & international trips</span>
+              <span><strong>Tour Packages & Vacations:</strong> Customized domestic & international trips</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+              <span><strong>FREE Sponsored Trips:</strong> Creator, brand & promotional retreats</span>
             </li>
             <li class="flex items-center gap-2">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0"></i>
@@ -231,6 +235,28 @@
           <span>Inquire Tour Packages</span> &rarr;
         </button>
       </div>
+
+      <!-- Service 3: FREE Sponsored Trips (B2C) -->
+      <div id="services-sponsored-trips" class="p-5 rounded-3xl glass-card border border-slate-800 hover:border-amber-500/50 flex flex-col justify-between transition group bg-gradient-to-b from-slate-900/60 to-slate-950">
+        <div>
+          <div class="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="gift" class="w-5 h-5"></i>
+          </div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">Sponsored Desk</span>
+          <h3 class="text-base font-bold text-white mt-2 mb-2">FREE Sponsored Trips</h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            Get access to brand-sponsored getaways, influencer collabs, corporate-funded retreats, and promotional travel opportunities.
+          </p>
+          <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Fully / partially sponsored getaways</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Creator, influencer & brand tie-ups</li>
+          </ul>
+        </div>
+        <button @click="activeServiceName = 'FREE Sponsored Trips & Getaways'; serviceModal = true" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-emerald-400 hover:from-amber-400 hover:to-emerald-300 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md shadow-amber-500/20">
+          <span>Apply for Sponsored Trip</span> &rarr;
+        </button>
+      </div>
+
 
 
       <!-- Service 3: Catering & Event Management -->
