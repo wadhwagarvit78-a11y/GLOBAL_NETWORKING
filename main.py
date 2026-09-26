@@ -20,7 +20,8 @@ init_db()
 BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI(title="TrustHub Networking — Verified Business & Client Solutions")
-app.add_middleware(SessionMiddleware, secret_key="trusthub-super-secret-key-2026")
+app.add_middleware(SessionMiddleware, secret_key="trusthub-prod-session-v2-2026")
+
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
