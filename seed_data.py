@@ -139,11 +139,12 @@ def seed_all():
         ),
         (
             12,
-            "FREE Sponsored Trips",
-            "free-sponsored-trips",
+            "FREE Sponcered Trips",
+            "free-sponcered-trips",
             "Travel & Sponsorships",
             "Exclusive circle for travel organizers, brands, influencers, hospitality sponsors & corporate groups collaborating on fully/partially funded trips.",
             "gift",
+
             "https://chat.whatsapp.com/invite/Free-Sponsored-Trips-Hub",
             "Sponsor Terms / Collab Split",
             0
