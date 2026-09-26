@@ -182,11 +182,11 @@ async def handle_post_lead(
         description=description,
         expected_commission=expected_commission
     )
-    return RedirectResponse(url=f"/leads/{lead_id}", status_code=302)
+    return RedirectResponse(url=f"/leads/{lead_id}?submitted=pending", status_code=302)
 
 # 6. Lead Detail & 1-Click WhatsApp Handoff
 @app.get("/leads/{lead_id}", response_class=HTMLResponse)
-async def lead_detail_page(request: Request, lead_id: int):
+async def lead_detail_page(request: Request, lead_id: int, submitted: str = None):
     current_user = get_current_user(request)
     lead = models.get_lead_by_id(lead_id)
     if not lead:
@@ -194,7 +194,8 @@ async def lead_detail_page(request: Request, lead_id: int):
         
     return templates.TemplateResponse(request=request, name="lead_detail.html", context={
         "current_user": current_user,
-        "lead": lead
+        "lead": lead,
+        "submitted": submitted
     })
 
 @app.post("/leads/claim/{lead_id}")
@@ -369,15 +370,53 @@ async def handle_admin_logout(request: Request):
     return RedirectResponse(url="/", status_code=302)
 
 @app.get("/admin", response_class=HTMLResponse)
-async def admin_page(request: Request):
+async def admin_page(request: Request, tab: str = None, approved: int = None, rejected: int = None):
     if not is_admin(request):
         return RedirectResponse(url="/admin/login", status_code=302)
     current_user = get_current_user(request)
     metrics = models.get_admin_metrics()
+    
+    approved_lead_token = request.session.pop("approved_lead_token", None)
+    approved_lead_group = request.session.pop("approved_lead_group", None)
+    broadcast_text = request.session.pop("broadcast_text", None)
+    whatsapp_send_url = request.session.pop("whatsapp_send_url", None)
+    group_link = request.session.pop("group_link", None)
+    
     return templates.TemplateResponse(request=request, name="admin.html", context={
         "current_user": current_user,
-        "metrics": metrics
+        "metrics": metrics,
+        "active_tab": tab,
+        "approved": approved,
+        "rejected": rejected,
+        "approved_lead_token": approved_lead_token,
+        "approved_lead_group": approved_lead_group,
+        "broadcast_text": broadcast_text,
+        "whatsapp_send_url": whatsapp_send_url,
+        "group_link": group_link
     })
+
+@app.post("/admin/leads/approve/{lead_id}")
+async def handle_admin_approve_lead(request: Request, lead_id: int):
+    if not is_admin(request):
+        return RedirectResponse(url="/admin/login", status_code=302)
+    lead = models.approve_lead(lead_id)
+    if lead:
+        broadcast_text = models.format_whatsapp_broadcast_message(lead)
+        encoded_text = urllib.parse.quote(broadcast_text)
+        group_link = lead.get("whatsapp_group_link") or ""
+        request.session["approved_lead_token"] = lead.get("lead_token")
+        request.session["approved_lead_group"] = lead.get("group_name")
+        request.session["broadcast_text"] = broadcast_text
+        request.session["whatsapp_send_url"] = f"https://api.whatsapp.com/send?text={encoded_text}"
+        request.session["group_link"] = group_link
+    return RedirectResponse(url="/admin?tab=approvals&approved=1", status_code=302)
+
+@app.post("/admin/leads/reject/{lead_id}")
+async def handle_admin_reject_lead(request: Request, lead_id: int):
+    if not is_admin(request):
+        return RedirectResponse(url="/admin/login", status_code=302)
+    models.reject_lead(lead_id)
+    return RedirectResponse(url="/admin?tab=approvals&rejected=1", status_code=302)
 
 
 @app.post("/admin/update-group-link")

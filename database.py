@@ -78,7 +78,7 @@ def init_db():
         budget_range TEXT NOT NULL,
         description TEXT NOT NULL,
         expected_commission TEXT,
-        status TEXT DEFAULT 'open', -- 'open', 'claimed', 'in_progress', 'closed', 'disputed'
+        status TEXT DEFAULT 'pending_approval', -- 'pending_approval', 'open', 'claimed', 'in_progress', 'closed', 'rejected'
         claimed_by_id INTEGER,
         claimed_at TIMESTAMP,
         closed_at TIMESTAMP,

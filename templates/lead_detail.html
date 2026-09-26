@@ -26,8 +26,35 @@
       <span class="text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
         Deal Successfully Closed
       </span>
+    {% elif lead.status == 'pending_approval' %}
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        Under Executive Review
+      </span>
+    {% elif lead.status == 'rejected' %}
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40">
+        Review Rejected
+      </span>
     {% endif %}
   </div>
+
+  {% if lead.status == 'pending_approval' %}
+    <div class="mb-6 p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex items-start gap-3">
+        <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+        <div>
+          <div class="text-sm font-bold text-amber-300">Under Executive Desk Review</div>
+          <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+            This requirement has been submitted and is currently being verified by the TrustHub Executive Desk to ensure deal authenticity. Once approved, it will go live on the {{ lead.group_name }} network and broadcasted to verified community partners.
+          </p>
+        </div>
+      </div>
+      <a href="https://wa.me/918529171368?text={{ ('Hi TrustHub Admin, I submitted requirement ' ~ lead.lead_token ~ ' (' ~ lead.title ~ '). Requesting review & approval.')|urlencode }}" target="_blank" rel="noopener noreferrer" class="shrink-0 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition shadow-md shadow-amber-500/20">
+        <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+        <span>Fast-Track on WhatsApp</span>
+      </a>
+    </div>
+  {% endif %}
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
     
@@ -101,6 +128,16 @@
           {% elif lead.status == 'closed' %}
             <div class="w-full p-4 rounded-xl bg-purple-950/40 border border-purple-500/30 text-xs text-purple-200">
               <strong class="text-purple-300">Deal Closed:</strong> Total value: ₹{{ "{:,.2f}".format(lead.deal_value) }} | Commission Earned: ₹{{ "{:,.2f}".format(lead.commission_earned) }} | Platform Fee: ₹{{ "{:,.2f}".format(lead.platform_fee) }}
+            </div>
+          {% elif lead.status == 'pending_approval' %}
+            <div class="w-full p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-3">
+              <i data-lucide="clock" class="w-4 h-4 text-amber-400 shrink-0"></i>
+              <span>This requirement is pending Executive Desk review. Once verified, it will be open for claim.</span>
+            </div>
+          {% elif lead.status == 'rejected' %}
+            <div class="w-full p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 flex items-center gap-3">
+              <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-400 shrink-0"></i>
+              <span>This requirement did not meet quality verification standards and was closed.</span>
             </div>
           {% endif %}
         </div>

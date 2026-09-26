@@ -88,7 +88,7 @@ def get_leads_for_group(group_id: int, sub_location: str = None, deal_type: str 
     FROM leads l
     JOIN users u ON l.author_id = u.id
     LEFT JOIN users c ON l.claimed_by_id = c.id
-    WHERE l.group_id = ?
+    WHERE l.group_id = ? AND l.status IN ('open', 'claimed', 'in_progress', 'closed')
     """
     params = [group_id]
     
@@ -126,6 +126,67 @@ def get_lead_by_id(lead_id: int):
     conn.close()
     return dict(lead) if lead else None
 
+def get_pending_leads():
+    conn = get_db_connection()
+    leads = conn.execute("""
+    SELECT l.*, u.full_name as author_name, u.whatsapp_number as author_whatsapp,
+           u.business_name as author_business, u.city_area as author_city,
+           u.phone_number as author_phone,
+           g.name as group_name, g.whatsapp_group_link
+    FROM leads l
+    JOIN users u ON l.author_id = u.id
+    JOIN vertical_groups g ON l.group_id = g.id
+    WHERE l.status = 'pending_approval'
+    ORDER BY l.id DESC
+    """).fetchall()
+    conn.close()
+    return [dict(l) for l in leads]
+
+def approve_lead(lead_id: int):
+    conn = get_db_connection()
+    conn.execute("""
+    UPDATE leads SET status = 'open' WHERE id = ?
+    """, (lead_id,))
+    conn.commit()
+    conn.close()
+    return get_lead_by_id(lead_id)
+
+def reject_lead(lead_id: int):
+    conn = get_db_connection()
+    conn.execute("""
+    UPDATE leads SET status = 'rejected' WHERE id = ?
+    """, (lead_id,))
+    conn.commit()
+    conn.close()
+    return True
+
+def format_whatsapp_broadcast_message(lead: dict) -> str:
+    token = lead.get('lead_token', f"LEAD-{lead.get('id')}")
+    title = lead.get('title', '')
+    category = lead.get('group_name', 'TrustHub Network')
+    loc = lead.get('sub_location', 'NCR')
+    budget = lead.get('budget_range', 'Negotiable')
+    deal_type = (lead.get('deal_type') or 'Requirement').capitalize()
+    commission = lead.get('expected_commission') or 'Standard Split'
+    desc = lead.get('description', '')
+    if len(desc) > 220:
+        desc = desc[:217] + "..."
+        
+    msg = (
+        f"🔥 *NEW VERIFIED REQUIREMENT [{token}]*\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"📌 *Category:* {category}\n"
+        f"📍 *Location:* {loc}\n"
+        f"🏷️ *Details:* {title} ({deal_type})\n"
+        f"💰 *Budget:* {budget}\n"
+        f"🤝 *Commission Split:* {commission}\n"
+        f"📝 *Requirement:* {desc}\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"👉 *Claim & Connect securely on TrustHub:*\n"
+        f"https://www.trusthubnetworking.com/leads/{lead.get('id')}"
+    )
+    return msg
+
 def create_lead(author_id: int, group_id: int, title: str, deal_type: str, sub_location: str, budget_range: str, description: str, expected_commission: str):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -138,7 +199,7 @@ def create_lead(author_id: int, group_id: int, title: str, deal_type: str, sub_l
     INSERT INTO leads (
         lead_token, group_id, author_id, title, deal_type, sub_location, budget_range,
         description, expected_commission, status
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'open')
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending_approval')
     """, (lead_token, group_id, author_id, title, deal_type, sub_location, budget_range, description, expected_commission))
     
     lead_id = cursor.lastrowid
@@ -263,6 +324,18 @@ def get_admin_metrics():
     SELECT * FROM cross_vertical_requests ORDER BY id DESC
     """).fetchall()
     
+    pending_leads = conn.execute("""
+    SELECT l.*, u.full_name as author_name, u.whatsapp_number as author_whatsapp,
+           u.business_name as author_business, u.city_area as author_city,
+           u.phone_number as author_phone,
+           g.name as group_name, g.whatsapp_group_link
+    FROM leads l
+    JOIN users u ON l.author_id = u.id
+    JOIN vertical_groups g ON l.group_id = g.id
+    WHERE l.status = 'pending_approval'
+    ORDER BY l.id DESC
+    """).fetchall()
+    
     conn.close()
     return {
         "total_users": total_users,
@@ -273,6 +346,7 @@ def get_admin_metrics():
         "groups": [dict(g) for g in groups],
         "users": [dict(u) for u in all_users],
         "leads": [dict(l) for l in all_leads],
+        "pending_leads": [dict(pl) for pl in pending_leads],
         "ledger": [dict(r) for r in all_ledger],
         "cross_requests": [dict(cr) for cr in cross_requests]
     }

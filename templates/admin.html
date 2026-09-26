@@ -3,8 +3,61 @@
 {% block title %}Founder Admin Control Center — TrustHub Networking{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ tab: 'groups' }">
-  
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ 
+  tab: '{{ active_tab or ('approvals' if metrics.pending_leads|length > 0 else 'groups') }}',
+  broadcastModal: {{ 'true' if broadcast_text else 'false' }},
+  copied: false
+}">
+
+  <!-- Broadcast to WhatsApp Modal -->
+  <div x-show="broadcastModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm">
+    <div @click.away="broadcastModal = false" class="max-w-lg w-full p-6 rounded-3xl glass-card border border-emerald-500/40 shadow-2xl space-y-5 bg-gradient-to-b from-slate-900 to-slate-950">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+          <h3 class="text-base font-extrabold text-white">Lead Approved & Live!</h3>
+        </div>
+        <button @click="broadcastModal = false" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+
+      <p class="text-xs text-slate-300">
+        Requirement <strong class="text-emerald-400 font-mono">{{ approved_lead_token }}</strong> is now LIVE on TrustHub! Next step: Broadcast it to the <strong>{{ approved_lead_group }}</strong> WhatsApp community group.
+      </p>
+
+      <!-- Pre-formatted Announcement Box -->
+      <div class="relative">
+        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Formatted Community Announcement:</label>
+        <textarea id="broadcastTextArea" readonly rows="7" class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3 text-xs text-slate-200 font-mono leading-relaxed select-all focus:outline-none focus:border-brand-500">{{ broadcast_text }}</textarea>
+        
+        <button @click="navigator.clipboard.writeText(document.getElementById('broadcastTextArea').value); copied = true; setTimeout(() => copied = false, 2500)" class="absolute right-3 bottom-3 px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] font-bold text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span x-text="copied ? 'Copied!' : 'Copy Text'"></span>
+        </button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2 pt-2">
+        {% if whatsapp_send_url %}
+          <a href="{{ whatsapp_send_url }}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-brand-500 hover:from-emerald-400 hover:to-brand-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition">
+            <i data-lucide="send" class="w-4 h-4 fill-current"></i>
+            <span>Open WhatsApp & Send Broadcast Now &rarr;</span>
+          </a>
+        {% endif %}
+
+        {% if group_link %}
+          <a href="{{ group_link }}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs flex items-center justify-center gap-2 transition border border-slate-700">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+            <span>Open {{ approved_lead_group }} WhatsApp Group</span>
+          </a>
+        {% endif %}
+
+        <button @click="broadcastModal = false" class="w-full py-2 text-center text-xs text-slate-400 hover:text-white transition">
+          Done / Dismiss
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
@@ -61,6 +114,13 @@
 
   <!-- Tabs Navigation -->
   <div class="flex items-center gap-2 border-b border-slate-800 pb-4 mb-8 overflow-x-auto text-xs font-semibold">
+    <button @click="tab = 'approvals'" :class="tab === 'approvals' ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 font-bold' : '{% if metrics.pending_leads|length > 0 %}bg-amber-500/20 text-amber-300 border border-amber-500/40{% else %}bg-slate-900 text-slate-400 hover:text-white{% endif %}'" class="px-4 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap relative">
+      <i data-lucide="shield-alert" class="w-4 h-4 text-amber-400"></i>
+      <span>Pending Approvals ({{ metrics.pending_leads|length }})</span>
+      {% if metrics.pending_leads|length > 0 %}
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+      {% endif %}
+    </button>
     <button @click="tab = 'groups'" :class="tab === 'groups' ? 'bg-brand-500 text-slate-950 shadow-md shadow-brand-500/20' : 'bg-slate-900 text-slate-400 hover:text-white'" class="px-4 py-2 rounded-xl transition flex items-center gap-2 whitespace-nowrap">
       <i data-lucide="message-circle" class="w-4 h-4"></i>
       <span>WhatsApp Group Links ({{ metrics.groups|length }})</span>
@@ -81,6 +141,117 @@
       <i data-lucide="target" class="w-4 h-4 text-teal-400"></i>
       <span>B2B2C Client Inquiries ({{ metrics.cross_requests|length }})</span>
     </button>
+  </div>
+
+  <!-- TAB 0: Pending Approvals Queue -->
+  <div x-show="tab === 'approvals'" class="space-y-6">
+    <div class="p-6 rounded-3xl glass-card border border-slate-800">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-bold text-white">Pending Executive Review Queue</h2>
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">
+              {{ metrics.pending_leads|length }} Awaiting Action
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Review newly posted member requirements. When you click Approve, the lead goes live on the site/app and the WhatsApp announcement message is generated instantly.</p>
+        </div>
+      </div>
+
+      {% if metrics.pending_leads|length == 0 %}
+        <div class="text-center py-12 px-4 rounded-2xl bg-slate-900/40 border border-slate-800/80">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-3">
+            <i data-lucide="check-circle" class="w-6 h-6"></i>
+          </div>
+          <div class="text-sm font-bold text-white">All Caught Up!</div>
+          <p class="text-xs text-slate-400 mt-1">No pending leads awaiting approval right now. New submissions will show up here immediately.</p>
+        </div>
+      {% else %}
+        <div class="space-y-4">
+          {% for pl in metrics.pending_leads %}
+            <div class="p-6 rounded-2xl bg-slate-900/90 border border-amber-500/30 shadow-lg space-y-4">
+              <!-- Top Row: Badges & Token -->
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-xs font-bold text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded border border-brand-500/20">
+                    {{ pl.lead_token }}
+                  </span>
+                  <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                    {{ pl.group_name }}
+                  </span>
+                  <span class="text-[11px] font-semibold uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                    {{ pl.deal_type }}
+                  </span>
+                </div>
+                <div class="text-[11px] text-slate-400 flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                  <span>Submitted: {{ pl.created_at }}</span>
+                </div>
+              </div>
+
+              <!-- Title & Criteria -->
+              <div>
+                <h3 class="text-base font-extrabold text-white">{{ pl.title }}</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3 p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs">
+                  <div>
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Location:</span>
+                    <span class="font-semibold text-slate-200">{{ pl.sub_location }}</span>
+                  </div>
+                  <div>
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Budget:</span>
+                    <span class="font-semibold text-brand-400">{{ pl.budget_range }}</span>
+                  </div>
+                  <div>
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Commission Split:</span>
+                    <span class="font-semibold text-emerald-400">{{ pl.expected_commission or 'Standard Split' }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Full Description -->
+              <div class="p-3.5 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-slate-300 whitespace-pre-line leading-relaxed">
+                {{ pl.description }}
+              </div>
+
+              <!-- Author / Submitter Info -->
+              <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center font-bold text-white text-xs">
+                    {{ pl.author_name[:2].upper() }}
+                  </div>
+                  <div>
+                    <div class="font-bold text-white">{{ pl.author_name }} <span class="text-slate-400 font-normal">({{ pl.author_business or 'Independent' }})</span></div>
+                    <div class="text-[11px] text-slate-400">{{ pl.author_city }}</div>
+                  </div>
+                </div>
+
+                <a href="https://wa.me/{{ pl.author_whatsapp }}?text={{ ('Hi ' ~ pl.author_name ~ ', reviewing your requirement ' ~ pl.lead_token ~ ' on TrustHub.')|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+                  <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  <span>WhatsApp Author (+{{ pl.author_whatsapp }})</span>
+                </a>
+              </div>
+
+              <!-- Action Buttons (Mobile-first large touch targets) -->
+              <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                <form action="/admin/leads/approve/{{ pl.id }}" method="POST" class="flex-1">
+                  <button type="submit" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-brand-500 hover:from-emerald-400 hover:to-brand-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 transition">
+                    <i data-lucide="check-circle" class="w-4 h-4 fill-current"></i>
+                    <span>Approve & Broadcast to WhatsApp &rarr;</span>
+                  </button>
+                </form>
+
+                <form action="/admin/leads/reject/{{ pl.id }}" method="POST" onsubmit="return confirm('Are you sure you want to reject this lead? It will not be shown to members.');" class="sm:w-auto">
+                  <button type="submit" class="w-full py-3 px-4 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 font-bold text-xs border border-rose-500/30 flex items-center justify-center gap-2 transition">
+                    <i data-lucide="x-circle" class="w-4 h-4"></i>
+                    <span>Reject / Spam</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
   </div>
 
   <!-- TAB 1: WhatsApp Group Links Manager -->
