@@ -6,8 +6,161 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ 
   tab: '{{ active_tab or ('approvals' if metrics.pending_leads|length > 0 else 'groups') }}',
   broadcastModal: {{ 'true' if broadcast_text else 'false' }},
-  copied: false
+  quickIngestModal: false,
+  copied: false,
+  whatsappPaste: '',
+  quickTitle: '',
+  quickLocation: '',
+  quickBudget: '',
+  onPasteText(txt) {
+    this.whatsappPaste = txt;
+    if (!this.quickTitle && txt) {
+      let firstLine = txt.trim().split('\n')[0];
+      if (firstLine.length > 70) firstLine = firstLine.substring(0, 67) + '...';
+      this.quickTitle = firstLine;
+    }
+  }
 }">
+
+  <!-- Quick Ingest Lead from WhatsApp Modal -->
+  <div x-show="quickIngestModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm overflow-y-auto">
+    <div @click.away="quickIngestModal = false" class="max-w-xl w-full p-6 sm:p-8 rounded-3xl glass-card border border-emerald-500/40 shadow-2xl space-y-5 bg-gradient-to-b from-slate-900 to-slate-950 my-8">
+      
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+            <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-white">Quick Ingest Lead from WhatsApp</h3>
+            <p class="text-[11px] text-slate-400">15-second tool to convert WhatsApp requirements into verified trackable leads.</p>
+          </div>
+        </div>
+        <button @click="quickIngestModal = false" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+
+      <form action="/admin/leads/quick-ingest" method="POST" class="space-y-4">
+        
+        <!-- Target Vertical Group -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            Target Profession Circle / Vertical <span class="text-brand-400">*</span>
+          </label>
+          <select name="group_id" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:ring-1 focus:ring-brand-500">
+            {% for g in metrics.groups %}
+              <option value="{{ g.id }}">{{ g.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- WhatsApp Raw Message Paste Box -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5 flex items-center justify-between">
+            <span>Paste WhatsApp Message / Requirement <span class="text-brand-400">*</span></span>
+            <span class="text-[10px] text-slate-500 font-normal">Auto-fills details below</span>
+          </label>
+          <textarea name="description" rows="4" required x-model="whatsappPaste" @input="onPasteText($event.target.value)" placeholder="Copy the message from your WhatsApp and paste here... e.g. Urgent Buyer looking for 3BHK in Gurgaon Sec 54, budget 3.5-4 Cr, ready client." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-brand-500 font-mono"></textarea>
+        </div>
+
+        <!-- Title -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            Requirement Title / Headline <span class="text-brand-400">*</span>
+          </label>
+          <input type="text" name="title" required x-model="quickTitle" placeholder="e.g. 3BHK Luxury Builder Floor in Sec 54 Gurgaon" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-brand-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Specific Location -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+              Specific Location / City <span class="text-brand-400">*</span>
+            </label>
+            <input type="text" name="sub_location" required x-model="quickLocation" placeholder="e.g. Gurgaon Sec 54 / Jibhi / South Delhi" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-brand-500">
+          </div>
+
+          <!-- Budget Range -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+              Budget Range
+            </label>
+            <input type="text" name="budget_range" x-model="quickBudget" placeholder="e.g. ₹3.5 Cr / ₹60,000 / Flexible" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-brand-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Deal Type -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Deal Type</label>
+            <select name="deal_type" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:ring-1 focus:ring-brand-500">
+              <option value="buy">Purchase / Buying Mandate</option>
+              <option value="sell">Exclusive Mandate / Seller</option>
+              <option value="rent">Rental / Lease</option>
+              <option value="project">Project / Tour Package</option>
+              <option value="client_consult">Consultation / Advisory</option>
+            </select>
+          </div>
+
+          <!-- Commission Split -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Commission Split</label>
+            <input type="text" name="expected_commission" value="20% Brokerage Split" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:ring-1 focus:ring-brand-500">
+          </div>
+        </div>
+
+        <!-- Auto-Approve Checkbox -->
+        <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3">
+          <input type="checkbox" name="auto_approve" id="auto_approve_check" checked value="true" class="w-4 h-4 rounded text-brand-500 bg-slate-900 border-slate-700 focus:ring-brand-500">
+          <label for="auto_approve_check" class="text-xs text-slate-200 cursor-pointer">
+            <strong class="text-emerald-400">Auto-Approve Immediately:</strong> Publish live on site/app and open pre-formatted WhatsApp Broadcast Card with claim link.
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-400 to-brand-500 hover:from-emerald-400 hover:to-brand-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition">
+          <i data-lucide="send" class="w-4 h-4 fill-current"></i>
+          <span>Create, Approve & Generate WhatsApp Broadcast &rarr;</span>
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded bg-rose-500/10 text-rose-400 text-xs font-bold uppercase tracking-wider border border-rose-500/20">
+          Admin Portal
+        </span>
+        <span class="text-xs text-slate-500">|</span>
+        <span class="text-xs text-slate-400">Founder Overview</span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Platform Control Center</h1>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Quick Ingest Lead Button -->
+      <button @click="quickIngestModal = true" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 text-xs font-bold shadow-lg shadow-emerald-500/20 transition">
+        <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+        <span>+ Quick Ingest Lead</span>
+      </button>
+
+      <div class="px-3.5 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Founder: <strong>Trusthub admin</strong></span>
+      </div>
+      <a href="/app" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition">
+        <i data-lucide="eye" class="w-4 h-4"></i>
+        <span>Member View</span>
+      </a>
+      <a href="/admin/logout" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold transition">
+        <i data-lucide="log-out" class="w-4 h-4"></i>
+        <span>Exit Admin</span>
+      </a>
+    </div>
+  </div>
 
   <!-- Broadcast to WhatsApp Modal -->
   <div x-show="broadcastModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm">
@@ -55,36 +208,6 @@
           Done / Dismiss
         </button>
       </div>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <div>
-      <div class="flex items-center gap-2">
-        <span class="px-2.5 py-0.5 rounded bg-rose-500/10 text-rose-400 text-xs font-bold uppercase tracking-wider border border-rose-500/20">
-          Admin Portal
-        </span>
-        <span class="text-xs text-slate-500">|</span>
-        <span class="text-xs text-slate-400">Founder Overview</span>
-      </div>
-      <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Platform Control Center</h1>
-    </div>
-
-    <!-- Actions -->
-    <div class="flex items-center gap-3">
-      <div class="px-3.5 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>Founder: <strong>Trusthub admin</strong></span>
-      </div>
-      <a href="/app" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700 transition">
-        <i data-lucide="eye" class="w-4 h-4"></i>
-        <span>Member View</span>
-      </a>
-      <a href="/admin/logout" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold transition">
-        <i data-lucide="log-out" class="w-4 h-4"></i>
-        <span>Exit Admin</span>
-      </a>
     </div>
   </div>
 

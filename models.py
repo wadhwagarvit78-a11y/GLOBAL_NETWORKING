@@ -187,7 +187,7 @@ def format_whatsapp_broadcast_message(lead: dict) -> str:
     )
     return msg
 
-def create_lead(author_id: int, group_id: int, title: str, deal_type: str, sub_location: str, budget_range: str, description: str, expected_commission: str):
+def create_lead(author_id: int, group_id: int, title: str, deal_type: str, sub_location: str, budget_range: str, description: str, expected_commission: str, status: str = 'pending_approval'):
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -199,8 +199,8 @@ def create_lead(author_id: int, group_id: int, title: str, deal_type: str, sub_l
     INSERT INTO leads (
         lead_token, group_id, author_id, title, deal_type, sub_location, budget_range,
         description, expected_commission, status
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending_approval')
-    """, (lead_token, group_id, author_id, title, deal_type, sub_location, budget_range, description, expected_commission))
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (lead_token, group_id, author_id, title, deal_type, sub_location, budget_range, description, expected_commission, status))
     
     lead_id = cursor.lastrowid
     conn.commit()

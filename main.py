@@ -418,6 +418,52 @@ async def handle_admin_reject_lead(request: Request, lead_id: int):
     models.reject_lead(lead_id)
     return RedirectResponse(url="/admin?tab=approvals&rejected=1", status_code=302)
 
+# Quick Ingest Lead from WhatsApp Message (15-second creation & auto-broadcast)
+@app.post("/admin/leads/quick-ingest")
+async def handle_quick_ingest_lead(
+    request: Request,
+    group_id: int = Form(...),
+    title: str = Form(...),
+    deal_type: str = Form("buy"),
+    sub_location: str = Form(...),
+    budget_range: str = Form(""),
+    description: str = Form(...),
+    expected_commission: str = Form("20% Split / Standard"),
+    auto_approve: bool = Form(True)
+):
+    if not is_admin(request):
+        return RedirectResponse(url="/admin/login", status_code=302)
+    
+    current_user = get_current_user(request)
+    author_id = current_user["id"] if current_user else 1
+    
+    lead_status = "open" if auto_approve else "pending_approval"
+    lead_id = models.create_lead(
+        author_id=author_id,
+        group_id=group_id,
+        title=title.strip(),
+        deal_type=deal_type,
+        sub_location=sub_location.strip(),
+        budget_range=budget_range.strip() or "Negotiable",
+        description=description.strip(),
+        expected_commission=expected_commission.strip() or "Standard Split",
+        status=lead_status
+    )
+    
+    lead = models.get_lead_by_id(lead_id)
+    if lead_status == "open" and lead:
+        broadcast_text = models.format_whatsapp_broadcast_message(lead)
+        encoded_text = urllib.parse.quote(broadcast_text)
+        group_link = lead.get("whatsapp_group_link") or ""
+        request.session["approved_lead_token"] = lead.get("lead_token")
+        request.session["approved_lead_group"] = lead.get("group_name")
+        request.session["broadcast_text"] = broadcast_text
+        request.session["whatsapp_send_url"] = f"https://api.whatsapp.com/send?text={encoded_text}"
+        request.session["group_link"] = group_link
+        return RedirectResponse(url="/admin?approved=1&tab=leads", status_code=302)
+        
+    return RedirectResponse(url="/admin?tab=approvals", status_code=302)
+
 
 @app.post("/admin/update-group-link")
 async def handle_update_group_link(
